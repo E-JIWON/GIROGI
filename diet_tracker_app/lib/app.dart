@@ -5,6 +5,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:diet_tracker_app/core/theme/app_theme.dart';
 
 /// 앱의 진입점 위젯
 ///
@@ -22,23 +23,12 @@ class DietTrackerApp extends StatelessWidget {
       debugShowCheckedModeBanner: true,
 
       /// 라이트 테마 설정
-      /// TODO: core/theme/app_theme.dart에서 정의된 테마 적용
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6366F1), // 인디고
-        ),
-        useMaterial3: true,
-      ),
+      /// Material 3 기반의 라이트 테마를 적용합니다.
+      theme: AppTheme.getLightTheme(),
 
       /// 다크 테마 설정
-      /// TODO: core/theme/app_theme.dart에서 정의된 다크 테마 적용
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6366F1),
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      /// Material 3 기반의 다크 테마를 적용합니다.
+      darkTheme: AppTheme.getDarkTheme(),
 
       /// 시스템 테마 자동 전환 설정
       themeMode: ThemeMode.system,

@@ -197,11 +197,58 @@ Repository 패턴으로 데이터 소스를 추상화:
 - 비즈니스 로직 메서드 (연속 성공 계산 등)
 - 샘플 데이터로 테스트 시나리오 지원
 
+**Phase 4: Core 레이어 (테마, 색상, 상수)**
+
+Material Design 3 기반의 디자인 시스템 구축:
+
+*상수 정의:*
+- AppConstants: 앱 전역 상수 정의
+  - API 관련 상수 (베이스 URL, 타임아웃)
+  - 데이터베이스 관련 상수 (Hive 박스 이름)
+  - 행동 변화 로직 상수 (미션 개수, 치팅데이 조건)
+  - UI 관련 상수 (패딩, 보더 라디우스, 아이콘 크기)
+  - 애니메이션 상수 (기본/빠른/느린 애니메이션 시간)
+
+*색상 팔레트:*
+- AppColors: 완전한 색상 시스템
+  - Primary 색상 계열 (#6366F1 인디고)
+  - Semantic 색상 (Success, Warning, Error, Info)
+  - Neutral 색상 (Grey 50~900)
+  - Functional 색상 (배경, 표면, 구분선)
+  - 기능별 색상 (Streak, 치팅데이, 자기 연민)
+  - 그라데이션 및 그림자 색상
+  - 라이트/다크 모드 지원
+
+*타이포그래피:*
+- AppTypography: Material 3 타이포그래피 시스템
+  - Display Styles (큰 제목)
+  - Headline Styles (헤드라인)
+  - Title Styles (타이틀)
+  - Body Styles (본문)
+  - Label Styles (라벨)
+  - Custom Styles (Streak Counter, Timer Display)
+  - 유틸리티 메서드 (색상/굵기 적용)
+
+*테마 정의:*
+- AppTheme: 완전한 테마 시스템
+  - 라이트/다크 모드 ThemeData
+  - Material 3 ColorScheme
+  - 컴포넌트별 테마 (Button, Card, Input 등)
+  - 일관된 스타일 적용
+
+**Core 레이어 설계 특징:**
+- 중앙화된 상수 관리로 매직 넘버 방지
+- 색상 심리학 적용 (신뢰감, 안정감 제공)
+- Material 3 타이포그래피 시스템 준수
+- 라이트/다크 모드 완전 지원
+- 재사용 가능한 디자인 토큰
+- app.dart에 테마 적용 완료
+
 ### 다음 단계
 
-- 테마 및 디자인 시스템 정의
-- 하단 네비게이션 바 구현
+- 하단 네비게이션 바 구현 (5개 탭)
 - 화면별 UI 구현 (홈, 체크리스트, 커뮤니티 등)
+- 공통 위젯 구현 (리액션 바, 댓글 섹션 등)
 
 ---
 
@@ -282,4 +329,4 @@ MIT License
 
 ---
 
-**최종 수정일**: 2026-02-05 (Phase 3: Repository 레이어 완료)
+**최종 수정일**: 2026-02-05 (Phase 4: Core 레이어 완료)
