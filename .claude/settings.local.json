@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git config:*)",
       "Bash(flutter --version:*)",
-      "Bash(flutter create:*)"
+      "Bash(flutter create:*)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []

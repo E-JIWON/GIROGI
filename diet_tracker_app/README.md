@@ -74,24 +74,39 @@
 
 ```
 lib/
-├── core/
-│   ├── constants/     # 앱 전역 상수
-│   ├── theme/         # 디자인 시스템 정의
-│   └── utils/         # 공통 유틸리티
+├── app.dart                          # 루트 위젯 (MaterialApp 설정)
+├── main.dart                         # 애플리케이션 진입점
 │
-├── data/
-│   ├── models/        # 데이터 전송 객체 (DTO)
-│   ├── repositories/  # 데이터 소스 추상화
-│   └── local_storage/ # 로컬 영속성 레이어
+├── core/                             # 공통 모듈 레이어
+│   ├── constants/                    # 앱 전역 상수 (API, 설정값)
+│   ├── theme/                        # 디자인 시스템 (색상, 타이포그래피)
+│   └── utils/                        # 공통 유틸리티 (포매터, 검증)
 │
-├── domain/
-│   ├── entities/      # 비즈니스 도메인 엔티티
-│   └── usecases/      # 비즈니스 로직 캡슐화
+├── data/                             # 데이터 레이어
+│   ├── models/                       # DTO (JSON 직렬화 모델)
+│   ├── repositories/                 # Repository 구현 (Mock/실제 DB)
+│   └── local_storage/                # 로컬 영속성 (Hive/SQLite)
 │
-└── presentation/
-    ├── screens/       # 화면 단위 UI
-    ├── widgets/       # 재사용 가능 컴포넌트
-    └── providers/     # 상태 관리 프로바이더
+├── domain/                           # 도메인 레이어
+│   ├── entities/                     # 비즈니스 엔티티 (순수 객체)
+│   └── usecases/                     # UseCase (비즈니스 로직 캡슐화)
+│
+└── presentation/                     # 프레젠테이션 레이어
+    ├── screens/                      # 화면 단위 UI
+    │   ├── home/                     # 홈 화면 (스트릭, 미션, 캘린더)
+    │   ├── checklist/                # 체크리스트 화면 (시간대별 체크)
+    │   ├── community/                # 커뮤니티 화면 (피드, 숏츠)
+    │   ├── emergency/                # 유혹 극복 화면 (타이머, 자기 연민)
+    │   ├── profile/                  # 프로필 화면 (다중 탭)
+    │   └── report/                   # 리포트 화면 (비교 그래프)
+    │
+    ├── widgets/                      # 재사용 가능 컴포넌트
+    │   ├── common/                   # 공통 위젯 (버튼, 카드 등)
+    │   ├── timeline/                 # 타임라인 위젯
+    │   ├── reaction/                 # 리액션/댓글 위젯
+    │   └── chart/                    # 차트 위젯
+    │
+    └── providers/                    # Riverpod 상태 관리
 ```
 
 ### 설계 원칙

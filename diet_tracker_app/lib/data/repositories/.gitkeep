@@ -1,0 +1,4 @@
+# Repository 구현체 위치
+# - 데이터 소스 추상화
+# - Mock Repository (개발 단계)
+# - 실제 Repository (프로덕션)
