@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:girogi/core/theme/app_theme.dart';
+import 'package:girogi/presentation/screens/main_navigation.dart';
 
 /// 앱의 진입점 위젯
 ///
@@ -34,18 +35,8 @@ class GirogiApp extends StatelessWidget {
       themeMode: ThemeMode.system,
 
       /// 초기 화면
-      /// TODO: presentation/screens/home/home_screen.dart 연결
-      home: const Scaffold(
-        body: Center(
-          child: Text(
-            'GIROGI',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+      /// 하단 네비게이션 바를 포함한 메인 화면
+      home: const MainNavigation(),
 
       /// 라우팅 설정
       /// TODO: 화면별 라우트 정의 추가
