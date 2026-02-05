@@ -5,7 +5,11 @@
       "Bash(flutter --version:*)",
       "Bash(flutter create:*)",
       "Bash(tree:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git mv:*)",
+      "Bash(find:*)",
+      "Bash(flutter pub get:*)"
     ],
     "deny": [],
     "ask": []
