@@ -174,9 +174,31 @@ lib/
 - TODO 마커로 DB 전환 지점 명시
 - 모든 필드 목적 기반 상세 주석
 
+**Phase 3: Repository 레이어 (6개 Repository)**
+
+Repository 패턴으로 데이터 소스를 추상화:
+
+*Repository 인터페이스:*
+- DailyRecordRepository: 일일 기록 CRUD 및 통계 계산
+- UserRepository: 사용자 프로필 및 팔로우 관리
+- PostRepository: 커뮤니티 게시글, 리액션, 댓글 관리
+
+*Mock 구현체 (메모리 기반):*
+- MockDailyRecordRepository: 7일간 샘플 데이터
+- MockUserRepository: 4명의 테스트 사용자
+- MockPostRepository: 다양한 타입의 샘플 게시글
+
+**Repository 설계 특징:**
+- 인터페이스 기반 추상화 (의존성 역전)
+- Mock 구현체로 UI 개발 즉시 가능
+- TODO 마커로 실제 DB 전환 지점 명시
+  - Hive/SQLite 로컬 DB 옵션
+  - Firebase/Supabase 클라우드 옵션
+- 비즈니스 로직 메서드 (연속 성공 계산 등)
+- 샘플 데이터로 테스트 시나리오 지원
+
 ### 다음 단계
 
-- Mock Repository 패턴 구현
 - 테마 및 디자인 시스템 정의
 - 하단 네비게이션 바 구현
 - 화면별 UI 구현 (홈, 체크리스트, 커뮤니티 등)
@@ -260,4 +282,4 @@ MIT License
 
 ---
 
-**최종 수정일**: 2026-02-05 (Phase 2: 데이터 모델 레이어 완료)
+**최종 수정일**: 2026-02-05 (Phase 3: Repository 레이어 완료)
