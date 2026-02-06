@@ -105,7 +105,7 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (Phase 1-3 완료 ✅)
+### Next.js 앱 (Phase 1-4 완료 ✅)
 ```bash
 cd girogi-web
 npm install  # 이미 설치 완료
@@ -149,6 +149,20 @@ npm run dev
 - ✅ 타입 안전성 확보
   - TypeScript 인터페이스 ↔ Zod 스키마 동기화
   - 헬퍼 함수 제공 (isEatingOut, getWeightChange 등)
+
+**Phase 4 완료 내역**:
+- ✅ Mock 데이터 생성 (UI 개발용)
+  - `src/lib/mock/users.ts` - 사용자 4명 (본인 + 친구 3명)
+  - `src/lib/mock/dailyRecords.ts` - 최근 7일 일일 기록
+  - `src/lib/mock/posts.ts` - 게시글 6개 (다양한 타입)
+  - `src/lib/mock/index.ts` - 통합 export
+- ✅ Mock 데이터 헬퍼 함수
+  - 사용자 조회 (ID, 닉네임, 팔로우/팔로잉)
+  - 일일 기록 조회 (날짜, 범위, Streak 계산)
+  - 게시글 관리 (CRUD, 리액션, 댓글)
+- ✅ Flutter Mock Repository와 100% 호환
+  - 동일한 데이터 구조 및 비즈니스 로직
+  - 백엔드 없이 UI 개발 가능
 
 ---
 
