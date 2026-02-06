@@ -11,21 +11,14 @@
 
 import { MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface Reaction {
-  like: number;
-  love: number;
-  fighting: number;
-  touched: number;
-  funny: number;
-  empathy: number;
-}
+import { type Reaction, createReactionCounts } from '@/types/common';
+import { ReactionType } from '@/types/enums';
 
 interface ReactionBarProps {
   /**
-   * 리액션 데이터
+   * 리액션 데이터 (배열)
    */
-  reactions: Reaction;
+  reactions: Reaction[];
   /**
    * 리액션 탭 콜백
    */
@@ -41,12 +34,12 @@ interface ReactionBarProps {
 }
 
 const REACTION_CONFIG = {
-  like: { emoji: '👍', label: '좋아요' },
-  love: { emoji: '❤️', label: '최고' },
-  fighting: { emoji: '💪', label: '화이팅' },
-  touched: { emoji: '😭', label: '감동' },
-  funny: { emoji: '😂', label: '웃김' },
-  empathy: { emoji: '🤝', label: '공감' },
+  [ReactionType.HEART]: { emoji: '❤️', label: '좋아요' },
+  [ReactionType.FIRE]: { emoji: '🔥', label: '열정' },
+  [ReactionType.MUSCLE]: { emoji: '💪', label: '화이팅' },
+  [ReactionType.CLAP]: { emoji: '👏', label: '박수' },
+  [ReactionType.HUG]: { emoji: '🤗', label: '공감' },
+  [ReactionType.SAD]: { emoji: '😢', label: '감동' },
 } as const;
 
 export function ReactionBar({
@@ -55,17 +48,12 @@ export function ReactionBar({
   commentCount,
   onCommentTap,
 }: ReactionBarProps) {
-  // 총 리액션 수 계산
-  const totalCount =
-    reactions.like +
-    reactions.love +
-    reactions.fighting +
-    reactions.touched +
-    reactions.funny +
-    reactions.empathy;
+  // 리액션 집계
+  const reactionCounts = createReactionCounts(reactions);
+  const totalCount = reactionCounts.total;
 
   // 상위 3개 리액션 추출
-  const topReactions = Object.entries(reactions)
+  const topReactions = Object.entries(reactionCounts.counts)
     .filter(([_, count]) => count > 0)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 3);
@@ -77,7 +65,7 @@ export function ReactionBar({
         <div className="mb-2 flex items-center">
           {topReactions.map(([type]) => (
             <span key={type} className="mr-1 text-base">
-              {REACTION_CONFIG[type as keyof Reaction].emoji}
+              {REACTION_CONFIG[type as ReactionType].emoji}
             </span>
           ))}
           <span className="ml-1 text-sm text-grey-600">{totalCount}</span>
@@ -87,32 +75,31 @@ export function ReactionBar({
       {/* 리액션 버튼들 */}
       <div className="flex items-center">
         {/* 6개 리액션 버튼 */}
-        {Object.entries(REACTION_CONFIG).map(([type, config]) => (
-          <button
-            key={type}
-            onClick={() => onReactionTap(type)}
-            className={cn(
-              'mr-2 flex items-center rounded-full px-2 py-1 transition-all',
-              reactions[type as keyof Reaction] > 0
-                ? 'bg-primary/10'
-                : 'hover:bg-grey-100'
-            )}
-          >
-            <span className="text-sm">{config.emoji}</span>
-            {reactions[type as keyof Reaction] > 0 && (
-              <span
-                className={cn(
-                  'ml-1 text-xs',
-                  reactions[type as keyof Reaction] > 0
-                    ? 'font-semibold text-primary'
-                    : 'text-grey-600'
-                )}
-              >
-                {reactions[type as keyof Reaction]}
-              </span>
-            )}
-          </button>
-        ))}
+        {Object.entries(REACTION_CONFIG).map(([type, config]) => {
+          const count = reactionCounts.counts[type as ReactionType];
+          return (
+            <button
+              key={type}
+              onClick={() => onReactionTap(type)}
+              className={cn(
+                'mr-2 flex items-center rounded-full px-2 py-1 transition-all',
+                count > 0 ? 'bg-primary/10' : 'hover:bg-grey-100'
+              )}
+            >
+              <span className="text-sm">{config.emoji}</span>
+              {count > 0 && (
+                <span
+                  className={cn(
+                    'ml-1 text-xs',
+                    count > 0 ? 'font-semibold text-primary' : 'text-grey-600'
+                  )}
+                >
+                  {count}
+                </span>
+              )}
+            </button>
+          );
+        })}
 
         <div className="flex-1" />
 

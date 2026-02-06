@@ -12,7 +12,7 @@
 'use client';
 
 import { useState } from 'react';
-import { EditNote, X, Save, Lightbulb } from 'lucide-react';
+import { FileText, X, Save, Lightbulb } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface FailureReportDialogProps {
@@ -102,7 +102,7 @@ export function FailureReportDialog({
             {/* 헤더 */}
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <EditNote className="h-7 w-7 text-selfcompassion" />
+                <FileText className="h-7 w-7 text-selfcompassion" />
                 <h2 className="text-xl font-bold text-grey-900">실패 리포트</h2>
               </div>
               <button

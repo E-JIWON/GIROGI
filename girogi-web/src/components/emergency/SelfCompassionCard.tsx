@@ -10,7 +10,7 @@
  * Flutter: lib/presentation/widgets/emergency/self_compassion_card.dart
  */
 
-import { Heart, RotateCcw, EditNote, Info, CheckCircle, XCircle, Calendar } from 'lucide-react';
+import { Heart, RotateCcw, FileText, Info, CheckCircle, XCircle, Calendar } from 'lucide-react';
 
 interface SelfCompassionCardProps {
   /**
@@ -110,7 +110,7 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
           onClick={onCreateReport}
           className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-selfcompassion px-4 py-3 text-base font-semibold text-selfcompassion transition-all hover:bg-selfcompassion/5"
         >
-          <EditNote className="h-5 w-5" />
+          <FileText className="h-5 w-5" />
           실패 리포트 작성
         </button>
       </div>

@@ -243,7 +243,7 @@ export const mockChecklistItems: ChecklistItem[] = [
   {
     id: 'afterwork_fruit',
     title: '과일 간식 먹기',
-    timeSlot: TimeSlot.AFTERWORK,
+    timeSlot: TimeSlot.AFTER_WORK,
     isCoreMission: true, // 핵심 미션
   },
   // 저녁

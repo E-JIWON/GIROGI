@@ -14,7 +14,7 @@
 
 import { useState } from 'react';
 import { Send, MoreVertical } from 'lucide-react';
-import type { Comment, User } from '@/types/models';
+import type { Comment, User } from '@/types';
 
 interface CommentSectionProps {
   /**
@@ -68,9 +68,9 @@ export function CommentSection({
   };
 
   // 시간 포맷팅
-  const formatTimestamp = (timestamp: Date): string => {
+  const formatTimestamp = (timestamp: string): string => {
     const now = new Date();
-    const diff = now.getTime() - timestamp.getTime();
+    const diff = now.getTime() - new Date(timestamp).getTime();
 
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
@@ -85,9 +85,10 @@ export function CommentSection({
     } else if (days < 7) {
       return `${days}일 전`;
     } else {
-      const year = timestamp.getFullYear();
-      const month = timestamp.getMonth() + 1;
-      const day = timestamp.getDate();
+      const date = new Date(timestamp);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
       return `${year}.${month}.${day}`;
     }
   };
@@ -112,9 +113,9 @@ export function CommentSection({
                 <div key={comment.id} className="flex gap-3">
                   {/* 프로필 이미지 */}
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary">
-                    {author.profileImageUrl ? (
+                    {author.profileImage ? (
                       <img
-                        src={author.profileImageUrl}
+                        src={author.profileImage}
                         alt={author.nickname}
                         className="h-full w-full object-cover"
                       />

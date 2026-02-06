@@ -32,13 +32,13 @@ export default function ProfilePage() {
   // 최근 7일 식사 기록 추출
   const mealRecords: MealRecord[] = [];
   mockDailyRecords.forEach((record) => {
-    if (record.mealRecords) {
-      mealRecords.push(...record.mealRecords);
+    if (record.meals) {
+      mealRecords.push(...record.meals);
     }
   });
 
   // 시간순 정렬 (최신순)
-  mealRecords.sort((a, b) => b.time.getTime() - a.time.getTime());
+  mealRecords.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   // 본인이 작성한 게시글
   const userPosts = mockPosts.filter((post) => post.authorId === currentUser.id);

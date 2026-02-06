@@ -11,7 +11,8 @@
 
 import { MoreVertical, Heart, Play, ImageOff } from 'lucide-react';
 import { ReactionBar } from './ReactionBar';
-import type { Post, User } from '@/types/models';
+import type { Post, User } from '@/types';
+import { PostType } from '@/types/enums';
 
 interface PostCardProps {
   /**
@@ -49,9 +50,9 @@ export function PostCard({
       <div className="flex items-center p-4">
         {/* 프로필 이미지 */}
         <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary">
-          {author.profileImageUrl ? (
+          {author.profileImage ? (
             <img
-              src={author.profileImageUrl}
+              src={author.profileImage}
               alt={author.nickname}
               className="h-full w-full object-cover"
             />
@@ -92,7 +93,7 @@ export function PostCard({
           <ReactionBar
             reactions={post.reactions}
             onReactionTap={onReactionTap}
-            commentCount={post.commentCount}
+            commentCount={post.comments.length}
             onCommentTap={onCommentTap}
           />
         </div>
@@ -108,16 +109,16 @@ export function PostCard({
  */
 function renderContent(post: Post) {
   switch (post.type) {
-    case 'experience':
+    case PostType.TEXT:
       return renderExperiencePost(post);
-    case 'failure':
-      return renderFailurePost(post);
-    case 'motivation':
+    case PostType.IMAGE:
       return renderMotivationPost(post);
-    case 'mealRecord':
+    case PostType.YOUTUBE:
+      return renderExperiencePost(post);
+    case PostType.FAILURE_REPORT:
+      return renderFailurePost(post);
+    case PostType.SHARED_RECORD:
       return renderMealRecordPost(post);
-    case 'shorts':
-      return renderShortsPost(post);
     default:
       return null;
   }
@@ -250,9 +251,9 @@ function renderShortsPost(post: Post) {
 /**
  * 시간 포맷팅
  */
-function formatTimestamp(timestamp: Date): string {
+function formatTimestamp(timestamp: string): string {
   const now = new Date();
-  const diff = now.getTime() - timestamp.getTime();
+  const diff = now.getTime() - new Date(timestamp).getTime();
 
   const minutes = Math.floor(diff / 60000);
   const hours = Math.floor(diff / 3600000);
@@ -267,9 +268,10 @@ function formatTimestamp(timestamp: Date): string {
   } else if (days < 7) {
     return `${days}일 전`;
   } else {
-    const year = timestamp.getFullYear();
-    const month = timestamp.getMonth() + 1;
-    const day = timestamp.getDate();
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
     return `${year}.${month}.${day}`;
   }
 }

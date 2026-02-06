@@ -13,7 +13,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, EditNote } from 'lucide-react';
+import { Heart, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { TemptationTimer } from '@/components/emergency/TemptationTimer';
 import { FutureSelfCard } from '@/components/emergency/FutureSelfCard';
@@ -110,7 +110,7 @@ export default function EmergencyPage() {
         onClick={handleOpenFailureReport}
         className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-selfcompassion px-6 py-4 text-base font-semibold text-white shadow-lg transition-all hover:bg-selfcompassion/90 hover:shadow-xl"
       >
-        <EditNote className="h-5 w-5" />
+        <FileText className="h-5 w-5" />
         <span>실패 리포트</span>
       </button>
 

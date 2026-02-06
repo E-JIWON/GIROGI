@@ -167,7 +167,7 @@ export const failureReportSchema = z.object({
 export const sharedRecordSchema = z.object({
   type: sharedRecordTypeSchema,
   recordDate: z.string().datetime(),
-  data: z.record(z.any()),
+  data: z.record(z.string(), z.any()),
 });
 
 /** 게시글 스키마 */

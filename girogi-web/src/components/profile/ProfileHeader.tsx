@@ -12,7 +12,7 @@
  */
 
 import { Edit, UserPlus, UserMinus } from 'lucide-react';
-import type { User } from '@/types/models';
+import type { User } from '@/types';
 
 interface ProfileHeaderProps {
   /**
@@ -49,9 +49,9 @@ export function ProfileHeader({
       <div className="mb-4 flex items-start">
         {/* 프로필 이미지 */}
         <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-primary">
-          {user.profileImageUrl ? (
+          {user.profileImage ? (
             <img
-              src={user.profileImageUrl}
+              src={user.profileImage}
               alt={user.nickname}
               className="h-full w-full object-cover"
             />
@@ -62,9 +62,8 @@ export function ProfileHeader({
           )}
         </div>
 
-        {/* 통계 (게시글, 팔로워, 팔로잉) */}
+        {/* 통계 (팔로워, 팔로잉) */}
         <div className="ml-4 flex flex-1 justify-around">
-          <StatItem label="게시글" value={user.postCount.toString()} />
           <StatItem label="팔로워" value={user.followers.length.toString()} />
           <StatItem label="팔로잉" value={user.following.length.toString()} />
         </div>

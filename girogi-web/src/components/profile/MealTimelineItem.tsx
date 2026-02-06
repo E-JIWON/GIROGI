@@ -47,6 +47,12 @@ const MEAL_TIME_COLORS = {
     border: 'border-purple-300',
     dot: 'bg-purple-500',
   },
+  snack: {
+    bg: 'bg-pink-100',
+    text: 'text-pink-700',
+    border: 'border-pink-300',
+    dot: 'bg-pink-500',
+  },
 } as const;
 
 /**
@@ -56,6 +62,7 @@ const MEAL_TIME_LABELS = {
   breakfast: '아침',
   lunch: '점심',
   dinner: '저녁',
+  snack: '간식',
 } as const;
 
 export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineItemProps) {
@@ -63,7 +70,7 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
   const mealLabel = MEAL_TIME_LABELS[mealRecord.mealTime];
 
   // 시간 포맷 (HH:MM)
-  const timeString = mealRecord.time.toLocaleTimeString('ko-KR', {
+  const timeString = new Date(mealRecord.createdAt).toLocaleTimeString('ko-KR', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
@@ -112,12 +119,12 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
 
             {/* 장소 태그 */}
             <div className="flex items-center gap-1.5 text-xs text-grey-600">
-              {mealRecord.place === MealPlace.Home ? (
+              {mealRecord.place === MealPlace.HOME ? (
                 <>
                   <Home className="h-4 w-4" />
                   <span>집밥</span>
                 </>
-              ) : mealRecord.place === MealPlace.DiningOut ? (
+              ) : mealRecord.place === MealPlace.RESTAURANT ? (
                 <>
                   <ShoppingBag className="h-4 w-4" />
                   <span>외식</span>
@@ -132,10 +139,10 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
           </div>
 
           {/* 식사 사진 */}
-          {mealRecord.photoUrl && (
+          {mealRecord.imageUrl && (
             <div className="relative h-40 overflow-hidden">
               <img
-                src={mealRecord.photoUrl}
+                src={mealRecord.imageUrl}
                 alt={`${mealLabel} 식사`}
                 className="h-full w-full object-cover"
                 onError={(e) => {
@@ -153,9 +160,9 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
             )}
 
             {/* 준수 행동 태그 */}
-            {mealRecord.compliantBehaviors && mealRecord.compliantBehaviors.length > 0 && (
+            {mealRecord.achievements && mealRecord.achievements.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {mealRecord.compliantBehaviors.map((behavior, index) => (
+                {mealRecord.achievements.map((behavior, index) => (
                   <div
                     key={index}
                     className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
@@ -163,13 +170,6 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
                     {behavior}
                   </div>
                 ))}
-              </div>
-            )}
-
-            {/* 저작 횟수 (있을 경우) */}
-            {mealRecord.chewCount && mealRecord.chewCount > 0 && (
-              <div className="mt-3 text-xs text-grey-600">
-                🦷 {mealRecord.chewCount}회 씹기
               </div>
             )}
           </div>

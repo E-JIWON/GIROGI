@@ -39,6 +39,7 @@ const getMealTimeIcon = (mealTime: MealTime): string => {
     [MealTime.BREAKFAST]: '🌅',
     [MealTime.LUNCH]: '☀️',
     [MealTime.DINNER]: '🌙',
+    [MealTime.SNACK]: '🍪',
   };
   return icons[mealTime] || '🏃'; // 운동은 이모지 대신 lucide-react 사용
 };
@@ -49,6 +50,7 @@ const getMealTimeColor = (mealTime: MealTime): string => {
     [MealTime.BREAKFAST]: 'orange-500',
     [MealTime.LUNCH]: 'amber-500',
     [MealTime.DINNER]: 'purple-600',
+    [MealTime.SNACK]: 'pink-500',
   };
   return colors[mealTime] || 'blue-500'; // 운동 = 파랑
 };

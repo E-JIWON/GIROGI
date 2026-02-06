@@ -22,4 +22,5 @@ export * from './user';
 export * from './models';
 
 // Zod schemas (for runtime validation)
-export * from './schemas';
+// TODO: Re-export specific schemas to avoid type conflicts
+// export * from './schemas';

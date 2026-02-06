@@ -11,7 +11,7 @@
  */
 
 import { Trophy, TrendingUp } from 'lucide-react';
-import type { User, UserStats } from '@/types/models';
+import type { User, UserStats } from '@/types';
 import { cn } from '@/lib/utils';
 
 /**
@@ -56,21 +56,28 @@ const COMPARISON_CONFIG = {
     unit: '%',
     icon: TrendingUp,
     getValue: (stats: UserStats) => {
-      if (stats.totalDays === 0) return 0;
-      return Math.round((stats.successDays / stats.totalDays) * 100);
+      // weeklyProgress 배열의 평균을 성공률로 사용
+      if (stats.weeklyProgress.length === 0) return 0;
+      const sum = stats.weeklyProgress.reduce((a, b) => a + b, 0);
+      return Math.round((sum / stats.weeklyProgress.length) * 100);
     },
   },
   weeklySuccess: {
     title: '주간 성공 일수',
     unit: '일',
     icon: Trophy,
-    getValue: (stats: UserStats) => stats.weeklySuccessDays,
+    getValue: (stats: UserStats) => {
+      // 최근 주의 성공률을 일수로 변환 (7일 * 성공률)
+      if (stats.weeklyProgress.length === 0) return 0;
+      const recentWeek = stats.weeklyProgress[stats.weeklyProgress.length - 1];
+      return Math.round(recentWeek * 7);
+    },
   },
   totalDays: {
-    title: '총 다이어트 일수',
+    title: '총 성공 일수',
     unit: '일',
     icon: TrendingUp,
-    getValue: (stats: UserStats) => stats.totalDays,
+    getValue: (stats: UserStats) => stats.totalSuccessDays,
   },
 } as const;
 
@@ -130,9 +137,9 @@ export function ComparisonChart({
 
                   {/* 프로필 이미지 */}
                   <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-primary">
-                    {item.user.profileImageUrl ? (
+                    {item.user.profileImage ? (
                       <img
-                        src={item.user.profileImageUrl}
+                        src={item.user.profileImage}
                         alt={item.user.nickname}
                         className="h-full w-full object-cover"
                       />

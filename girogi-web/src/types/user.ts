@@ -20,6 +20,8 @@ export interface User {
   bio?: string | null;
   /** 현재 연속 성공 일수 (실패 시 0으로 리셋) */
   currentStreak: number;
+  /** 최고 연속 성공 일수 (역대 최고 기록) */
+  bestStreak: number;
   /** 총 성공일 (실패해도 누적값 유지) */
   totalSuccessDays: number;
   /** 총 유혹 극복 횟수 (10분 타이머 완료 횟수) */
