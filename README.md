@@ -1,561 +1,131 @@
-# 오늘부터 다시 - Diet Tracker Application
+# GIROGI (기로기)
 
-## 프로젝트 개요
-
-행동경제학 및 심리학 연구 기반의 다이어트 지원 애플리케이션입니다. 의지력 의존적 접근이 아닌 시스템적 환경 설계를 통해 지속 가능한 행동 변화를 유도합니다.
-
-### 핵심 목표
-
-타겟 사용자인 바쁜 직장인을 위한 과학적 근거 기반의 다이어트 관리 시스템 구축. 실패 후 자기비난을 최소화하고 즉각적인 복귀를 지원하는 자기 연민(Self-Compassion) 메커니즘을 통해 장기 지속률을 향상시킵니다.
-
-### 적용 연구 및 이론적 기반
-
-**Episodic Future Thinking (EFT)**
-- 출처: International Journal of Nursing Studies (2024)
-- 효과: 충동적 섭취 행동 억제, BMI 감소
-- 구현: 유혹 상황에서 미래 자아 시각화 인터페이스 제공
-
-**Temptation Bundling**
-- 출처: Katy Milkman, Wharton School
-- 효과: 운동 참여율 10-14% 증가
-- 구현: 긍정적 행동과 보상을 결합한 인센티브 시스템
-
-**Implementation Intention**
-- 출처: Peter Gollwitzer
-- 효과: 목표 달성률 증대
-- 구현: "When-Where-What" 구조화된 체크리스트
-
-**Tiny Habits Methodology**
-- 출처: BJ Fogg, Stanford Behavior Design Lab
-- 효과: 저항 최소화 습관 형성
-- 구현: 최소 행동 단위 기반 미션 설계
-
-**Self-Compassion Theory**
-- 출처: British Journal of Health Psychology (2021)
-- 효과: 실패 후 복귀율 증가, 지속 의지 강화
-- 구현: 실패 리포트 및 긍정적 피드백 루프
-
-**Slow Eating Research**
-- 출처: Scientific Reports (2021), Nutrients (2025)
-- 효과: 식이유발 열 생성 증가, 포만감 향상
-- 구현: 저작 횟수 추적 및 리마인더
+> 행동경제학과 심리학 연구 기반의 과학적 다이어트 앱
+> **상태**: Flutter MVP 완성 → Next.js로 전환 중
 
 ---
 
-## 기술 아키텍처
+## 🎯 프로젝트 개요
 
-### 기술 스택
+의지력 의존이 아닌 **시스템적 환경 설계**로 지속 가능한 행동 변화를 유도하는 다이어트 앱입니다.
 
-**Frontend Framework**
-- Flutter 3.38.5 / Dart 3.10.4
-- 크로스 플랫폼 네이티브 렌더링
-
-**상태 관리**
-- Riverpod (Provider 패턴 기반 반응형 상태 관리)
-
-**데이터 영속성**
-- 개발 단계: Mock Repository Pattern
-- 프로덕션 전환 예정: Hive (NoSQL) 또는 SQLite + Drift (ORM)
-
-**백엔드 인프라**
-- 개발 단계: Mock Data Layer
-- 프로덕션 후보: Firebase (BaaS) 또는 Supabase (오픈소스 Firebase 대안)
-
-**UI/UX 라이브러리**
-- fl_chart: 데이터 시각화 및 비교 그래프
-- Lottie: 마이크로 인터랙션 애니메이션
-- image_picker: 네이티브 이미지 선택
-- cached_network_image: 이미지 캐싱 및 성능 최적화
-- youtube_player_flutter: 임베디드 비디오 재생
-
-### 아키텍처 패턴
-
-**Clean Architecture** 기반 레이어 분리
-
-```
-lib/
-├── app.dart                          # 루트 위젯 (MaterialApp 설정)
-├── main.dart                         # 애플리케이션 진입점
-│
-├── core/                             # 공통 모듈 레이어
-│   ├── constants/                    # 앱 전역 상수 (API, 설정값)
-│   ├── theme/                        # 디자인 시스템 (색상, 타이포그래피)
-│   └── utils/                        # 공통 유틸리티 (포매터, 검증)
-│
-├── data/                             # 데이터 레이어
-│   ├── models/                       # DTO (JSON 직렬화 모델)
-│   ├── repositories/                 # Repository 구현 (Mock/실제 DB)
-│   └── local_storage/                # 로컬 영속성 (Hive/SQLite)
-│
-├── domain/                           # 도메인 레이어
-│   ├── entities/                     # 비즈니스 엔티티 (순수 객체)
-│   └── usecases/                     # UseCase (비즈니스 로직 캡슐화)
-│
-└── presentation/                     # 프레젠테이션 레이어
-    ├── screens/                      # 화면 단위 UI
-    │   ├── home/                     # 홈 화면 (스트릭, 미션, 캘린더)
-    │   ├── checklist/                # 체크리스트 화면 (시간대별 체크)
-    │   ├── community/                # 커뮤니티 화면 (피드, 숏츠)
-    │   ├── emergency/                # 유혹 극복 화면 (타이머, 자기 연민)
-    │   ├── profile/                  # 프로필 화면 (다중 탭)
-    │   └── report/                   # 리포트 화면 (비교 그래프)
-    │
-    ├── widgets/                      # 재사용 가능 컴포넌트
-    │   ├── common/                   # 공통 위젯 (버튼, 카드 등)
-    │   ├── timeline/                 # 타임라인 위젯
-    │   ├── reaction/                 # 리액션/댓글 위젯
-    │   └── chart/                    # 차트 위젯
-    │
-    └── providers/                    # Riverpod 상태 관리
-```
-
-### 설계 원칙
-
-**Low Coupling, High Cohesion**
-- 모듈 간 의존성 최소화
-- 단일 책임 원칙 준수
-- 인터페이스 기반 추상화
-
-**Reusability & Maintainability**
-- 컴포넌트 재사용성 최대화
-- 적절한 추상화 레벨 유지
-- 과도한 파편화 방지
-
-**Documentation & Code Quality**
-- 모든 함수 및 변수에 목적 기반 주석
-- Mock 데이터 영역에 TODO 마커 명시
-- 실제 DB 연동 전환 지점 문서화
+**핵심 차별점**:
+- 6가지 심리학/행동경제학 이론 적용
+- 자기 연민(Self-Compassion) 메커니즘으로 실패 후 복귀 지원
+- Streak(연속 성공)과 소셜 지원으로 동기부여
 
 ---
 
-## 구현 현황
-
-### 완료된 구현
-
-**Phase 1: 프로젝트 초기화 및 아키텍처 설계**
-- Flutter 프로젝트 생성 및 초기 설정
-- Clean Architecture 기반 폴더 구조 구축
-- 레이어별 책임 분리 (core/data/domain/presentation)
-
-**Phase 2: 데이터 모델 레이어 (14개 모델)**
-
-심리학 이론을 반영한 완전한 데이터 모델 구현:
-
-*기본 타입 및 체크리스트:*
-- Enum 타입 정의 (8종) + Extension (한글명, 아이콘)
-- ChecklistItem: Implementation Intention 기반 구조화
-- Comment: 커뮤니티 댓글 시스템
-- Reaction: 6종 감정 표현 + 집계 유틸리티
-
-*식사 및 건강 추적:*
-- MealRecord: Slow Eating 이론 기반 식사 기록
-- WeightRecord: 체중 변화 추적
-
-*동기부여 시스템:*
-- RewardStatus: Temptation Bundling 보상 로직
-- UserGoals: Episodic Future Thinking 미래 비전
-
-*통합 기록 및 사용자:*
-- DailyRecord: 일일 활동 통합 기록
-- User: 커뮤니티 프로필 + 소셜 기능
-
-*소셜 기능:*
-- SharedRecord: 기록 공유 시스템
-- FailureReport: Self-Compassion 실패 기록
-- Post: 다양한 타입의 커뮤니티 게시글
-
-*통계 및 분석:*
-- UserStats: 듀오링고 스타일 비교 통계
-
-**모델 설계 특징:**
-- 불변 객체 패턴 (copyWith)
-- JSON 직렬화/역직렬화
-- 헬퍼 클래스 및 Extension
-- TODO 마커로 DB 전환 지점 명시
-- 모든 필드 목적 기반 상세 주석
-
-**Phase 3: Repository 레이어 (6개 Repository)**
-
-Repository 패턴으로 데이터 소스를 추상화:
-
-*Repository 인터페이스:*
-- DailyRecordRepository: 일일 기록 CRUD 및 통계 계산
-- UserRepository: 사용자 프로필 및 팔로우 관리
-- PostRepository: 커뮤니티 게시글, 리액션, 댓글 관리
-
-*Mock 구현체 (메모리 기반):*
-- MockDailyRecordRepository: 7일간 샘플 데이터
-- MockUserRepository: 4명의 테스트 사용자
-- MockPostRepository: 다양한 타입의 샘플 게시글
-
-**Repository 설계 특징:**
-- 인터페이스 기반 추상화 (의존성 역전)
-- Mock 구현체로 UI 개발 즉시 가능
-- TODO 마커로 실제 DB 전환 지점 명시
-  - Hive/SQLite 로컬 DB 옵션
-  - Firebase/Supabase 클라우드 옵션
-- 비즈니스 로직 메서드 (연속 성공 계산 등)
-- 샘플 데이터로 테스트 시나리오 지원
-
-**Phase 4: Core 레이어 (테마, 색상, 상수)**
-
-Material Design 3 기반의 디자인 시스템 구축:
-
-*상수 정의:*
-- AppConstants: 앱 전역 상수 정의
-  - API 관련 상수 (베이스 URL, 타임아웃)
-  - 데이터베이스 관련 상수 (Hive 박스 이름)
-  - 행동 변화 로직 상수 (미션 개수, 치팅데이 조건)
-  - UI 관련 상수 (패딩, 보더 라디우스, 아이콘 크기)
-  - 애니메이션 상수 (기본/빠른/느린 애니메이션 시간)
-
-*색상 팔레트:*
-- AppColors: 완전한 색상 시스템
-  - Primary 색상 계열 (#6366F1 인디고)
-  - Semantic 색상 (Success, Warning, Error, Info)
-  - Neutral 색상 (Grey 50~900)
-  - Functional 색상 (배경, 표면, 구분선)
-  - 기능별 색상 (Streak, 치팅데이, 자기 연민)
-  - 그라데이션 및 그림자 색상
-  - 라이트/다크 모드 지원
-
-*타이포그래피:*
-- AppTypography: Material 3 타이포그래피 시스템
-  - Display Styles (큰 제목)
-  - Headline Styles (헤드라인)
-  - Title Styles (타이틀)
-  - Body Styles (본문)
-  - Label Styles (라벨)
-  - Custom Styles (Streak Counter, Timer Display)
-  - 유틸리티 메서드 (색상/굵기 적용)
-
-*테마 정의:*
-- AppTheme: 완전한 테마 시스템
-  - 라이트/다크 모드 ThemeData
-  - Material 3 ColorScheme
-  - 컴포넌트별 테마 (Button, Card, Input 등)
-  - 일관된 스타일 적용
-
-**Core 레이어 설계 특징:**
-- 중앙화된 상수 관리로 매직 넘버 방지
-- 색상 심리학 적용 (신뢰감, 안정감 제공)
-- Material 3 타이포그래피 시스템 준수
-- 라이트/다크 모드 완전 지원
-- 재사용 가능한 디자인 토큰
-- app.dart에 테마 적용 완료
-
-**Phase 5: 메인 네비게이션 및 화면 스켈레톤**
-
-하단 네비게이션 바와 5개 주요 화면의 기본 구조 구현:
-
-*메인 네비게이션:*
-- MainNavigation: 하단 네비게이션 바를 통한 화면 전환 관리
-- 5개 탭 구조 (BottomNavigationBar)
-- 상태 관리 (StatefulWidget)
-- Material 3 스타일 적용
-
-*화면 스켈레톤 (5개):*
-- HomeScreen: 홈 화면 기본 구조
-- ChecklistScreen: 체크리스트 화면 기본 구조
-- EmergencyScreen: 유혹 극복 화면 기본 구조
-- CommunityScreen: 커뮤니티 화면 기본 구조
-- ProfileScreen: 프로필 화면 기본 구조
-
-**네비게이션 설계 특징:**
-- 5개 탭: 홈, 체크리스트, 유혹 극복(중앙 강조), 커뮤니티, 프로필
-- 각 화면마다 적절한 아이콘 및 라벨 설정
-- AppBar 구성 (타이틀, 액션 버튼)
-- 화면 간 상태 유지 (IndexedStack 방식)
-- 모든 주석 상세 작성
-
-**Phase 6: 홈 화면 상세 구현**
-
-연속 성공 일수, 핵심 미션, 주간 캘린더, 보상 시스템을 포함한 완전한 홈 화면 구현:
-
-*홈 화면 위젯 (4개):*
-- StreakCounter: 연속 성공 일수 카운터
-  - 그라데이션 배경 (도파민 자극)
-  - 현재 Streak 및 최고 기록 표시
-  - 불꽃 아이콘으로 시각화
-- MissionCard: 핵심 미션 카드
-  - 3개 미션 중 2개 이상 달성 시 성공일 인정
-  - 체크/언체크 토글 기능
-  - 완료 시 초록색 강조
-- WeeklyCalendar: 주간 성공률 캘린더
-  - 최근 7일간 성공/실패 기록 시각화
-  - 성공률 백분율 표시
-  - 원형 인디케이터 (성공/실패/미래)
-- RewardStatusCard: 보상 시스템 현황
-  - 과자박스 개수 (3일마다 1개 획득)
-  - 치팅데이 카운트다운 (7일 연속 성공)
-  - Temptation Bundling 이론 적용
-
-*홈 화면 기능:*
-- 당겨서 새로고침 (RefreshIndicator)
-- 미션 토글 상태 관리
-- 섹션별 구조화된 레이아웃
-- TODO 마커로 Repository 연동 지점 표시
-
-**홈 화면 설계 특징:**
-- 심리학 이론 기반 UI/UX (Streak, Tiny Habits)
-- Material 3 테마 자동 적용
-- 반응형 레이아웃
-- 샘플 데이터로 즉시 동작 가능
-
-**Phase 7: 체크리스트 화면 상세 구현**
-
-시간대별 체크리스트와 식사 기록 기능을 포함한 완전한 체크리스트 화면 구현:
-
-*체크리스트 위젯 (2개):*
-- ChecklistTimeSection: 시간대별 체크리스트 섹션
-  - 시간대 아이콘 및 라벨 (아침/점심/저녁/운동)
-  - 완료 카운터 (2/3 형식)
-  - 체크/언체크 토글 기능
-  - 완료 항목 취소선 처리
-- MealRecordButton: 식사 기록 버튼
-  - 기록 완료 시 초록색 강조
-  - 식사 사진, 장소, 메뉴, 준수 행동 기록
-  - 상세 보기 및 수정 기능
-
-*체크리스트 화면 기능:*
-- 시간대별 체크리스트 (아침/점심/저녁/운동)
-- 각 시간대별 식사 기록 버튼
-- 주간 외식 빈도 경고 (3회 이상 시 표시)
-- 당겨서 새로고침
-- 캘린더 버튼 (히스토리 보기)
-
-**체크리스트 설계 특징:**
-- Implementation Intention 이론 적용
-- Slow Eating 이론 기반 식사 기록
-- 외식 빈도 모니터링 및 경고 시스템
-- TODO 마커로 Repository 연동 지점 표시
-
-**Phase 8: 유혹 극복 화면 상세 구현**
-
-유혹 상황에서 충동 지연과 자기 연민 기능을 포함한 완전한 유혹 극복 화면 구현:
-
-*유혹 극복 위젯 (4개):*
-- TemptationTimer: 10분 타이머 위젯
-  - 원형 진행률 표시 (CircularProgressIndicator)
-  - 시작/일시정지/재시작/리셋 컨트롤
-  - 타이머 완료 후 선택지 제공
-  - 유혹 사라짐 또는 자기 연민 모드 진입
-- FutureSelfCard: 미래 자아 시각화 카드
-  - 목표 이미지 업로드 기능
-  - 목표 체중 및 현재 체중 비교
-  - 예상 달성일 카운트다운
-  - 동기부여 메시지 제공
-- SelfCompassionCard: 자기 연민 카드
-  - 자기 비난 최소화 메시지
-  - 전체 성공률 및 통계 표시
-  - 다시 시작하기 버튼
-  - 실패 리포트 작성 유도
-- FailureReportDialog: 실패 리포트 다이얼로그
-  - 실패 상황, 원인, 대응 방안 기록
-  - 커뮤니티 공유 옵션
-  - 폼 검증 및 저장 기능
-
-*유혹 극복 화면 기능:*
-- 자기 연민 모드 토글 (하트 아이콘)
-- 일반 모드: 타이머 + 미래 자아 시각화
-- 자기 연민 모드: 실패 후 복귀 지원
-- 실패 리포트 작성 FAB (Floating Action Button)
-- 당겨서 새로고침
-
-**유혹 극복 설계 특징:**
-- Episodic Future Thinking (EFT) 이론 적용
-- Self-Compassion Theory 기반 실패 후 복귀
-- 10분 충동 지연 메커니즘
-- TODO 마커로 Repository 연동 지점 표시
-
-**Phase 9: 커뮤니티 화면 상세 구현**
-
-사용자 간 경험 공유 및 상호 지원을 위한 완전한 소셜 커뮤니티 화면 구현:
-
-*커뮤니티 위젯 (3개):*
-- PostCard: 게시글 카드 위젯
-  - 5가지 게시글 타입별 렌더링 (경험 공유, 실패 리포트, 동기부여, 식사 기록, 숏츠)
-  - 작성자 프로필 및 작성 시간 표시
-  - 게시글 타입별 차별화된 디자인
-  - 이미지/비디오 썸네일 표시
-- ReactionBar: 리액션 바 위젯
-  - 6종 감정 표현 리액션 (👍 좋아요, ❤️ 최고, 💪 화이팅, 😭 감동, 😂 웃김, 🤝 공감)
-  - 리액션 요약 및 개수 표시
-  - 댓글 버튼 및 개수 표시
-- PostComposerDialog: 게시글 작성 다이얼로그
-  - 게시글 타입 선택 (경험 공유, 동기부여, 식사 기록)
-  - 내용 입력 및 폼 검증
-  - 이미지 추가 기능
-
-*커뮤니티 화면 기능:*
-- 3개 탭 구조 (전체/팔로잉/숏츠)
-- 전체/팔로잉 피드: 세로 스크롤 리스트
-- 숏츠 피드: 2열 그리드 레이아웃
-- 당겨서 새로고침
-- 빈 상태 UI 처리
-- 글쓰기 버튼 (상단 우측)
-
-**커뮤니티 설계 특징:**
-- MockPostRepository 연동
-- 게시글 타입별 차별화된 UI
-- 소셜 기능을 통한 동기부여 강화
-- TODO 마커로 Repository 연동 지점 표시
-
-**Phase 10: 프로필 화면 상세 구현**
-
-사용자 프로필 정보 및 활동 히스토리를 표시하는 완전한 프로필 화면 구현:
-
-*프로필 위젯 (2개):*
-- ProfileHeader: 프로필 헤더 위젯
-  - 프로필 이미지 및 닉네임 표시
-  - 통계 (게시글, 팔로워, 팔로잉 수)
-  - 바이오 표시
-  - 팔로우/언팔로우 버튼 (타인 프로필)
-  - 프로필 편집 버튼 (본인 프로필)
-- MealTimelineItem: 식사 타임라인 아이템
-  - 타임라인 UI (시간 표시, 점, 연결선)
-  - 식사 시간대별 색상 구분
-  - 식사 사진, 장소, 메뉴 표시
-  - 집밥/외식 구분 태그
-  - 준수 행동 태그
-
-*프로필 화면 기능:*
-- NestedScrollView 구조 (스크롤 시 헤더 고정)
-- 2개 탭 구조 (식사 타임라인/기록)
-- 식사 타임라인: 최근 7일 식사 기록 타임라인
-- 기록 탭: 사용자가 작성한 게시글 목록
-- 본인/타인 프로필 구분
-- 팔로우/언팔로우 기능
-- 빈 상태 UI 처리
-- 당겨서 새로고침
-
-**프로필 설계 특징:**
-- MockUserRepository, MockDailyRecordRepository, MockPostRepository 연동
-- NestedScrollView로 헤더 고정 구현
-- Sliver 위젯 활용
-- TODO 마커로 Repository 연동 지점 표시
-
-**Phase 11: 공통 위젯 구현**
-
-재사용 가능한 공통 위젯 구현:
-
-*공통 위젯 (2개):*
-- CommentSection: 댓글 섹션 위젯
-  - 댓글 목록 표시 (프로필 이미지, 닉네임, 작성 시간, 내용)
-  - 댓글 작성 입력 필드
-  - 댓글 옵션 (신고, 삭제)
-  - 빈 상태 UI 처리
-  - 시간 포맷팅 (방금 전, n분 전, n시간 전, n일 전)
-- ComparisonChart: 비교 차트 위젯
-  - 듀오링고 스타일 가로 막대 차트
-  - 4가지 차트 타입 (연속 성공 일수, 전체 성공률, 주간 성공 일수, 총 다이어트 일수)
-  - 순위 표시 (1등은 그라데이션 강조)
-  - 프로필 이미지 및 닉네임 표시
-  - 진행률 바 애니메이션
-
-**공통 위젯 설계 특징:**
-- 재사용 가능한 독립적인 컴포넌트
-- 명확한 Props 인터페이스
-- 빈 상태 UI 처리
-- Material Design 3 스타일 적용
-
-### 완료된 구현
-
-**Phase 1-11**: 전체 화면 및 공통 위젯 구현 완료
-
-모든 주요 화면과 위젯이 구현되었으며, Mock Repository와 연동되어 즉시 동작 가능합니다.
-각 화면은 TODO 마커로 실제 DB 연동 지점이 표시되어 있습니다.
-
-### 다음 단계 (프로덕션 준비)
-
-- 상태 관리 시스템 도입 (Riverpod)
-- 실제 DB 연동 (Hive/SQLite 로컬 + Firebase/Supabase 클라우드)
-- API 통신 레이어 구현
-- 에러 핸들링 및 로딩 상태 관리
-- 이미지 업로드 기능 구현
-- 푸시 알림 설정
-- 앱 아이콘 및 스플래시 스크린
-- 테스트 작성 (Unit, Widget, Integration)
-- 성능 최적화
-- 앱스토어 배포 준비
-
----
-
-## 주요 기능
+## ✨ 주요 기능
 
 ### 홈 대시보드
-- 연속 성공 일수 추적 (Streak Counter)
-- 일일 핵심 미션 관리 (3개 미션 중 2개 이상 달성)
-- 주간 성공률 캘린더 시각화
-- 보상 시스템 현황 (과자박스 적립, 치팅데이 카운트다운)
+- 🔥 연속 성공 일수(Streak) 추적
+- ✅ 일일 핵심 미션 (3개 중 2개 달성)
+- 📅 주간 성공률 캘린더
+- 🎁 보상 시스템 (과자박스, 치팅데이)
 
-### 체크리스트 시스템
-- 시간대별 행동 체크리스트 (아침/점심/퇴근/저녁/운동)
-- 식사 기록 (장소, 메뉴, 사진, 준수 행동 다중 선택)
-- 주간 외식 빈도 모니터링 및 경고
+### 체크리스트
+- ⏰ 시간대별 행동 체크리스트
+- 🍽️ 식사 기록 (장소, 메뉴, 사진)
+- ⚠️ 외식 빈도 경고 시스템
 
-### 유혹 극복 인터페이스
-- 10분 타이머 기반 충동 지연 메커니즘
-- 미래 자아 시각화 (Episodic Future Thinking)
-- 자기 연민 모드 (실패 후 즉각 복귀 지원)
-- 실패 리포트 생성 및 커뮤니티 공유
+### 유혹 극복
+- ⏱️ 10분 타이머 (충동 지연)
+- 🔮 미래 자아 시각화 (EFT 이론)
+- 💖 자기 연민 모드 (실패 후 복귀)
 
-### 소셜 커뮤니티
-- 성공/실패 경험 공유 피드
-- 리액션 시스템 (감정 표현 6종)
-- 댓글 기반 상호 지원
-- 유튜브 숏츠 형식 동기부여 콘텐츠
-- 사용자 식사 타임라인 타임라인 뷰
+### 커뮤니티
+- 📝 경험 공유 피드
+- 😊 6종 감정 리액션
+- 💬 댓글 기반 상호 지원
+- 🎬 숏츠 형식 동기부여 콘텐츠
 
-### 프로필 및 소셜 기능
-- 다중 탭 프로필 (미션, 체크리스트, 식사 타임라인, 기록 히스토리)
-- 팔로우/팔로잉 네트워크
-- 타 사용자 데이터 열람 (공개 범위 설정)
-- 응원 댓글 및 리액션
-
-### 비교 분석 리포트
-- 듀오링고 스타일 친구 비교 그래프
-- 주간 습관 달성률 시각화
-- 체중 변화 추이 비교 (동의 기반)
-- 유혹 극복 빈도 통계
+### 프로필
+- 👤 식사 타임라인
+- 📊 듀오링고 스타일 친구 비교
+- 🤝 팔로우/팔로잉 네트워크
 
 ---
 
-## 프로젝트 메타데이터
+## 🛠 기술 스택
 
-**패키지 식별자**: com.girogi.diet_tracker_app
-**프로젝트명**: diet_tracker_app
-**최소 지원 버전**: iOS 12.0+, Android API Level 21+
+### Flutter 앱 (MVP 완성)
+```
+Flutter 3.38.5 / Dart 3.10.4
+Clean Architecture
+Material Design 3
+Mock Repository Pattern
+```
+
+### ⚡ Next.js로 전환 중 (2026-02-06~)
+```typescript
+Next.js 15        // 프레임워크
+TypeScript 5.7    // 언어
+Tailwind CSS 4.0  // 스타일링
+Zustand          // 상태 관리
+TanStack Query   // 서버 데이터
+Zod              // 타입 검증
+```
+
+**전환 이유**:
+- 웹 우선 전략 (SEO, 즉시 배포)
+- 본인이 직접 수정 가능 (TypeScript/React 익숙)
+- 앱스토어 수수료 절감 (30% → 0%)
+- PWA → Capacitor로 앱 래핑 가능
 
 ---
 
-## 개발 환경 설정
+## 📂 프로젝트 구조
 
-### 의존성 설치 및 실행
+```
+diet_tracker_app/          # Flutter MVP (보관용)
+└── lib/
+    ├── core/              # 테마, 상수
+    ├── data/              # 14개 모델, Repository
+    ├── domain/            # 비즈니스 로직
+    └── presentation/      # 5개 화면, 위젯
 
+girogi-web/                # Next.js 앱 (개발 중)
+└── src/
+    ├── app/               # App Router
+    ├── components/        # UI 컴포넌트
+    ├── lib/               # 유틸리티, API
+    ├── stores/            # Zustand
+    └── types/             # TypeScript 타입
+```
+
+---
+
+## 🚀 시작하기
+
+### Flutter 앱 (MVP)
 ```bash
 cd diet_tracker_app
 flutter pub get
 flutter run
 ```
 
-### 프로덕션 빌드
-
+### Next.js 앱 (개발 중)
 ```bash
-# iOS
-flutter build ios --release
-
-# Android
-flutter build apk --release
-flutter build appbundle --release
+cd girogi-web
+npm install
+npm run dev
 ```
 
 ---
 
-## 라이선스
+## 📚 문서
+
+- **상세 개발 가이드**: `CLAUDE.md`
+- **Next.js 전환 계획**: `.claude/GIROGI_Next.js_전환_계획.md`
+- **기술 스택 분석**: `.claude/web_analysis/`
+
+---
+
+## 📄 라이선스
 
 MIT License
 
 ---
 
-**최종 수정일**: 2026-02-05 (Phase 11: 공통 위젯 구현 완료 - MVP 완성)
+**최종 수정**: 2026-02-06 (Next.js 전환 시작)
