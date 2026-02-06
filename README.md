@@ -105,7 +105,7 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (Phase 1-5 완료 ✅)
+### Next.js 앱 (Phase 1-6.1 완료 ✅)
 ```bash
 cd girogi-web
 pnpm install  # 이미 설치 완료
@@ -183,6 +183,18 @@ pnpm dev
   - 그라데이션 배경, 색상 체계, 타이포그래피
   - 반응형 레이아웃, 인터랙션 애니메이션
 
+**Phase 6-1 완료 내역** (체크리스트 화면):
+- ✅ 체크리스트 컴포넌트 구현 (2개)
+  - `src/components/checklist/ChecklistTimeSection.tsx` - 시간대별 체크리스트
+  - `src/components/checklist/MealRecordButton.tsx` - 식사 기록 버튼
+- ✅ 체크리스트 페이지 구현
+  - `src/app/checklist/page.tsx` - 4개 시간대 섹션 (아침/점심/저녁/운동)
+  - 외식 경고 배너 (주 3회 이상 시)
+  - useState로 로컬 상태 관리
+- ✅ Implementation Intention 이론 적용
+  - 시간대별 구조화된 행동 체크리스트
+  - 구체적 행동 목표 ("30회 이상 씹기", "8시 전 식사 완료")
+
 ---
 
 ## 📚 문서
@@ -199,4 +211,4 @@ MIT License
 
 ---
 
-**최종 수정**: 2026-02-06 (Next.js 전환 시작)
+**최종 수정**: 2026-02-06 (Phase 6-1: 체크리스트 화면 완료)
