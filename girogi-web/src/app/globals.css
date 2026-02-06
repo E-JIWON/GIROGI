@@ -1,26 +1,279 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/**
+ * GIROGI 디자인 시스템
+ * Flutter AppColors, AppTypography, AppConstants를 Tailwind CSS 4.0으로 변환
+ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  /* 라이트 모드 색상 */
+  --background: #ffffff;
+  --foreground: #111827;
+
+  /* Semantic Colors */
+  --color-primary: #6366f1;
+  --color-primary-light: #818cf8;
+  --color-primary-dark: #4f46e5;
+  --color-primary-container: #e0e7ff;
+
+  --color-success: #22c55e;
+  --color-success-light: #4ade80;
+  --color-success-dark: #16a34a;
+  --color-success-container: #dcfce7;
+
+  --color-warning: #f59e0b;
+  --color-warning-light: #fbbf24;
+  --color-warning-dark: #d97706;
+  --color-warning-container: #fef3c7;
+
+  --color-error: #ef4444;
+  --color-error-light: #f87171;
+  --color-error-dark: #dc2626;
+  --color-error-container: #fee2e2;
+
+  --color-info: #3b82f6;
+  --color-info-container: #dbeafe;
+
+  /* Feature-specific Colors */
+  --color-streak: #ff6b35;
+  --color-streak-light: #ff8e53;
+  --color-cheat-day: #f4a261;
+  --color-snack-box: #e9c46a;
+  --color-temptation: #2a9d8f;
+  --color-self-compassion: #e07a5f;
+  --color-community: #264653;
+
+  /* Grey Scale */
+  --color-grey-50: #f9fafb;
+  --color-grey-100: #f3f4f6;
+  --color-grey-200: #e5e7eb;
+  --color-grey-300: #d1d5db;
+  --color-grey-400: #9ca3af;
+  --color-grey-500: #6b7280;
+  --color-grey-600: #4b5563;
+  --color-grey-700: #374151;
+  --color-grey-800: #1f2937;
+  --color-grey-900: #111827;
+
+  /* Text Colors (Light Mode) */
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-disabled: #9ca3af;
+
+  /* Surface Colors (Light Mode) */
+  --color-surface: #ffffff;
+  --color-divider: #e5e7eb;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* 다크 모드 색상 */
+    --background: #0f172a;
+    --foreground: #f9fafb;
+
+    /* Text Colors (Dark Mode) */
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #9ca3af;
+    --color-text-disabled: #4b5563;
+
+    /* Surface Colors (Dark Mode) */
+    --color-surface: #1e293b;
+    --color-divider: #334155;
   }
 }
 
+@theme inline {
+  /**
+   * Colors
+   * Flutter AppColors를 Tailwind 색상으로 매핑
+   */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Primary Colors */
+  --color-primary-50: #eef2ff;
+  --color-primary-100: var(--color-primary-container);
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: var(--color-primary-light);
+  --color-primary-500: var(--color-primary);
+  --color-primary-600: var(--color-primary-dark);
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+
+  /* Success Colors */
+  --color-success-50: #f0fdf4;
+  --color-success-100: var(--color-success-container);
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: var(--color-success-light);
+  --color-success-500: var(--color-success);
+  --color-success-600: var(--color-success-dark);
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+
+  /* Warning Colors */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: var(--color-warning-container);
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: var(--color-warning-light);
+  --color-warning-500: var(--color-warning);
+  --color-warning-600: var(--color-warning-dark);
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* Error Colors */
+  --color-error-50: #fef2f2;
+  --color-error-100: var(--color-error-container);
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: var(--color-error-light);
+  --color-error-500: var(--color-error);
+  --color-error-600: var(--color-error-dark);
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+
+  /* Grey Scale */
+  --color-grey-50: var(--color-grey-50);
+  --color-grey-100: var(--color-grey-100);
+  --color-grey-200: var(--color-grey-200);
+  --color-grey-300: var(--color-grey-300);
+  --color-grey-400: var(--color-grey-400);
+  --color-grey-500: var(--color-grey-500);
+  --color-grey-600: var(--color-grey-600);
+  --color-grey-700: var(--color-grey-700);
+  --color-grey-800: var(--color-grey-800);
+  --color-grey-900: var(--color-grey-900);
+
+  /**
+   * Typography
+   * Flutter AppTypography를 Tailwind font sizes로 매핑
+   */
+  --font-family-sans: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+
+  /* Font Sizes (Flutter의 TextStyle fontSize 기반) */
+  --font-size-xs: 0.6875rem;    /* 11px - labelSmall */
+  --font-size-sm: 0.75rem;      /* 12px - bodySmall, labelMedium */
+  --font-size-base: 0.875rem;   /* 14px - bodyMedium, titleSmall */
+  --font-size-lg: 1rem;         /* 16px - bodyLarge, titleMedium */
+  --font-size-xl: 1.375rem;     /* 22px - titleLarge */
+  --font-size-2xl: 1.5rem;      /* 24px - headlineSmall */
+  --font-size-3xl: 1.75rem;     /* 28px - headlineMedium */
+  --font-size-4xl: 2rem;        /* 32px - headlineLarge */
+  --font-size-5xl: 2.25rem;     /* 36px - displaySmall */
+  --font-size-6xl: 2.8125rem;   /* 45px - displayMedium */
+  --font-size-7xl: 3.5625rem;   /* 57px - displayLarge */
+  --font-size-streak: 3rem;     /* 48px - streakCounter */
+  --font-size-timer: 4rem;      /* 64px - timerDisplay */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Line Heights */
+  --line-height-tight: 1.12;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /**
+   * Spacing
+   * Flutter AppConstants의 padding, margin 값 기반
+   */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px - smallPadding */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px - defaultPadding */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px - largePadding */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px - defaultProfileImageSize */
+  --spacing-12: 3rem;     /* 48px - largeIconSize */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px - largeProfileImageSize */
+
+  /**
+   * Border Radius
+   * Flutter AppConstants의 borderRadius 값 기반
+   */
+  --radius-sm: 0.5rem;    /* 8px - smallBorderRadius */
+  --radius-md: 0.75rem;   /* 12px - defaultBorderRadius */
+  --radius-lg: 1.25rem;   /* 20px - largeBorderRadius */
+  --radius-xl: 1.5rem;    /* 24px */
+  --radius-2xl: 2rem;     /* 32px */
+  --radius-full: 9999px;
+
+  /**
+   * Shadows
+   */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  /**
+   * Animation Duration
+   * Flutter AppConstants의 animation duration 기반
+   */
+  --duration-fast: 150ms;      /* fastAnimationDuration */
+  --duration-normal: 300ms;    /* defaultAnimationDuration */
+  --duration-slow: 500ms;      /* slowAnimationDuration */
+}
+
+/**
+ * Global Styles
+ */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/**
+ * Custom Utilities
+ * Flutter에서 자주 사용되는 패턴을 Tailwind 유틸리티로
+ */
+@layer utilities {
+  .text-gradient-streak {
+    background: linear-gradient(135deg, var(--color-streak) 0%, var(--color-streak-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-streak {
+    background: linear-gradient(135deg, var(--color-streak) 0%, var(--color-streak-light) 100%);
+  }
+
+  .bg-gradient-success {
+    background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%);
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  }
 }

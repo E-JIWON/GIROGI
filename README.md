@@ -105,12 +105,32 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (개발 중)
+### Next.js 앱 (Phase 1-2 완료 ✅)
 ```bash
 cd girogi-web
-npm install
+npm install  # 이미 설치 완료
 npm run dev
 ```
+
+**Phase 1 완료 내역**:
+- ✅ Next.js 15 + TypeScript 프로젝트 생성
+- ✅ 필수 패키지 설치 (zustand, @tanstack/react-query, zod)
+- ✅ 폴더 구조 생성 (components, lib, stores, types)
+
+**Phase 2 완료 내역**:
+- ✅ Flutter 디자인 시스템 분석 (AppColors, AppTypography, AppConstants)
+- ✅ Tailwind CSS 4.0 테마 설정 완료
+  - Primary/Success/Warning/Error 색상 체계
+  - Grey 계열 (50-900) 색상
+  - Feature 색상 (Streak, CheatDay, SnackBox 등)
+- ✅ 타이포그래피 변환 (Pretendard 폰트)
+  - Display/Headline/Title/Body/Label 시스템
+  - Custom 폰트 (streakCounter, timerDisplay)
+- ✅ 디자인 토큰 정의
+  - Spacing (8, 16, 24px 등)
+  - Border Radius (8, 12, 20px)
+  - Animation Duration (150, 300, 500ms)
+- ✅ 커스텀 그라데이션 유틸리티 (Streak, Success, Primary)
 
 ---
 
