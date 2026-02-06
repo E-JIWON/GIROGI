@@ -9,7 +9,17 @@
       "Bash(git commit:*)",
       "Bash(git mv:*)",
       "Bash(find:*)",
-      "Bash(flutter pub get:*)"
+      "Bash(flutter pub get:*)",
+      "WebSearch",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(cat:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npm install:*)",
+      "Bash(git log:*)",
+      "Bash(pnpm install)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []
