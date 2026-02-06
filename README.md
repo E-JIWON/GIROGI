@@ -108,8 +108,8 @@ flutter run
 ### Next.js 앱 (Phase 1-5 완료 ✅)
 ```bash
 cd girogi-web
-npm install  # 이미 설치 완료
-npm run dev
+pnpm install  # 이미 설치 완료
+pnpm dev
 ```
 
 **Phase 1 완료 내역**:
