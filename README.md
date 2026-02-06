@@ -105,7 +105,7 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (Phase 1-2 완료 ✅)
+### Next.js 앱 (Phase 1-3 완료 ✅)
 ```bash
 cd girogi-web
 npm install  # 이미 설치 완료
@@ -131,6 +131,24 @@ npm run dev
   - Border Radius (8, 12, 20px)
   - Animation Duration (150, 300, 500ms)
 - ✅ 커스텀 그라데이션 유틸리티 (Streak, Success, Primary)
+
+**Phase 3 완료 내역**:
+- ✅ Flutter 데이터 모델 14개 분석
+  - Enums: 7개 (MealTime, MealPlace, ExerciseType 등)
+  - Models: DailyRecord, User, MealRecord, Post 등
+- ✅ TypeScript 타입 정의 생성
+  - `src/types/enums.ts` - 7개 Enum + 디스플레이 맵
+  - `src/types/common.ts` - Comment, Reaction 공통 타입
+  - `src/types/user.ts` - User, UserGoals, UserStats
+  - `src/types/models.ts` - DailyRecord, Post 등 핵심 모델
+  - `src/types/index.ts` - 통합 export
+- ✅ Zod 스키마 정의 (런타임 검증)
+  - `src/types/schemas.ts` - 모든 모델의 Zod 스키마
+  - Form 검증 스키마 (signup, login, profile 등)
+  - API 응답 파싱용 스키마
+- ✅ 타입 안전성 확보
+  - TypeScript 인터페이스 ↔ Zod 스키마 동기화
+  - 헬퍼 함수 제공 (isEatingOut, getWeightChange 등)
 
 ---
 
