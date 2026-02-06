@@ -105,7 +105,7 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (Phase 1-6.1 완료 ✅)
+### Next.js 앱 (Phase 1-7 완료 ✅)
 ```bash
 cd girogi-web
 pnpm install  # 이미 설치 완료
@@ -194,6 +194,21 @@ pnpm dev
 - ✅ Implementation Intention 이론 적용
   - 시간대별 구조화된 행동 체크리스트
   - 구체적 행동 목표 ("30회 이상 씹기", "8시 전 식사 완료")
+
+**Phase 7 완료 내역** (유혹 극복 화면):
+- ✅ 유혹 극복 컴포넌트 구현 (4개)
+  - `src/components/emergency/TemptationTimer.tsx` - 10분 타이머 (원형 진행률, 시작/일시정지/리셋)
+  - `src/components/emergency/FutureSelfCard.tsx` - 미래 자아 시각화 (EFT 이론)
+  - `src/components/emergency/SelfCompassionCard.tsx` - 자기 연민 카드 (통계, 재시작)
+  - `src/components/emergency/FailureReportDialog.tsx` - 실패 리포트 다이얼로그 (3단계 질문)
+- ✅ 유혹 극복 페이지 구현
+  - `src/app/emergency/page.tsx` - 자기 연민 모드 토글, FAB 버튼
+  - 일반 모드: 타이머 + 미래 자아
+  - 자기 연민 모드: 자기 연민 카드
+- ✅ 심리학 이론 적용
+  - Episodic Future Thinking (EFT) - 미래 자아 시각화로 충동 억제
+  - Self-Compassion - 실패 후 즉시 복귀 지원
+  - Temptation Bundling - 10분 타이머로 충동 지연
 
 ---
 
