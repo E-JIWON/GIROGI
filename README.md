@@ -105,7 +105,7 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (Phase 1-4 완료 ✅)
+### Next.js 앱 (Phase 1-5 완료 ✅)
 ```bash
 cd girogi-web
 npm install  # 이미 설치 완료
@@ -163,6 +163,25 @@ npm run dev
 - ✅ Flutter Mock Repository와 100% 호환
   - 동일한 데이터 구조 및 비즈니스 로직
   - 백엔드 없이 UI 개발 가능
+
+**Phase 5 완료 내역**:
+- ✅ 홈 화면 컴포넌트 구현 (4개)
+  - `src/components/home/StreakCounter.tsx` - 연속 성공 일수 카운터
+  - `src/components/home/MissionCard.tsx` - 핵심 미션 카드
+  - `src/components/home/WeeklyCalendar.tsx` - 주간 성공률 캘린더
+  - `src/components/home/RewardStatusCard.tsx` - 보상 현황 (과자박스, 치팅데이)
+- ✅ 유틸리티 함수 생성
+  - `src/lib/utils.ts` - cn() 함수 (clsx + tailwind-merge)
+- ✅ 홈 페이지 구현
+  - `src/app/page.tsx` - 4개 컴포넌트 조립
+  - Mock 데이터 연동 (Streak 계산, 주간 기록)
+  - 미션 토글 인터랙션 (useState)
+- ✅ 추가 패키지 설치
+  - `lucide-react` - 아이콘 라이브러리
+  - `clsx` + `tailwind-merge` - 조건부 클래스 관리
+- ✅ Flutter 디자인 100% 재현
+  - 그라데이션 배경, 색상 체계, 타이포그래피
+  - 반응형 레이아웃, 인터랙션 애니메이션
 
 ---
 
