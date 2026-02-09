@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.rollup.cache
 
 # testing
 /coverage
@@ -35,4 +36,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# ide
+.vscode
+
+# custom
 .claude/
+.cursorrules
+CLAUDE.md
+docs/
+
+# local design docs & examples
+girogi-web/DESIGN_GUIDE.md
+girogi-web/DESIGN_QUICK_START.md

@@ -55,7 +55,7 @@ export function BottomTabBar() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-grey-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-      <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-around px-4">
+      <div className="mx-auto flex h-16 max-w-2xl items-center justify-around px-4">
         {TABS.map((tab) => {
           const Icon = tab.icon;
           const isActive = pathname === tab.href;
