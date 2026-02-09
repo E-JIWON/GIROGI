@@ -86,7 +86,7 @@ export function FutureSelfCard({
   }, [])
 
   return (
-    <div className="rounded-[24px] bg-white p-6">
+    <div className="rounded-lg bg-white p-6">
       {/* 헤더 */}
       <div className="mb-4 flex items-center gap-3">
         <Sunrise className="h-7 w-7 text-primary-500" />
@@ -96,7 +96,7 @@ export function FutureSelfCard({
       </div>
 
       {/* 목표 이미지 또는 플레이스홀더 */}
-      <div className="mb-4 h-52 w-full overflow-hidden rounded-[16px] bg-neutral-100">
+      <div className="mb-4 h-52 w-full overflow-hidden rounded-md bg-neutral-100">
         {goalImageUrl ? (
           <img
             src={goalImageUrl}
@@ -154,7 +154,7 @@ export function FutureSelfCard({
       )}
 
       {/* 동기부여 메시지 */}
-      <div className="rounded-[16px] bg-warning-100 p-4">
+      <div className="rounded-md bg-warning-100 p-4">
         <div className="mb-2 flex items-center gap-2">
           <Lightbulb className="h-5 w-5 text-temptation" />
           <h4 className="text-sm font-bold text-temptation">

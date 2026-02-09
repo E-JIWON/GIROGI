@@ -1,6 +1,28 @@
 @import 'tailwindcss';
 
 /**
+ * ========================================
+ * Galmuri 11 웹폰트 (SIL OFL 1.1)
+ * https://quiple.dev/galmuri
+ * ========================================
+ */
+@font-face {
+  font-family: 'Galmuri11';
+  src: url('/fonts/Galmuri11.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Galmuri11';
+  src: url('/fonts/Galmuri11-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/**
  * GIROGI 파스텔 디자인 시스템
  *
  * 디자인 철학:
@@ -20,63 +42,63 @@
 
   /* ========================================
      Primary (라벤더) - 메인 컬러
-     부드럽고 차분한 느낌
+     Notion 스타일: 차분하고 subtle
      ======================================== */
-  --color-primary-50: #f5f6fb;
-  --color-primary-100: #e8eaf6;
-  --color-primary-200: #d4d7e9;
-  --color-primary-300: #c0c4dc;
-  --color-primary-400: #acb0cf;
-  --color-primary-500: #a6b1e1; /* 메인 */
-  --color-primary-600: #8a94c7;
-  --color-primary-700: #6e78ad;
-  --color-primary-800: #525b93;
-  --color-primary-900: #363f79;
+  --color-primary-50: #f7f8fc;
+  --color-primary-100: #e9ebf5;
+  --color-primary-200: #d6d9e8;
+  --color-primary-300: #b8bdd4;
+  --color-primary-400: #a9aec9;
+  --color-primary-500: #9fa8da; /* 메인 - 채도 낮춤 */
+  --color-primary-600: #8891c0;
+  --color-primary-700: #717aa6;
+  --color-primary-800: #5a638c;
+  --color-primary-900: #434c72;
 
   /* ========================================
      Success (민트) - 성공, 완료
-     탁하고 부드러운 민트 (라벤더와 비슷한 채도)
+     Notion 스타일: 회색빛 그린, 매우 subtle
      ======================================== */
-  --color-success-50: #f7faf9;
-  --color-success-100: #e8f3ee;
-  --color-success-200: #d4e9df;
-  --color-success-300: #c0dfce; /* 메인 - 탁한 민트 */
-  --color-success-400: #acd5bd;
-  --color-success-500: #98cbac;
-  --color-success-600: #84c19b;
-  --color-success-700: #70b78a;
-  --color-success-800: #5cad79;
-  --color-success-900: #48a368;
+  --color-success-50: #f8faf9;
+  --color-success-100: #e8f5e9;
+  --color-success-200: #d4e8d6;
+  --color-success-300: #c8e6c9; /* 메인 - 거의 회색에 가까운 그린 */
+  --color-success-400: #b0ddb3;
+  --color-success-500: #a5d6a7; /* 대체 메인 */
+  --color-success-600: #81c784;
+  --color-success-700: #66bb6a;
+  --color-success-800: #4caf50;
+  --color-success-900: #43a047;
 
   /* ========================================
      Warning (레몬 크림) - 경고, 주의
-     부드럽고 따뜻한 노란색
+     Notion 스타일: 매우 밝고 subtle한 노란색
      ======================================== */
-  --color-warning-50: #fffef5;
-  --color-warning-100: #fffaeb;
-  --color-warning-200: #fff4d6;
-  --color-warning-300: #fff4b8; /* 메인 */
-  --color-warning-400: #ffe69a;
-  --color-warning-500: #ffd97c;
-  --color-warning-600: #ffcc5e;
-  --color-warning-700: #ffbf40;
-  --color-warning-800: #ffb222;
-  --color-warning-900: #ffa500;
+  --color-warning-50: #fffefb;
+  --color-warning-100: #fffbf0;
+  --color-warning-200: #fff8e1;
+  --color-warning-300: #fff9e6; /* 메인 - 거의 흰색에 가까움 */
+  --color-warning-400: #ffecb3;
+  --color-warning-500: #ffe082;
+  --color-warning-600: #ffb74d;
+  --color-warning-700: #ffa726;
+  --color-warning-800: #ff9800;
+  --color-warning-900: #f57c00;
 
   /* ========================================
      Error (코랄) - 오류, 실패
-     부드러운 핑크/코랄
+     Notion 스타일: 거의 안 보이는 핑크
      ======================================== */
-  --color-error-50: #fff9fa;
-  --color-error-100: #fff0f2;
-  --color-error-200: #ffe1e5;
-  --color-error-300: #ffcbd0; /* 메인 */
-  --color-error-400: #ffb5bb;
-  --color-error-500: #ff9fa6;
-  --color-error-600: #ff8991;
-  --color-error-700: #ff737c;
-  --color-error-800: #ff5d67;
-  --color-error-900: #ff4752;
+  --color-error-50: #fefbfb;
+  --color-error-100: #fef5f5;
+  --color-error-200: #fde9ea;
+  --color-error-300: #fcd6d9; /* 메인 - 매우 subtle */
+  --color-error-400: #f5b7bd;
+  --color-error-500: #ef9a9a; /* 대체 메인 */
+  --color-error-600: #e57373;
+  --color-error-700: #ef5350;
+  --color-error-800: #f44336;
+  --color-error-900: #e53935;
 
   /* ========================================
      Info (스카이블루) - 정보
@@ -349,8 +371,8 @@
   /* ========================================
      Typography
      ======================================== */
-  --font-family-sans: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-    Roboto, sans-serif;
+  --font-family-sans: 'Galmuri11', Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 
   /* Font Sizes */
   --font-size-xs: 0.6875rem; /* 11px */
@@ -631,4 +653,14 @@ body {
 
 .input-clean::placeholder {
   color: var(--color-text-disabled);
+}
+
+/**
+ * ========================================
+ * Notion 스타일 페이지 배경
+ * ========================================
+ */
+body {
+  background-color: #fafafa;
+  color: var(--color-text-primary);
 }

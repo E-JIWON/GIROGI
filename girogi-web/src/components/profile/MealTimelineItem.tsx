@@ -107,7 +107,7 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
 
       {/* 오른쪽: 식사 정보 카드 */}
       <div className="mb-6 flex-1">
-        <div className="overflow-hidden rounded-[16px] border border-grey-200 bg-white">
+        <div className="overflow-hidden rounded-md border border-grey-200 bg-white">
           {/* 식사 시간대 + 장소 헤더 */}
           <div className={cn('flex items-center justify-between border-b px-4 py-3', colors.border)}>
             <div className="flex items-center gap-2">

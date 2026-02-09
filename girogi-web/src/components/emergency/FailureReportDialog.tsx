@@ -96,7 +96,7 @@ export function FailureReportDialog({
       {/* 다이얼로그 */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="w-full max-w-lg overflow-hidden rounded-[24px] bg-white"
+          className="w-full max-w-lg overflow-hidden rounded-lg bg-white"
           onClick={(e) => e.stopPropagation()}
         >
           {/* 스크롤 가능한 컨텐츠 */}
@@ -116,7 +116,7 @@ export function FailureReportDialog({
             </div>
 
             {/* 허가 효과 경고 */}
-            <div className="mb-4 rounded-[16px] bg-warning-100 p-3">
+            <div className="mb-4 rounded-md bg-warning-100 p-3">
               <div className="flex gap-2">
                 <AlertTriangle className="h-5 w-5 shrink-0 text-warning" />
                 <div>
@@ -150,7 +150,7 @@ export function FailureReportDialog({
                   onChange={(e) => setSituation(e.target.value)}
                   placeholder="예: 회식 자리에서 술과 안주를 먹었다"
                   className={cn(
-                    'w-full rounded-[12px] p-3 text-base transition-colors',
+                    'w-full rounded p-3 text-base transition-colors',
                     errors.situation
                       ? 'bg-error-50 focus:bg-error-100'
                       : 'bg-neutral-50 focus:bg-neutral-100'
@@ -172,7 +172,7 @@ export function FailureReportDialog({
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="예: 분위기상 거절하기 어려웠다"
                   className={cn(
-                    'w-full rounded-[12px] p-3 text-base transition-colors',
+                    'w-full rounded p-3 text-base transition-colors',
                     errors.reason
                       ? 'bg-error-50 focus:bg-error-100'
                       : 'bg-neutral-50 focus:bg-neutral-100'
@@ -194,7 +194,7 @@ export function FailureReportDialog({
                   onChange={(e) => setSolution(e.target.value)}
                   placeholder="예: 미리 저칼로리 식사를 하고 가겠다"
                   className={cn(
-                    'w-full rounded-[12px] p-3 text-base transition-colors',
+                    'w-full rounded p-3 text-base transition-colors',
                     errors.solution
                       ? 'bg-error-50 focus:bg-error-100'
                       : 'bg-neutral-50 focus:bg-neutral-100'

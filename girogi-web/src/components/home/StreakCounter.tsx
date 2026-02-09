@@ -22,7 +22,7 @@ interface StreakCounterProps {
 
 export function StreakCounter({ currentStreak, bestStreak }: StreakCounterProps) {
   return (
-    <div className="relative overflow-hidden rounded-[24px] bg-gradient-streak p-6">
+    <div className="relative overflow-hidden rounded-lg bg-gradient-streak p-6">
       {/* 상단 라벨 */}
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-base font-semibold text-white">연속 성공</h3>

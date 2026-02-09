@@ -36,7 +36,7 @@ export function MealRecordButton({
     <div
       onClick={onTap}
       className={cn(
-        'cursor-pointer rounded-[16px] border p-4 transition-all',
+        'cursor-pointer rounded-md border p-4 transition-all',
         'hover:shadow-md',
         hasRecord
           ? 'border-success/20 bg-success/5'

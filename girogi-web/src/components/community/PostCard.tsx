@@ -45,7 +45,7 @@ export function PostCard({
   onMoreTap,
 }: PostCardProps) {
   return (
-    <div className="mb-4 overflow-hidden rounded-[16px] bg-white">
+    <div className="mb-4 overflow-hidden rounded-md bg-white">
       {/* 헤더 (작성자 정보) */}
       <div className="flex items-center p-4">
         {/* 프로필 이미지 */}
@@ -137,7 +137,7 @@ function renderExperiencePost(post: Post) {
 
       {/* 이미지 */}
       {post.imageUrl && (
-        <div className="mb-3 overflow-hidden rounded-[16px]">
+        <div className="mb-3 overflow-hidden rounded-md">
           <img
             src={post.imageUrl}
             alt="게시글 이미지"
@@ -158,7 +158,7 @@ function renderExperiencePost(post: Post) {
  */
 function renderFailurePost(post: Post) {
   return (
-    <div className="mx-4 mb-3 rounded-[16px] bg-error-50 p-4">
+    <div className="mx-4 mb-3 rounded-md bg-error-50 p-4">
       {/* 실패 리포트 헤더 */}
       <div className="mb-3 flex items-center">
         <Heart className="h-5 w-5 fill-selfcompassion text-selfcompassion" />
@@ -180,7 +180,7 @@ function renderMotivationPost(post: Post) {
   return (
     <div className="px-4">
       {post.content && (
-        <div className="mb-3 rounded-[16px] bg-gradient-to-r from-primary/10 to-secondary/10 p-4">
+        <div className="mb-3 rounded-md bg-gradient-to-r from-primary/10 to-secondary/10 p-4">
           <p className="text-lg font-bold text-primary">{post.content}</p>
         </div>
       )}
@@ -196,7 +196,7 @@ function renderMealRecordPost(post: Post) {
     <div className="px-4">
       {/* 식사 이미지 */}
       {post.imageUrl && (
-        <div className="mb-3 overflow-hidden rounded-[16px]">
+        <div className="mb-3 overflow-hidden rounded-md">
           <img
             src={post.imageUrl}
             alt="식사 이미지"
@@ -220,7 +220,7 @@ function renderShortsPost(post: Post) {
   return (
     <div className="px-4">
       {/* 비디오 썸네일 */}
-      <div className="relative mb-3 h-52 overflow-hidden rounded-[16px] bg-neutral-900">
+      <div className="relative mb-3 h-52 overflow-hidden rounded-md bg-neutral-900">
         {/* 썸네일 이미지 */}
         {post.imageUrl && (
           <img

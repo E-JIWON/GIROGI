@@ -75,7 +75,7 @@ export function ChecklistTimeSection({
   const borderColorClass = `border-${colorClass}`;
 
   return (
-    <div className="rounded-[24px] bg-white p-6">
+    <div className="rounded-lg bg-white p-6">
       {/* 헤더 (아이콘 + 시간대 + 완료 카운터) */}
       <div className="mb-3 flex items-center gap-3">
         {/* 아이콘 원형 컨테이너 */}
@@ -114,7 +114,7 @@ export function ChecklistTimeSection({
             key={index}
             onClick={() => onToggle(index)}
             className={cn(
-              'flex cursor-pointer items-center gap-3 rounded-[12px] p-3 transition-all',
+              'flex cursor-pointer items-center gap-3 rounded p-3 transition-all',
               'hover:bg-neutral-50 active:scale-[0.99]',
               item.isChecked && 'opacity-60'
             )}

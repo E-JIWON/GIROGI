@@ -158,7 +158,7 @@ export function CommentSection({
                         />
 
                         {/* 메뉴 */}
-                        <div className="absolute right-0 top-8 z-20 w-32 overflow-hidden rounded-[16px] border border-grey-200 bg-white">
+                        <div className="absolute right-0 top-8 z-20 w-32 overflow-hidden rounded-md border border-grey-200 bg-white">
                           {isOwnComment ? (
                             <button
                               onClick={() => {

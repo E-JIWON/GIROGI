@@ -107,16 +107,18 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white shadow-sm">
-        <div className="mx-auto max-w-2xl px-4 py-4">
-          <h1 className="text-xl font-bold text-grey-900">GIROGI</h1>
-        </div>
-      </header>
+      {/* Notion 스타일 콘텐츠 영역 */}
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
+        {/* 헤더 */}
+        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+          <div className="px-8 py-4 border-b border-neutral-100">
+            <h1 className="text-lg font-semibold text-neutral-700">GIROGI</h1>
+          </div>
+        </header>
 
-      {/* 메인 컨텐츠 */}
-      <main className="mx-auto max-w-2xl px-4 py-6">
-        <div className="space-y-6">
+        {/* 메인 컨텐츠 */}
+        <main className="px-8 py-6">
+          <div className="space-y-4">
           {/* Streak 카운터 */}
           <StreakCounter
             currentStreak={currentStreak}
@@ -125,10 +127,10 @@ export default function Home() {
 
           {/* 핵심 미션 섹션 */}
           <section>
-            <h2 className="mb-3 text-lg font-semibold text-grey-900">
+            <h2 className="mb-3 text-base font-semibold text-neutral-700">
               오늘의 핵심 미션
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-2">
               {missions.map((mission) => (
                 <MissionCard
                   key={mission.id}
@@ -152,8 +154,9 @@ export default function Home() {
             userId={mockCurrentUser.id}
             onRewardUsed={handleRewardUsed}
           />
-        </div>
-      </main>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

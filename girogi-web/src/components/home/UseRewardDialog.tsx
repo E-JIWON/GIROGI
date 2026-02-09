@@ -121,7 +121,7 @@ export function UseRewardDialog({
               value={food}
               onChange={(e) => setFood(e.target.value)}
               placeholder="예: 치킨, 피자, 아이스크림"
-              className="w-full px-4 py-3 border border-grey-300 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-3 border border-grey-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
@@ -140,12 +140,12 @@ export function UseRewardDialog({
               onChange={(e) => setMemo(e.target.value)}
               placeholder="어떤 상황이었나요?"
               rows={3}
-              className="w-full px-4 py-3 border border-grey-300 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+              className="w-full px-4 py-3 border border-grey-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
             />
           </div>
 
           {/* 안내 메시지 */}
-          <div className={`rounded-[16px] bg-${color}/5 p-3`}>
+          <div className={`rounded-md bg-${color}/5 p-3`}>
             <p className="text-sm text-neutral-700">
               {rewardType === 'snackbox'
                 ? '과자박스를 사용하면 개수가 1개 차감됩니다.'
@@ -158,13 +158,13 @@ export function UseRewardDialog({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 bg-neutral-100 text-neutral-700 rounded-[16px] font-semibold hover:bg-neutral-200 transition-colors"
+              className="flex-1 py-3 bg-neutral-100 text-neutral-700 rounded-md font-semibold hover:bg-neutral-200 transition-colors"
             >
               취소
             </button>
             <button
               type="submit"
-              className={`flex-1 py-3 bg-${color} text-white rounded-[16px] font-semibold hover:opacity-90 transition-opacity`}
+              className={`flex-1 py-3 bg-${color} text-white rounded-md font-semibold hover:opacity-90 transition-opacity`}
             >
               사용하기
             </button>

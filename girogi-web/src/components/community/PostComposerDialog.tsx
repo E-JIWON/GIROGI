@@ -79,7 +79,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
       {/* 다이얼로그 */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="w-full max-w-lg overflow-hidden rounded-[16px] bg-white"
+          className="w-full max-w-lg overflow-hidden rounded-md bg-white"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="max-h-[85vh] overflow-y-auto p-6">
@@ -139,7 +139,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
                 }}
                 placeholder={POST_TYPE_CONFIG[selectedType].placeholder}
                 className={cn(
-                  'w-full rounded-[16px] border p-3 text-base',
+                  'w-full rounded-md border p-3 text-base',
                   error
                     ? 'border-error focus:border-error'
                     : 'border-grey-300 focus:border-primary'
@@ -155,7 +155,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
                 // TODO: 이미지 선택 기능
                 console.log('이미지 추가 (TODO)');
               }}
-              className="mb-6 flex items-center gap-2 rounded-[16px] border-2 border-grey-300 px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:text-primary"
+              className="mb-6 flex items-center gap-2 rounded-md border-2 border-grey-300 px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:text-primary"
             >
               <ImagePlus className="h-5 w-5" />
               이미지 추가
@@ -164,7 +164,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
             {/* 게시 버튼 */}
             <button
               onClick={handlePublish}
-              className="flex w-full items-center justify-center gap-2 rounded-[16px] bg-primary px-4 py-3 text-base font-semibold text-white transition-all hover:bg-primary/90"
+              className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-base font-semibold text-white transition-all hover:bg-primary/90"
             >
               <Send className="h-5 w-5" />
               게시하기

@@ -101,7 +101,7 @@ export function ComparisonChart({
   const maxValue = Math.max(...sortedData.map((item) => item.value), 1);
 
   return (
-    <div className="rounded-[16px] border border-grey-200 bg-white p-6">
+    <div className="rounded-md border border-grey-200 bg-white p-6">
       {/* 헤더 */}
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
