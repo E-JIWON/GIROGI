@@ -3,7 +3,7 @@
  *
  * 시간대별 체크리스트 섹션 (아침/점심/저녁/운동)
  * - 시간대 아이콘 + 라벨 + 완료 카운터
- * - 체크리스트 항목 리스트
+ * - 체크리스트 항목 리스트 (When-Where-What 형식)
  * - 완료 항목 취소선 + 회색 처리
  *
  * Flutter: lib/presentation/widgets/checklist/checklist_time_section.dart
@@ -13,9 +13,13 @@ import { Check } from 'lucide-react';
 import { MealTime } from '@/types/enums';
 import { cn } from '@/lib/utils';
 
-interface ChecklistItem {
+interface ChecklistItemDisplay {
   title: string;
   isChecked: boolean;
+  when?: string;
+  where?: string;
+  what?: string;
+  icon?: string;
 }
 
 interface ChecklistTimeSectionProps {
@@ -26,7 +30,7 @@ interface ChecklistTimeSectionProps {
   /**
    * 체크리스트 항목 배열
    */
-  items: ChecklistItem[];
+  items: ChecklistItemDisplay[];
   /**
    * 체크박스 토글 콜백
    */
@@ -127,17 +131,43 @@ export function ChecklistTimeSection({
               {item.isChecked && <Check className="h-4 w-4 text-white" strokeWidth={3} />}
             </div>
 
-            {/* 체크리스트 제목 */}
-            <span
-              className={cn(
-                'flex-1 text-base transition-all',
-                item.isChecked
-                  ? 'text-grey-500 line-through'
-                  : 'text-grey-900'
+            {/* 아이콘 (선택사항) */}
+            {item.icon && (
+              <span className="text-xl shrink-0">{item.icon}</span>
+            )}
+
+            {/* 체크리스트 제목 (When-Where-What 형식) */}
+            <div className="flex-1">
+              {item.when || item.where || item.what ? (
+                // When-Where-What 구조화된 형식
+                <div
+                  className={cn(
+                    'text-base transition-all',
+                    item.isChecked ? 'text-grey-500 line-through' : 'text-grey-900'
+                  )}
+                >
+                  {item.when && (
+                    <span className="font-semibold text-primary">🕐 {item.when}</span>
+                  )}
+                  {item.when && (item.where || item.what) && <span> 에 </span>}
+                  {item.where && (
+                    <span className="font-semibold text-success">📍 {item.where}</span>
+                  )}
+                  {item.where && item.what && <span> 에서 </span>}
+                  {item.what && <span>{item.what}</span>}
+                </div>
+              ) : (
+                // 레거시 형식 (title만)
+                <span
+                  className={cn(
+                    'text-base transition-all',
+                    item.isChecked ? 'text-grey-500 line-through' : 'text-grey-900'
+                  )}
+                >
+                  {item.title}
+                </span>
               )}
-            >
-              {item.title}
-            </span>
+            </div>
           </div>
         ))}
       </div>

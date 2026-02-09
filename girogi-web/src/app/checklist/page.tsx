@@ -20,6 +20,10 @@ import { MealTime } from '@/types/enums';
 interface ChecklistItem {
   title: string;
   isChecked: boolean;
+  when?: string;
+  where?: string;
+  what?: string;
+  icon?: string;
 }
 
 interface MealRecords {
@@ -27,32 +31,116 @@ interface MealRecords {
 }
 
 export default function ChecklistPage() {
-  // 아침 체크리스트
+  // 아침 체크리스트 (When-Where-What 형식)
   const [breakfastChecklist, setBreakfastChecklist] = useState<ChecklistItem[]>([
-    { title: '물 한 잔 마시기', isChecked: true },
-    { title: '체중 측정하기', isChecked: true },
-    { title: '스트레칭 5분', isChecked: false },
+    {
+      title: '물 한 잔 마시기',
+      when: '기상 후',
+      where: '침실',
+      what: '물 한 잔 마시기',
+      icon: '💧',
+      isChecked: true,
+    },
+    {
+      title: '체중 측정하기',
+      when: '아침 식사 전',
+      where: '화장실',
+      what: '체중 측정하기',
+      icon: '⚖️',
+      isChecked: true,
+    },
+    {
+      title: '스트레칭 5분',
+      when: '아침 시간',
+      where: '거실',
+      what: '스트레칭 5분',
+      icon: '🧘',
+      isChecked: false,
+    },
   ]);
 
-  // 점심 체크리스트
+  // 점심 체크리스트 (When-Where-What 형식)
   const [lunchChecklist, setLunchChecklist] = useState<ChecklistItem[]>([
-    { title: '식사 30회 이상 씹기', isChecked: false },
-    { title: '채소 먼저 먹기', isChecked: false },
-    { title: '배부를 때까지만 먹기', isChecked: false },
+    {
+      title: '식사 30회 이상 씹기',
+      when: '식사 중',
+      where: '식당',
+      what: '한 입당 30회 씹기',
+      icon: '😋',
+      isChecked: false,
+    },
+    {
+      title: '채소 먼저 먹기',
+      when: '식사 시작',
+      where: '식당',
+      what: '채소 반찬 먼저 먹기',
+      icon: '🥗',
+      isChecked: false,
+    },
+    {
+      title: '배부를 때까지만 먹기',
+      when: '식사 중',
+      where: '식당',
+      what: '80% 배부름에 멈추기',
+      icon: '🍽️',
+      isChecked: false,
+    },
   ]);
 
-  // 저녁 체크리스트
+  // 저녁 체크리스트 (When-Where-What 형식)
   const [dinnerChecklist, setDinnerChecklist] = useState<ChecklistItem[]>([
-    { title: '8시 전 식사 완료', isChecked: false },
-    { title: '천천히 먹기', isChecked: false },
-    { title: '과식하지 않기', isChecked: false },
+    {
+      title: '8시 전 식사 완료',
+      when: '오후 8시 전',
+      where: '집',
+      what: '저녁 식사 완료',
+      icon: '⏰',
+      isChecked: false,
+    },
+    {
+      title: '천천히 먹기',
+      when: '식사 중',
+      where: '식탁',
+      what: '20분 이상 천천히 먹기',
+      icon: '🐌',
+      isChecked: false,
+    },
+    {
+      title: '과식하지 않기',
+      when: '식사 중',
+      where: '식탁',
+      what: '작은 그릇 사용하기',
+      icon: '🍽️',
+      isChecked: false,
+    },
   ]);
 
-  // 운동 체크리스트
+  // 운동 체크리스트 (When-Where-What 형식)
   const [exerciseChecklist, setExerciseChecklist] = useState<ChecklistItem[]>([
-    { title: '계단 이용하기', isChecked: false },
-    { title: '스트레칭 10분', isChecked: false },
-    { title: '산책 20분', isChecked: false },
+    {
+      title: '계단 이용하기',
+      when: '출퇴근 시',
+      where: '건물',
+      what: '엘리베이터 대신 계단 이용',
+      icon: '🚶',
+      isChecked: false,
+    },
+    {
+      title: '스트레칭 10분',
+      when: '저녁 시간',
+      where: '집',
+      what: '전신 스트레칭 10분',
+      icon: '🧘',
+      isChecked: false,
+    },
+    {
+      title: '산책 20분',
+      when: '저녁 식사 후',
+      where: '근처 공원',
+      what: '가볍게 산책 20분',
+      icon: '🚶‍♂️',
+      isChecked: false,
+    },
   ]);
 
   // 식사 기록 여부 (아침/점심/저녁)

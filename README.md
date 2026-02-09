@@ -342,6 +342,26 @@ pnpm dev  # http://localhost:8282
     - 시간대별: "아침부터 목표를 향해 나아가고 있어요" (아침)
     - 시간대별: "지금 참으면 내일 아침이 가볍습니다" (저녁)
     - 일반: "당신은 충분히 강합니다", "한 번의 선택이 습관을 만듭니다" 등
+- ✅ **연구 기반 개선 Task 4: Implementation Intention "When-Where-What" 형식화**
+  - `src/types/models.ts` - ChecklistItem 타입 확장
+    - when?: string (언제, 예: "10:30", "식사 전")
+    - where?: string (어디서, 예: "사무실", "집")
+    - what?: string (무엇을, 예: "물 500ml 마시기")
+    - icon?: string (아이콘, 예: "💧", "🥗")
+    - defaultChecklistItems를 When-Where-What 형식으로 업데이트
+  - `src/components/checklist/ChecklistTimeSection.tsx` - 구조화된 표시
+    - when: 🕐 아이콘 + 시간 (primary 색상 강조)
+    - where: 📍 아이콘 + 장소 (success 색상 강조)
+    - what: 행동 설명 (일반 텍스트)
+    - 아이템 아이콘 표시 (💧🥗😋 등)
+  - `src/app/checklist/page.tsx` - 체크리스트 데이터 개선
+    - 모든 체크리스트 항목을 When-Where-What 형식으로 변경
+    - 기존: "물 한 잔 마시기" (막연함)
+    - 개선: "🕐 기상 후 에 📍 침실 에서 물 한 잔 마시기" (구체적)
+  - **Implementation Intention 이론 완성**
+    - Peter Gollwitzer 연구: "언제+어디서+무엇을" 구조화 → 목표 달성률 2-3배
+    - 기존: 단순 체크리스트 (모호함)
+    - 개선: 구조화된 행동 계획 (실행 확률 증가)
 
 ---
 

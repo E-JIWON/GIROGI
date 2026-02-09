@@ -25,12 +25,20 @@ import { Comment, Reaction } from './common';
 export interface ChecklistItem {
   /** 고유 식별자 */
   id: string;
-  /** 항목 제목 (예: "10:30 물 500ml", "샐러드 두 젓가락 먹기") */
+  /** 항목 제목 (레거시 호환용, when+where+what이 있으면 그것 우선) */
   title: string;
   /** 시간대 슬롯 (시간대별 그룹화용) */
   timeSlot: TimeSlot;
   /** 핵심 미션 여부 (3개 중 2개 이상 완료 시 하루 성공) */
   isCoreMission: boolean;
+  /** When: 언제 (예: "10:30", "식사 전", "기상 후") */
+  when?: string;
+  /** Where: 어디서 (예: "사무실", "집", "헬스장") */
+  where?: string;
+  /** What: 무엇을 (예: "물 500ml 마시기", "스쿼트 1개") */
+  what?: string;
+  /** 아이콘 이모지 (선택사항, 예: "💧", "🏃", "🥗") */
+  icon?: string;
 }
 
 /**
@@ -42,59 +50,95 @@ export const defaultChecklistItems: ChecklistItem[] = [
   // 아침
   {
     id: 'morning_water',
-    title: '10:30 물 500ml',
+    title: '10:30 물 500ml', // 레거시
+    when: '10:30',
+    where: '사무실',
+    what: '물 500ml 마시기',
+    icon: '💧',
     timeSlot: TimeSlot.MORNING,
     isCoreMission: false,
   },
   // 점심
   {
     id: 'lunch_salad',
-    title: '샐러드 두 젓가락 먹기',
+    title: '샐러드 두 젓가락 먹기', // 레거시
+    when: '식사 시작',
+    where: '식당',
+    what: '샐러드 두 젓가락 먹기',
+    icon: '🥗',
     timeSlot: TimeSlot.LUNCH,
     isCoreMission: false,
   },
   {
     id: 'lunch_chew',
-    title: '천천히 씹기 (20번 이상)',
+    title: '천천히 씹기 (20번 이상)', // 레거시
+    when: '식사 중',
+    where: '식당',
+    what: '한 입당 30회 씹기',
+    icon: '😋',
     timeSlot: TimeSlot.LUNCH,
     isCoreMission: false,
   },
   // 퇴근 (핵심 미션)
   {
     id: 'afterwork_fruit',
-    title: '바나나 or 사과 먹기',
+    title: '바나나 or 사과 먹기', // 레거시
+    when: '퇴근 직후',
+    where: '집',
+    what: '과일 1개 먹기',
+    icon: '🍎',
     timeSlot: TimeSlot.AFTER_WORK,
     isCoreMission: true,
   },
   // 저녁 (핵심 미션)
   {
     id: 'dinner_small_bowl',
-    title: '작은 그릇 사용',
+    title: '작은 그릇 사용', // 레거시
+    when: '식사 준비',
+    where: '주방',
+    what: '작은 그릇 사용하기',
+    icon: '🍽️',
     timeSlot: TimeSlot.DINNER,
     isCoreMission: true,
   },
   {
     id: 'dinner_no_tv',
-    title: 'TV 없이 먹기',
+    title: 'TV 없이 먹기', // 레거시
+    when: '식사 중',
+    where: '식탁',
+    what: 'TV 끄고 집중해서 먹기',
+    icon: '📺',
     timeSlot: TimeSlot.DINNER,
     isCoreMission: false,
   },
   {
     id: 'dinner_chew',
-    title: '천천히 씹기',
+    title: '천천히 씹기', // 레거시
+    when: '식사 중',
+    where: '식탁',
+    what: '한 입당 30회 씹기',
+    icon: '😋',
     timeSlot: TimeSlot.DINNER,
     isCoreMission: false,
   },
   // 운동 (핵심 미션 - 택1)
   {
     id: 'exercise_boxing',
-    title: '복싱',
+    title: '복싱', // 레거시
+    when: '저녁 7시',
+    where: '헬스장',
+    what: '복싱 30분',
+    icon: '🥊',
     timeSlot: TimeSlot.EXERCISE,
     isCoreMission: true,
   },
   {
     id: 'exercise_squat',
-    title: '스쿼트 1개',
+    title: '스쿼트 1개', // 레거시
+    when: '저녁 시간',
+    where: '집',
+    what: '스쿼트 1개',
+    icon: '🏋️',
     timeSlot: TimeSlot.EXERCISE,
     isCoreMission: true,
   },
