@@ -75,7 +75,7 @@ export function ChecklistTimeSection({
   const borderColorClass = `border-${colorClass}`;
 
   return (
-    <div className="rounded-lg border border-grey-200 bg-white p-4 shadow-sm">
+    <div className="rounded-[24px] bg-white p-6">
       {/* 헤더 (아이콘 + 시간대 + 완료 카운터) */}
       <div className="mb-3 flex items-center gap-3">
         {/* 아이콘 원형 컨테이너 */}
@@ -89,7 +89,7 @@ export function ChecklistTimeSection({
         </div>
 
         {/* 시간대 라벨 */}
-        <h3 className="flex-1 text-base font-semibold text-grey-900">
+        <h3 className="flex-1 text-base font-semibold text-neutral-900">
           {mealTime === MealTime.BREAKFAST && '아침'}
           {mealTime === MealTime.LUNCH && '점심'}
           {mealTime === MealTime.DINNER && '저녁'}
@@ -114,18 +114,18 @@ export function ChecklistTimeSection({
             key={index}
             onClick={() => onToggle(index)}
             className={cn(
-              'flex cursor-pointer items-center gap-3 rounded-lg p-3 transition-all',
-              'hover:bg-grey-50',
+              'flex cursor-pointer items-center gap-3 rounded-[12px] p-3 transition-all',
+              'hover:bg-neutral-50 active:scale-[0.99]',
               item.isChecked && 'opacity-60'
             )}
           >
             {/* 커스텀 체크박스 */}
             <div
               className={cn(
-                'flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 transition-all',
+                'flex h-6 w-6 shrink-0 items-center justify-center rounded-md transition-all',
                 item.isChecked
-                  ? `${borderColorClass} bg-${colorClass}`
-                  : 'border-grey-300 bg-white'
+                  ? `bg-${colorClass}`
+                  : 'bg-neutral-200'
               )}
             >
               {item.isChecked && <Check className="h-4 w-4 text-white" strokeWidth={3} />}
@@ -143,15 +143,15 @@ export function ChecklistTimeSection({
                 <div
                   className={cn(
                     'text-base transition-all',
-                    item.isChecked ? 'text-grey-500 line-through' : 'text-grey-900'
+                    item.isChecked ? 'text-neutral-500 line-through' : 'text-neutral-900'
                   )}
                 >
                   {item.when && (
-                    <span className="font-semibold text-primary">🕐 {item.when}</span>
+                    <span className="font-semibold text-primary-500">🕐 {item.when}</span>
                   )}
                   {item.when && (item.where || item.what) && <span> 에 </span>}
                   {item.where && (
-                    <span className="font-semibold text-success">📍 {item.where}</span>
+                    <span className="font-semibold text-success-500">📍 {item.where}</span>
                   )}
                   {item.where && item.what && <span> 에서 </span>}
                   {item.what && <span>{item.what}</span>}
@@ -161,7 +161,7 @@ export function ChecklistTimeSection({
                 <span
                   className={cn(
                     'text-base transition-all',
-                    item.isChecked ? 'text-grey-500 line-through' : 'text-grey-900'
+                    item.isChecked ? 'text-neutral-500 line-through' : 'text-neutral-900'
                   )}
                 >
                   {item.title}

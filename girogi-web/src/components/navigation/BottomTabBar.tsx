@@ -54,7 +54,7 @@ export function BottomTabBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-grey-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+    <nav className="max-w-2xl mx-auto fixed bottom-0 left-0 right-0 z-50 bg-white">
       <div className="mx-auto flex h-16 max-w-2xl items-center justify-around px-4">
         {TABS.map((tab) => {
           const Icon = tab.icon;
@@ -70,7 +70,7 @@ export function BottomTabBar() {
               >
                 <div
                   className={cn(
-                    'flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all',
+                    'flex h-14 w-14 items-center justify-center rounded-full transition-all',
                     isActive
                       ? 'bg-gradient-to-r from-error to-warning'
                       : 'bg-gradient-to-r from-error/80 to-warning/80 hover:from-error hover:to-warning'
