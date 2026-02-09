@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(flutter --version:*)",
+      "Bash(flutter create:*)",
+      "Bash(tree:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git mv:*)",
+      "Bash(find:*)",
+      "Bash(flutter pub get:*)",
+      "WebSearch",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(cat:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npm install:*)",
+      "Bash(git log:*)",
+      "Bash(pnpm install)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pnpm dev)",
+      "Bash(git rm:*)",
+      "Bash(grep:*)",
+      "WebFetch(domain:quiple.dev)",
+      "Bash(xargs:*)",
+      "Bash(gh release download:*)",
+      "Bash(unzip:*)",
+      "Bash(/Users/bongchil/github/GIROGI/girogi-web/src/app/globals.css << 'EOF'\n\n/**\n * ========================================\n * Notion 스타일 페이지 배경\n * ========================================\n */\nbody {\n  background-color: #fafafa;\n  color: var\\(--color-text-primary\\);\n}\nEOF)",
+      "Bash(node -e:*)",
+      "Bash(done)",
+      "Bash(npx tsc:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
