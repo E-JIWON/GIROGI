@@ -99,7 +99,7 @@ export function CommentSection({
       <div className="flex-1 overflow-y-auto px-4 py-4">
         {comments.length === 0 ? (
           <div className="flex h-full items-center justify-center">
-            <p className="text-sm text-grey-500">첫 댓글을 남겨보세요</p>
+            <p className="text-sm text-neutral-500">첫 댓글을 남겨보세요</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -129,23 +129,23 @@ export function CommentSection({
                   {/* 댓글 내용 */}
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-grey-900">
+                      <span className="text-sm font-semibold text-neutral-900">
                         {author.nickname}
                       </span>
-                      <span className="text-xs text-grey-500">
+                      <span className="text-xs text-neutral-500">
                         {formatTimestamp(comment.createdAt)}
                       </span>
                     </div>
-                    <p className="mt-1 text-sm text-grey-800">{comment.content}</p>
+                    <p className="mt-1 text-sm text-neutral-800">{comment.content}</p>
                   </div>
 
                   {/* 더보기 버튼 */}
                   <div className="relative">
                     <button
                       onClick={() => toggleMenu(comment.id)}
-                      className="rounded-full p-1 hover:bg-grey-100"
+                      className="rounded-full p-1 hover:bg-neutral-100"
                     >
-                      <MoreVertical className="h-4 w-4 text-grey-600" />
+                      <MoreVertical className="h-4 w-4 text-neutral-600" />
                     </button>
 
                     {/* 더보기 메뉴 */}
@@ -158,14 +158,14 @@ export function CommentSection({
                         />
 
                         {/* 메뉴 */}
-                        <div className="absolute right-0 top-8 z-20 w-32 overflow-hidden rounded-lg border border-grey-200 bg-white shadow-lg">
+                        <div className="absolute right-0 top-8 z-20 w-32 overflow-hidden rounded-[16px] border border-grey-200 bg-white">
                           {isOwnComment ? (
                             <button
                               onClick={() => {
                                 onCommentDelete?.(comment.id);
                                 setActiveMenuId(null);
                               }}
-                              className="w-full px-4 py-2 text-left text-sm text-error hover:bg-grey-50"
+                              className="w-full px-4 py-2 text-left text-sm text-error hover:bg-neutral-50"
                             >
                               삭제
                             </button>
@@ -175,7 +175,7 @@ export function CommentSection({
                                 onCommentReport?.(comment.id);
                                 setActiveMenuId(null);
                               }}
-                              className="w-full px-4 py-2 text-left text-sm text-grey-700 hover:bg-grey-50"
+                              className="w-full px-4 py-2 text-left text-sm text-neutral-700 hover:bg-neutral-50"
                             >
                               신고
                             </button>
@@ -210,7 +210,7 @@ export function CommentSection({
           <button
             onClick={handleSubmit}
             disabled={!commentText.trim()}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white transition-all hover:bg-primary/90 disabled:bg-grey-300"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white transition-all hover:bg-primary/90 disabled:bg-neutral-300"
           >
             <Send className="h-5 w-5" />
           </button>

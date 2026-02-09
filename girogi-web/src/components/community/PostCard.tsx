@@ -45,7 +45,7 @@ export function PostCard({
   onMoreTap,
 }: PostCardProps) {
   return (
-    <div className="mb-4 overflow-hidden rounded-lg border border-grey-200 bg-white shadow-sm">
+    <div className="mb-4 overflow-hidden rounded-[16px] bg-white">
       {/* 헤더 (작성자 정보) */}
       <div className="flex items-center p-4">
         {/* 프로필 이미지 */}
@@ -65,10 +65,10 @@ export function PostCard({
 
         {/* 닉네임 및 작성 시간 */}
         <div className="ml-3 flex-1">
-          <div className="text-sm font-semibold text-grey-900">
+          <div className="text-sm font-semibold text-neutral-900">
             {author.nickname}
           </div>
-          <div className="text-xs text-grey-600">
+          <div className="text-xs text-neutral-600">
             {formatTimestamp(post.createdAt)}
           </div>
         </div>
@@ -77,9 +77,9 @@ export function PostCard({
         {onMoreTap && (
           <button
             onClick={onMoreTap}
-            className="rounded-full p-1 hover:bg-grey-100"
+            className="rounded-full p-1 hover:bg-neutral-100"
           >
-            <MoreVertical className="h-5 w-5 text-grey-600" />
+            <MoreVertical className="h-5 w-5 text-neutral-600" />
           </button>
         )}
       </div>
@@ -132,12 +132,12 @@ function renderExperiencePost(post: Post) {
     <div className="px-4">
       {/* 본문 */}
       {post.content && (
-        <p className="mb-3 text-base text-grey-900">{post.content}</p>
+        <p className="mb-3 text-base text-neutral-900">{post.content}</p>
       )}
 
       {/* 이미지 */}
       {post.imageUrl && (
-        <div className="mb-3 overflow-hidden rounded-lg">
+        <div className="mb-3 overflow-hidden rounded-[16px]">
           <img
             src={post.imageUrl}
             alt="게시글 이미지"
@@ -158,7 +158,7 @@ function renderExperiencePost(post: Post) {
  */
 function renderFailurePost(post: Post) {
   return (
-    <div className="mx-4 mb-3 rounded-lg border-2 border-selfcompassion bg-selfcompassion/5 p-4">
+    <div className="mx-4 mb-3 rounded-[16px] bg-error-50 p-4">
       {/* 실패 리포트 헤더 */}
       <div className="mb-3 flex items-center">
         <Heart className="h-5 w-5 fill-selfcompassion text-selfcompassion" />
@@ -168,7 +168,7 @@ function renderFailurePost(post: Post) {
       </div>
 
       {/* 본문 */}
-      {post.content && <p className="text-base text-grey-900">{post.content}</p>}
+      {post.content && <p className="text-base text-neutral-900">{post.content}</p>}
     </div>
   );
 }
@@ -180,7 +180,7 @@ function renderMotivationPost(post: Post) {
   return (
     <div className="px-4">
       {post.content && (
-        <div className="mb-3 rounded-lg bg-gradient-to-r from-primary/10 to-secondary/10 p-4">
+        <div className="mb-3 rounded-[16px] bg-gradient-to-r from-primary/10 to-secondary/10 p-4">
           <p className="text-lg font-bold text-primary">{post.content}</p>
         </div>
       )}
@@ -196,7 +196,7 @@ function renderMealRecordPost(post: Post) {
     <div className="px-4">
       {/* 식사 이미지 */}
       {post.imageUrl && (
-        <div className="mb-3 overflow-hidden rounded-lg">
+        <div className="mb-3 overflow-hidden rounded-[16px]">
           <img
             src={post.imageUrl}
             alt="식사 이미지"
@@ -207,7 +207,7 @@ function renderMealRecordPost(post: Post) {
 
       {/* 식사 정보 */}
       {post.content && (
-        <p className="mb-3 text-base text-grey-900">{post.content}</p>
+        <p className="mb-3 text-base text-neutral-900">{post.content}</p>
       )}
     </div>
   );
@@ -220,7 +220,7 @@ function renderShortsPost(post: Post) {
   return (
     <div className="px-4">
       {/* 비디오 썸네일 */}
-      <div className="relative mb-3 h-52 overflow-hidden rounded-lg bg-grey-900">
+      <div className="relative mb-3 h-52 overflow-hidden rounded-[16px] bg-neutral-900">
         {/* 썸네일 이미지 */}
         {post.imageUrl && (
           <img
@@ -240,7 +240,7 @@ function renderShortsPost(post: Post) {
 
       {/* 제목 */}
       {post.content && (
-        <p className="mb-3 line-clamp-2 text-sm font-semibold text-grey-900">
+        <p className="mb-3 line-clamp-2 text-sm font-semibold text-neutral-900">
           {post.content}
         </p>
       )}

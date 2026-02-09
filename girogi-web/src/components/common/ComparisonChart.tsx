@@ -101,13 +101,13 @@ export function ComparisonChart({
   const maxValue = Math.max(...sortedData.map((item) => item.value), 1);
 
   return (
-    <div className="rounded-lg border border-grey-200 bg-white p-6 shadow-sm">
+    <div className="rounded-[16px] border border-grey-200 bg-white p-6">
       {/* 헤더 */}
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
           <Icon className="h-5 w-5 text-primary" />
         </div>
-        <h3 className="text-lg font-bold text-grey-900">{config.title}</h3>
+        <h3 className="text-lg font-bold text-neutral-900">{config.title}</h3>
       </div>
 
       {/* 차트 */}
@@ -129,7 +129,7 @@ export function ComparisonChart({
                       'flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold',
                       isFirstPlace
                         ? 'bg-gradient-to-r from-amber-400 to-amber-600 text-white'
-                        : 'bg-grey-200 text-grey-700'
+                        : 'bg-neutral-200 text-neutral-700'
                     )}
                   >
                     {rank}
@@ -154,7 +154,7 @@ export function ComparisonChart({
                   <span
                     className={cn(
                       'text-sm font-medium',
-                      isCurrentUser ? 'text-primary' : 'text-grey-900'
+                      isCurrentUser ? 'text-primary' : 'text-neutral-900'
                     )}
                   >
                     {item.user.nickname}
@@ -167,17 +167,17 @@ export function ComparisonChart({
                   <span
                     className={cn(
                       'text-lg font-bold',
-                      isFirstPlace ? 'text-amber-600' : 'text-grey-900'
+                      isFirstPlace ? 'text-amber-600' : 'text-neutral-900'
                     )}
                   >
                     {item.value}
                   </span>
-                  <span className="text-xs text-grey-600">{config.unit}</span>
+                  <span className="text-xs text-neutral-600">{config.unit}</span>
                 </div>
               </div>
 
               {/* 진행률 바 */}
-              <div className="h-3 overflow-hidden rounded-full bg-grey-100">
+              <div className="h-3 overflow-hidden rounded-full bg-neutral-100">
                 <div
                   className={cn(
                     'h-full transition-all duration-500',
@@ -185,7 +185,7 @@ export function ComparisonChart({
                       ? 'bg-gradient-to-r from-amber-400 to-amber-600'
                       : isCurrentUser
                         ? 'bg-primary'
-                        : 'bg-grey-400'
+                        : 'bg-neutral-400'
                   )}
                   style={{ width: `${percentage}%` }}
                 />
@@ -198,9 +198,9 @@ export function ComparisonChart({
       {/* 빈 상태 */}
       {sortedData.length === 0 && (
         <div className="flex flex-col items-center justify-center py-10">
-          <Icon className="h-12 w-12 text-grey-400" />
-          <p className="mt-3 text-sm text-grey-500">비교할 친구가 없습니다</p>
-          <p className="mt-1 text-xs text-grey-400">친구를 팔로우해보세요</p>
+          <Icon className="h-12 w-12 text-neutral-400" />
+          <p className="mt-3 text-sm text-neutral-500">비교할 친구가 없습니다</p>
+          <p className="mt-1 text-xs text-neutral-400">친구를 팔로우해보세요</p>
         </div>
       )}
     </div>

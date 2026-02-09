@@ -90,18 +90,18 @@ export function UseRewardDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6">
         {/* 헤더 */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Icon className={`h-6 w-6 text-${color}`} />
-            <h2 className="text-xl font-bold text-grey-900">{title}</h2>
+            <h2 className="text-xl font-bold text-neutral-900">{title}</h2>
           </div>
           <button
             onClick={onClose}
-            className="rounded-full p-1 hover:bg-grey-100 transition-colors"
+            className="rounded-full p-1 hover:bg-neutral-100 transition-colors"
           >
-            <X className="h-5 w-5 text-grey-600" />
+            <X className="h-5 w-5 text-neutral-600" />
           </button>
         </div>
 
@@ -111,7 +111,7 @@ export function UseRewardDialog({
           <div>
             <label
               htmlFor="food"
-              className="block text-sm font-semibold text-grey-700 mb-2"
+              className="block text-sm font-semibold text-neutral-700 mb-2"
             >
               무엇을 먹었나요? <span className="text-error">*</span>
             </label>
@@ -121,7 +121,7 @@ export function UseRewardDialog({
               value={food}
               onChange={(e) => setFood(e.target.value)}
               placeholder="예: 치킨, 피자, 아이스크림"
-              className="w-full px-4 py-3 border border-grey-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-3 border border-grey-300 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
@@ -130,7 +130,7 @@ export function UseRewardDialog({
           <div>
             <label
               htmlFor="memo"
-              className="block text-sm font-semibold text-grey-700 mb-2"
+              className="block text-sm font-semibold text-neutral-700 mb-2"
             >
               메모 (선택사항)
             </label>
@@ -140,13 +140,13 @@ export function UseRewardDialog({
               onChange={(e) => setMemo(e.target.value)}
               placeholder="어떤 상황이었나요?"
               rows={3}
-              className="w-full px-4 py-3 border border-grey-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+              className="w-full px-4 py-3 border border-grey-300 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-primary resize-none"
             />
           </div>
 
           {/* 안내 메시지 */}
-          <div className={`rounded-lg bg-${color}/5 p-3`}>
-            <p className="text-sm text-grey-700">
+          <div className={`rounded-[16px] bg-${color}/5 p-3`}>
+            <p className="text-sm text-neutral-700">
               {rewardType === 'snackbox'
                 ? '과자박스를 사용하면 개수가 1개 차감됩니다.'
                 : '치팅데이를 즐기세요! 내일부터 다시 시작하면 됩니다.'}
@@ -158,13 +158,13 @@ export function UseRewardDialog({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 bg-grey-100 text-grey-700 rounded-lg font-semibold hover:bg-grey-200 transition-colors"
+              className="flex-1 py-3 bg-neutral-100 text-neutral-700 rounded-[16px] font-semibold hover:bg-neutral-200 transition-colors"
             >
               취소
             </button>
             <button
               type="submit"
-              className={`flex-1 py-3 bg-${color} text-white rounded-lg font-semibold hover:opacity-90 transition-opacity`}
+              className={`flex-1 py-3 bg-${color} text-white rounded-[16px] font-semibold hover:opacity-90 transition-opacity`}
             >
               사용하기
             </button>

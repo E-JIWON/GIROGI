@@ -68,7 +68,7 @@ export function ReactionBar({
               {REACTION_CONFIG[type as ReactionType].emoji}
             </span>
           ))}
-          <span className="ml-1 text-sm text-grey-600">{totalCount}</span>
+          <span className="ml-1 text-sm text-neutral-600">{totalCount}</span>
         </div>
       )}
 
@@ -83,7 +83,7 @@ export function ReactionBar({
               onClick={() => onReactionTap(type)}
               className={cn(
                 'mr-2 flex items-center rounded-full px-2 py-1 transition-all',
-                count > 0 ? 'bg-primary/10' : 'hover:bg-grey-100'
+                count > 0 ? 'bg-primary/10' : 'hover:bg-neutral-100'
               )}
             >
               <span className="text-sm">{config.emoji}</span>
@@ -91,7 +91,7 @@ export function ReactionBar({
                 <span
                   className={cn(
                     'ml-1 text-xs',
-                    count > 0 ? 'font-semibold text-primary' : 'text-grey-600'
+                    count > 0 ? 'font-semibold text-primary' : 'text-neutral-600'
                   )}
                 >
                   {count}
@@ -108,21 +108,21 @@ export function ReactionBar({
           onClick={onCommentTap}
           className={cn(
             'flex items-center rounded-full px-3 py-1 transition-all',
-            commentCount > 0 ? 'bg-grey-200' : 'hover:bg-grey-100'
+            commentCount > 0 ? 'bg-neutral-200' : 'hover:bg-neutral-100'
           )}
         >
           <MessageCircle
             className={cn(
               'h-4 w-4',
-              commentCount > 0 ? 'text-grey-800' : 'text-grey-600'
+              commentCount > 0 ? 'text-neutral-800' : 'text-neutral-600'
             )}
           />
           <span
             className={cn(
               'ml-1 text-xs',
               commentCount > 0
-                ? 'font-semibold text-grey-800'
-                : 'text-grey-600'
+                ? 'font-semibold text-neutral-800'
+                : 'text-neutral-600'
             )}
           >
             {commentCount > 0 ? commentCount : '댓글'}

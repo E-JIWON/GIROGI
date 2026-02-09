@@ -36,7 +36,7 @@ export function MealRecordButton({
     <div
       onClick={onTap}
       className={cn(
-        'cursor-pointer rounded-lg border p-4 shadow-sm transition-all',
+        'cursor-pointer rounded-[16px] border p-4 transition-all',
         'hover:shadow-md',
         hasRecord
           ? 'border-success/20 bg-success/5'
@@ -64,14 +64,14 @@ export function MealRecordButton({
           <p
             className={cn(
               'text-base font-semibold',
-              hasRecord ? 'text-success' : 'text-grey-900'
+              hasRecord ? 'text-success' : 'text-neutral-900'
             )}
           >
             {hasRecord ? `${mealLabel} 기록 완료` : `${mealLabel} 기록하기`}
           </p>
 
           {/* 서브 텍스트 */}
-          <p className="mt-1 text-sm text-grey-600">
+          <p className="mt-1 text-sm text-neutral-600">
             {hasRecord
               ? '상세 보기 또는 수정'
               : '사진, 장소, 메뉴, 준수 행동 기록'}
@@ -81,7 +81,7 @@ export function MealRecordButton({
         {/* 화살표 아이콘 (오른쪽) */}
         <div className="shrink-0">
           <svg
-            className="h-5 w-5 text-grey-400"
+            className="h-5 w-5 text-neutral-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

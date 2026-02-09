@@ -105,7 +105,7 @@ export function TemptationTimer({
   };
 
   return (
-    <div className="rounded-lg border border-grey-200 bg-white p-6 shadow-md">
+    <div className="rounded-[16px] border border-grey-200 bg-white p-6">
       {/* 타이틀 */}
       <h3
         className={cn(
@@ -117,7 +117,7 @@ export function TemptationTimer({
       </h3>
 
       {/* 설명 */}
-      <p className="mt-2 text-center text-sm text-grey-600">
+      <p className="mt-2 text-center text-sm text-neutral-600">
         {isCompleted
           ? '유혹을 이겨내셨습니다. 아직도 먹고 싶으신가요?'
           : '충동은 보통 10분 내에 사라집니다'}
@@ -136,7 +136,7 @@ export function TemptationTimer({
               stroke="currentColor"
               strokeWidth="12"
               fill="none"
-              className="text-grey-200"
+              className="text-neutral-200"
             />
             {/* 진행률 원 */}
             <circle
@@ -162,10 +162,10 @@ export function TemptationTimer({
               <CheckCircle2 className="h-20 w-20 text-success" strokeWidth={2} />
             ) : (
               <>
-                <div className="text-5xl font-bold text-grey-900">
+                <div className="text-5xl font-bold text-neutral-900">
                   {formatTime(remainingSeconds)}
                 </div>
-                <div className="mt-2 text-xs text-grey-600">남은 시간</div>
+                <div className="mt-2 text-xs text-neutral-600">남은 시간</div>
               </>
             )}
           </div>
@@ -179,7 +179,7 @@ export function TemptationTimer({
             // 시작 전
             <button
               onClick={handleStart}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-temptation px-4 py-3 text-base font-semibold text-white transition-all hover:bg-temptation/90"
+              className="flex w-full items-center justify-center gap-2 rounded-[16px] bg-temptation px-4 py-3 text-base font-semibold text-white transition-all hover:bg-temptation/90"
             >
               <Play className="h-5 w-5" />
               타이머 시작
@@ -189,14 +189,14 @@ export function TemptationTimer({
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={handlePause}
-                className="flex items-center justify-center gap-2 rounded-lg border-2 border-grey-300 px-4 py-3 text-base font-semibold text-grey-700 transition-all hover:bg-grey-50"
+                className="flex items-center justify-center gap-2 rounded-[16px] border-2 border-grey-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
               >
                 <Pause className="h-5 w-5" />
                 일시정지
               </button>
               <button
                 onClick={handleReset}
-                className="flex items-center justify-center gap-2 rounded-lg border-2 border-grey-300 px-4 py-3 text-base font-semibold text-grey-700 transition-all hover:bg-grey-50"
+                className="flex items-center justify-center gap-2 rounded-[16px] border-2 border-grey-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
               >
                 <RotateCcw className="h-5 w-5" />
                 리셋
@@ -207,14 +207,14 @@ export function TemptationTimer({
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={handleResume}
-                className="flex items-center justify-center gap-2 rounded-lg bg-temptation px-4 py-3 text-base font-semibold text-white transition-all hover:bg-temptation/90"
+                className="flex items-center justify-center gap-2 rounded-[16px] bg-temptation px-4 py-3 text-base font-semibold text-white transition-all hover:bg-temptation/90"
               >
                 <Play className="h-5 w-5" />
                 재시작
               </button>
               <button
                 onClick={handleReset}
-                className="flex items-center justify-center gap-2 rounded-lg border-2 border-grey-300 px-4 py-3 text-base font-semibold text-grey-700 transition-all hover:bg-grey-50"
+                className="flex items-center justify-center gap-2 rounded-[16px] border-2 border-grey-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
               >
                 <RotateCcw className="h-5 w-5" />
                 리셋
@@ -230,7 +230,7 @@ export function TemptationTimer({
           {/* 유혹 사라짐 */}
           <button
             onClick={handleTemptationGone}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-success px-4 py-3 text-base font-semibold text-white transition-all hover:bg-success/90"
+            className="flex w-full items-center justify-center gap-2 rounded-[16px] bg-success px-4 py-3 text-base font-semibold text-white transition-all hover:bg-success/90"
           >
             <CheckCircle2 className="h-5 w-5" />
             네, 유혹이 사라졌습니다
@@ -239,7 +239,7 @@ export function TemptationTimer({
           {/* 자기 연민 모드 */}
           <button
             onClick={onSelfCompassionMode}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-selfcompassion px-4 py-3 text-base font-semibold text-selfcompassion transition-all hover:bg-selfcompassion/5"
+            className="flex w-full items-center justify-center gap-2 rounded-[16px] border-2 border-selfcompassion px-4 py-3 text-base font-semibold text-selfcompassion transition-all hover:bg-selfcompassion/5"
           >
             <Heart className="h-5 w-5" />
             아니요, 먹었습니다 (자기 연민 모드)

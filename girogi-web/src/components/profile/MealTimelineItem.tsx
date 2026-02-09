@@ -101,13 +101,13 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
 
         {/* 연결선 (마지막 항목이 아닐 때만) */}
         {!isLast && (
-          <div className="h-full w-0.5 flex-1 bg-grey-200" />
+          <div className="h-full w-0.5 flex-1 bg-neutral-200" />
         )}
       </div>
 
       {/* 오른쪽: 식사 정보 카드 */}
       <div className="mb-6 flex-1">
-        <div className="overflow-hidden rounded-lg border border-grey-200 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-[16px] border border-grey-200 bg-white">
           {/* 식사 시간대 + 장소 헤더 */}
           <div className={cn('flex items-center justify-between border-b px-4 py-3', colors.border)}>
             <div className="flex items-center gap-2">
@@ -118,7 +118,7 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
             </div>
 
             {/* 장소 태그 */}
-            <div className="flex items-center gap-1.5 text-xs text-grey-600">
+            <div className="flex items-center gap-1.5 text-xs text-neutral-600">
               {mealRecord.place === MealPlace.HOME ? (
                 <>
                   <Home className="h-4 w-4" />
@@ -156,7 +156,7 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
           <div className="p-4">
             {/* 메뉴 */}
             {mealRecord.menu && (
-              <p className="mb-3 text-base text-grey-900">{mealRecord.menu}</p>
+              <p className="mb-3 text-base text-neutral-900">{mealRecord.menu}</p>
             )}
 
             {/* 준수 행동 태그 */}
