@@ -4,12 +4,19 @@
  * Episodic Future Thinking (EFT) 이론을 적용한 미래 자아 시각화
  * - 목표 이미지 표시 (없으면 플레이스홀더)
  * - 목표 정보 (목표 체중, 현재 체중, 남은 일수)
- * - 동기부여 메시지
+ * - 동기부여 메시지 (랜덤 선택 + 시간대별 맞춤)
  *
  * Flutter: lib/presentation/widgets/emergency/future_self_card.dart
  */
 
-import { Sunrise, ImagePlus, Lightbulb } from 'lucide-react';
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Sunrise, ImagePlus, Lightbulb } from 'lucide-react'
+import {
+  EFT_MOTIVATION_MESSAGES,
+  EFT_MESSAGES_BY_TIME,
+} from '@/lib/constants'
 
 interface FutureSelfCardProps {
   /**
@@ -30,17 +37,53 @@ interface FutureSelfCardProps {
   targetDate?: Date | null;
 }
 
+/**
+ * 현재 시간대 감지
+ * - morning: 5시~12시
+ * - afternoon: 12시~18시
+ * - evening: 18시~5시
+ */
+function getCurrentTimeSlot(): 'morning' | 'afternoon' | 'evening' {
+  const hour = new Date().getHours()
+  if (hour >= 5 && hour < 12) return 'morning'
+  if (hour >= 12 && hour < 18) return 'afternoon'
+  return 'evening'
+}
+
+/**
+ * 배열에서 랜덤으로 N개 선택
+ */
+function getRandomItems<T>(array: readonly T[], count: number): T[] {
+  const shuffled = [...array].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, count)
+}
+
 export function FutureSelfCard({
   goalImageUrl,
   targetWeight,
   currentWeight,
   targetDate,
 }: FutureSelfCardProps) {
-  const hasGoalInfo = targetWeight && currentWeight;
-  const weightDiff = hasGoalInfo ? currentWeight - targetWeight : null;
+  const hasGoalInfo = targetWeight && currentWeight
+  const weightDiff = hasGoalInfo ? currentWeight - targetWeight : null
   const daysRemaining = targetDate
     ? Math.ceil((targetDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-    : null;
+    : null
+
+  // 동기부여 메시지 (랜덤 선택 + 시간대별)
+  const [motivationMessages, setMotivationMessages] = useState<string[]>([])
+
+  useEffect(() => {
+    // 시간대 감지
+    const timeSlot = getCurrentTimeSlot()
+    const timeBasedMessages = EFT_MESSAGES_BY_TIME[timeSlot]
+
+    // 시간대별 메시지 1개 + 일반 메시지 3개 = 총 4개
+    const selectedTimeMessage = getRandomItems(timeBasedMessages, 1)
+    const selectedGeneralMessages = getRandomItems(EFT_MOTIVATION_MESSAGES, 3)
+
+    setMotivationMessages([...selectedTimeMessage, ...selectedGeneralMessages])
+  }, [])
 
   return (
     <div className="rounded-lg border border-grey-200 bg-white p-4 shadow-md">
@@ -118,13 +161,22 @@ export function FutureSelfCard({
             잠깐만 생각해보세요
           </h4>
         </div>
-        <ul className="space-y-1 text-sm leading-relaxed text-grey-800">
-          <li>• 지금 먹으면 후회할 것 같나요?</li>
-          <li>• 목표 달성이 늦어질 수 있습니다</li>
-          <li>• 10분만 기다리면 유혹이 사라집니다</li>
-          <li>• 미래의 내가 고마워할 선택을 하세요</li>
-        </ul>
+        {motivationMessages.length > 0 ? (
+          <ul className="space-y-1 text-sm leading-relaxed text-grey-800">
+            {motivationMessages.map((message, index) => (
+              <li key={index}>• {message}</li>
+            ))}
+          </ul>
+        ) : (
+          // 로딩 중 기본 메시지
+          <ul className="space-y-1 text-sm leading-relaxed text-grey-800">
+            <li>• 지금 먹으면 후회할 것 같나요?</li>
+            <li>• 목표 달성이 늦어질 수 있습니다</li>
+            <li>• 10분만 기다리면 유혹이 사라집니다</li>
+            <li>• 미래의 내가 고마워할 선택을 하세요</li>
+          </ul>
+        )}
       </div>
     </div>
-  );
+  )
 }
