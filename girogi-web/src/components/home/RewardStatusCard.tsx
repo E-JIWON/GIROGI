@@ -8,8 +8,13 @@
  * Flutter: lib/presentation/widgets/home/reward_status_card.dart
  */
 
-import { Gift, PartyPopper, Info } from 'lucide-react';
-import { cn } from '@/lib/utils';
+'use client'
+
+import { useState } from 'react'
+import { Gift, PartyPopper, Info } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { UseRewardDialog } from './UseRewardDialog'
+import type { RewardType } from '@/types/models'
 
 interface RewardStatusCardProps {
   /**
@@ -20,6 +25,14 @@ interface RewardStatusCardProps {
    * 연속 다이어트 일수
    */
   consecutiveDietDays: number;
+  /**
+   * 현재 사용자 ID
+   */
+  userId?: string;
+  /**
+   * 보상 사용 후 콜백
+   */
+  onRewardUsed?: () => void;
 }
 
 /** 과자박스 획득 주기 (일) */
@@ -30,7 +43,13 @@ const DAYS_FOR_CHEAT_DAY = 7;
 export function RewardStatusCard({
   snackBoxCount,
   consecutiveDietDays,
+  userId = 'user1',
+  onRewardUsed,
 }: RewardStatusCardProps) {
+  // 다이얼로그 상태
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedRewardType, setSelectedRewardType] = useState<RewardType>('snackbox')
+
   // 치팅데이까지 남은 일수 계산
   const daysUntilCheatDay = (() => {
     const remaining =
@@ -41,6 +60,16 @@ export function RewardStatusCard({
   // 치팅데이 사용 가능 여부
   const canUseCheatDay =
     daysUntilCheatDay === 0 && consecutiveDietDays >= DAYS_FOR_CHEAT_DAY;
+
+  // 보상 사용 핸들러
+  const handleUseReward = (type: RewardType) => {
+    setSelectedRewardType(type)
+    setIsDialogOpen(true)
+  }
+
+  const handleRewardUsed = () => {
+    onRewardUsed?.()
+  }
 
   return (
     <div className="rounded-lg border border-grey-200 bg-white p-4 shadow-sm">
@@ -58,10 +87,18 @@ export function RewardStatusCard({
             <Gift className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-grey-700">과자박스</span>
           </div>
-          <p className="text-2xl font-bold text-primary">
+          <p className="text-2xl font-bold text-primary mb-2">
             {snackBoxCount}
             <span className="text-base">개</span>
           </p>
+          {snackBoxCount > 0 && (
+            <button
+              onClick={() => handleUseReward('snackbox')}
+              className="w-full py-1.5 bg-primary text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
+            >
+              사용하기
+            </button>
+          )}
         </div>
 
         {/* 치팅데이 */}
@@ -81,7 +118,15 @@ export function RewardStatusCard({
             <span className="text-sm font-medium text-grey-700">치팅데이</span>
           </div>
           {canUseCheatDay ? (
-            <p className="text-2xl font-bold text-cheatday">사용 가능!</p>
+            <>
+              <p className="text-2xl font-bold text-cheatday mb-2">사용 가능!</p>
+              <button
+                onClick={() => handleUseReward('cheatday')}
+                className="w-full py-1.5 bg-cheatday text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              >
+                사용하기
+              </button>
+            </>
           ) : (
             <p className="text-2xl font-bold text-grey-600">
               {daysUntilCheatDay}
@@ -107,6 +152,15 @@ export function RewardStatusCard({
           </p>
         </div>
       </div>
+
+      {/* 보상 사용 다이얼로그 */}
+      <UseRewardDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        rewardType={selectedRewardType}
+        userId={userId}
+        onUsed={handleRewardUsed}
+      />
     </div>
   );
 }

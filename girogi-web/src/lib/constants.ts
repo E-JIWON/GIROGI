@@ -172,3 +172,13 @@ export const CURRENT_WEIGHT_KEY = 'girogi_current_weight'
 
 /** 목표 날짜 localStorage 키 */
 export const GOAL_DATE_KEY = 'girogi_goal_date'
+
+// ============================================
+// 보상 사용
+// ============================================
+
+/** 보상 사용 내역 localStorage 키 */
+export const REWARD_USAGE_KEY = 'girogi_reward_usage'
+
+/** 현재 과자박스 개수 localStorage 키 */
+export const SNACK_BOX_COUNT_KEY = 'girogi_snack_box_count'

@@ -12,7 +12,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Apple, Utensils, Moon } from 'lucide-react';
 import { StreakCounter } from '@/components/home/StreakCounter';
 import { MissionCard } from '@/components/home/MissionCard';
@@ -23,6 +23,7 @@ import {
   calculateMockCurrentStreak,
 } from '@/lib/mock/dailyRecords';
 import { mockCurrentUser } from '@/lib/mock/users';
+import { SNACK_BOX_COUNT_KEY } from '@/lib/constants';
 
 interface Mission {
   id: string;
@@ -42,6 +43,22 @@ export default function Home() {
     .slice(0, 7)
     .reverse()
     .map((record) => record.isSuccessDay);
+
+  // 과자박스 개수 (localStorage에서 불러오기)
+  const [snackBoxCount, setSnackBoxCount] = useState(0);
+
+  useEffect(() => {
+    // 초기 과자박스 개수 불러오기
+    const storedCount = localStorage.getItem(SNACK_BOX_COUNT_KEY);
+    if (storedCount) {
+      setSnackBoxCount(parseInt(storedCount));
+    } else {
+      // 초기값 설정 (Mock 데이터 사용)
+      const initialCount = mockCurrentUser.snackBoxCount || 0;
+      setSnackBoxCount(initialCount);
+      localStorage.setItem(SNACK_BOX_COUNT_KEY, String(initialCount));
+    }
+  }, []);
 
   // 핵심 미션 3개
   const [missions, setMissions] = useState<Mission[]>([
@@ -79,8 +96,17 @@ export default function Home() {
     );
   };
 
+  // 보상 사용 후 핸들러
+  const handleRewardUsed = () => {
+    // localStorage에서 최신 과자박스 개수 불러오기
+    const updatedCount = localStorage.getItem(SNACK_BOX_COUNT_KEY);
+    if (updatedCount) {
+      setSnackBoxCount(parseInt(updatedCount));
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-grey-50">
+    <div className="min-h-screen">
       {/* 헤더 */}
       <header className="sticky top-0 z-10 bg-white shadow-sm">
         <div className="mx-auto max-w-2xl px-4 py-4">
@@ -121,8 +147,10 @@ export default function Home() {
 
           {/* 보상 현황 */}
           <RewardStatusCard
-            snackBoxCount={mockCurrentUser.snackBoxCount || 0}
+            snackBoxCount={snackBoxCount}
             consecutiveDietDays={currentStreak}
+            userId={mockCurrentUser.id}
+            onRewardUsed={handleRewardUsed}
           />
         </div>
       </main>

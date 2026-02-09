@@ -507,3 +507,32 @@ export function createSharedRecordPost(
     createdAt: createdAt || new Date().toISOString(),
   };
 }
+
+/**
+ * 보상 사용 타입
+ *
+ * Temptation Bundling 이론 적용
+ * 보상(과자박스, 치팅데이) 사용 기록
+ */
+export type RewardType = 'snackbox' | 'cheatday';
+
+/**
+ * 보상 사용 기록
+ *
+ * 과자박스 또는 치팅데이 사용 내역을 기록
+ * 언제, 무엇을 먹었는지 추적
+ */
+export interface RewardUsage {
+  /** 고유 식별자 */
+  id: string;
+  /** 사용자 ID */
+  userId: string;
+  /** 보상 타입 */
+  type: RewardType;
+  /** 먹은 음식 (예: "치킨", "피자", "아이스크림") */
+  food: string;
+  /** 메모 (선택사항) */
+  memo?: string;
+  /** 사용 일시 */
+  usedAt: string;
+}

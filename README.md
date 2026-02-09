@@ -105,11 +105,10 @@ flutter pub get
 flutter run
 ```
 
-### Next.js 앱 (Phase 1-7 완료 ✅)
+### Next.js 앱 (Phase 1-11 완료 ✅)
 ```bash
 cd girogi-web
-pnpm install  # 이미 설치 완료
-pnpm dev
+pnpm dev  # http://localhost:8282
 ```
 
 **Phase 1 완료 내역**:
@@ -305,6 +304,30 @@ pnpm dev
   - EFT 효과 강화: 목표 이미지 필수 설정으로 미래 자아 시각화 강제
   - 동기부여 메시지 다양화: 4개 → 10개 (반복 노출 효과 감소 방지)
   - 시간대별 맞춤: 아침/오후/저녁 상황별 메시지
+- ✅ **연구 기반 개선 Task 2: 보상 사용 메커니즘 구현**
+  - `src/types/models.ts` - RewardUsage 타입 정의
+    - RewardType ('snackbox' | 'cheatday')
+    - RewardUsage 인터페이스 (음식, 메모, 사용 일시)
+  - `src/lib/constants.ts` - 보상 관련 localStorage 키 추가
+    - REWARD_USAGE_KEY (사용 내역)
+    - SNACK_BOX_COUNT_KEY (과자박스 개수)
+  - `src/components/home/UseRewardDialog.tsx` - 보상 사용 다이얼로그
+    - 먹은 음식 입력 필드
+    - 메모 입력 (선택사항)
+    - localStorage에 사용 내역 저장
+    - 과자박스 사용 시 개수 차감
+  - `src/components/home/RewardStatusCard.tsx` - "사용하기" 버튼 추가
+    - 과자박스 1개 이상 시 "사용하기" 버튼 표시
+    - 치팅데이 사용 가능 시 "사용하기" 버튼 표시
+    - 다이얼로그 연동
+  - `src/app/page.tsx` - 홈 페이지 상태 관리
+    - 과자박스 개수 useState 관리
+    - localStorage에서 초기값 불러오기
+    - 보상 사용 후 화면 갱신
+- ✅ **Temptation Bundling 이론 완성**
+  - 보상을 "받는 것"뿐만 아니라 "사용하는 것"까지 구현
+  - 사용 내역 기록으로 추적 가능
+  - 과자박스 → 치팅데이 흐름 완성
 
 ---
 
