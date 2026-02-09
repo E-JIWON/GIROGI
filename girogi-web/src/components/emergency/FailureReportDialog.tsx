@@ -96,7 +96,7 @@ export function FailureReportDialog({
       {/* 다이얼로그 */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="w-full max-w-lg overflow-hidden rounded-lg bg-white shadow-xl"
+          className="w-full max-w-lg overflow-hidden rounded-[24px] bg-white"
           onClick={(e) => e.stopPropagation()}
         >
           {/* 스크롤 가능한 컨텐츠 */}
@@ -105,25 +105,25 @@ export function FailureReportDialog({
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <FileText className="h-7 w-7 text-selfcompassion" />
-                <h2 className="text-xl font-bold text-grey-900">실패 리포트</h2>
+                <h2 className="text-xl font-bold text-neutral-900">실패 리포트</h2>
               </div>
               <button
                 onClick={onClose}
-                className="rounded-full p-1 hover:bg-grey-100"
+                className="rounded-full p-1 hover:bg-neutral-100"
               >
-                <X className="h-6 w-6 text-grey-600" />
+                <X className="h-6 w-6 text-neutral-600" />
               </button>
             </div>
 
             {/* 허가 효과 경고 */}
-            <div className="mb-4 rounded-lg border-2 border-warning bg-warning/10 p-3">
+            <div className="mb-4 rounded-[16px] bg-warning-100 p-3">
               <div className="flex gap-2">
                 <AlertTriangle className="h-5 w-5 shrink-0 text-warning" />
                 <div>
                   <p className="text-sm font-bold text-warning mb-1">
                     {LICENSING_EFFECT_WARNING}
                   </p>
-                  <p className="text-xs text-grey-800">
+                  <p className="text-xs text-neutral-800">
                     리포트를 작성하고 <strong>지금 바로</strong> 다시 시작하세요. "내일부터"는 실패의 시작입니다.
                   </p>
                 </div>
@@ -133,7 +133,7 @@ export function FailureReportDialog({
             {/* 안내 메시지 */}
             <div className="mb-4 flex gap-2 rounded-lg bg-info/10 p-3">
               <Lightbulb className="h-5 w-5 shrink-0 text-info" />
-              <p className="text-xs text-grey-800">
+              <p className="text-xs text-neutral-800">
                 실패 원인을 분석하면 같은 상황에서 더 잘 대처할 수 있습니다
               </p>
             </div>
@@ -142,7 +142,7 @@ export function FailureReportDialog({
             <div className="space-y-4">
               {/* 1. 어떤 상황이었나요? */}
               <div>
-                <label className="mb-2 block text-sm font-semibold text-grey-900">
+                <label className="mb-2 block text-sm font-semibold text-neutral-900">
                   1. 어떤 상황이었나요?
                 </label>
                 <textarea
@@ -150,10 +150,10 @@ export function FailureReportDialog({
                   onChange={(e) => setSituation(e.target.value)}
                   placeholder="예: 회식 자리에서 술과 안주를 먹었다"
                   className={cn(
-                    'w-full rounded-lg border p-3 text-base',
+                    'w-full rounded-[12px] p-3 text-base transition-colors',
                     errors.situation
-                      ? 'border-error focus:border-error'
-                      : 'border-grey-300 focus:border-primary'
+                      ? 'bg-error-50 focus:bg-error-100'
+                      : 'bg-neutral-50 focus:bg-neutral-100'
                   )}
                   rows={2}
                 />
@@ -164,7 +164,7 @@ export function FailureReportDialog({
 
               {/* 2. 왜 실패했나요? */}
               <div>
-                <label className="mb-2 block text-sm font-semibold text-grey-900">
+                <label className="mb-2 block text-sm font-semibold text-neutral-900">
                   2. 왜 실패했나요?
                 </label>
                 <textarea
@@ -172,10 +172,10 @@ export function FailureReportDialog({
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="예: 분위기상 거절하기 어려웠다"
                   className={cn(
-                    'w-full rounded-lg border p-3 text-base',
+                    'w-full rounded-[12px] p-3 text-base transition-colors',
                     errors.reason
-                      ? 'border-error focus:border-error'
-                      : 'border-grey-300 focus:border-primary'
+                      ? 'bg-error-50 focus:bg-error-100'
+                      : 'bg-neutral-50 focus:bg-neutral-100'
                   )}
                   rows={2}
                 />
@@ -186,7 +186,7 @@ export function FailureReportDialog({
 
               {/* 3. 다음엔 어떻게 할까요? */}
               <div>
-                <label className="mb-2 block text-sm font-semibold text-grey-900">
+                <label className="mb-2 block text-sm font-semibold text-neutral-900">
                   3. 다음엔 어떻게 할까요?
                 </label>
                 <textarea
@@ -194,10 +194,10 @@ export function FailureReportDialog({
                   onChange={(e) => setSolution(e.target.value)}
                   placeholder="예: 미리 저칼로리 식사를 하고 가겠다"
                   className={cn(
-                    'w-full rounded-lg border p-3 text-base',
+                    'w-full rounded-[12px] p-3 text-base transition-colors',
                     errors.solution
-                      ? 'border-error focus:border-error'
-                      : 'border-grey-300 focus:border-primary'
+                      ? 'bg-error-50 focus:bg-error-100'
+                      : 'bg-neutral-50 focus:bg-neutral-100'
                   )}
                   rows={2}
                 />
@@ -207,7 +207,7 @@ export function FailureReportDialog({
               </div>
 
               {/* 커뮤니티 공유 체크박스 */}
-              <div className="rounded-lg bg-grey-100 p-3">
+              <div className="rounded-lg bg-neutral-100 p-3">
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
@@ -216,10 +216,10 @@ export function FailureReportDialog({
                     className="mt-1 h-4 w-4 cursor-pointer accent-primary"
                   />
                   <div className="flex-1">
-                    <div className="text-sm font-semibold text-grey-900">
+                    <div className="text-sm font-semibold text-neutral-900">
                       커뮤니티에 공유하기
                     </div>
-                    <div className="text-xs text-grey-600">
+                    <div className="text-xs text-neutral-600">
                       다른 사람들의 응원과 조언을 받을 수 있습니다
                     </div>
                   </div>
