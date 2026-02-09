@@ -171,11 +171,13 @@ export default function ChecklistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-grey-50">
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
       {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white shadow-sm">
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto max-w-2xl px-4 py-4">
-          <h1 className="text-xl font-bold text-grey-900">오늘의 체크리스트</h1>
+          <h1 className="text-lg font-semibold text-neutral-700">오늘의 체크리스트</h1>
         </div>
       </header>
 

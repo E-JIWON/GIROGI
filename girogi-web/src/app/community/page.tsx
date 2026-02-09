@@ -49,9 +49,9 @@ export default function CommunityPage() {
   return (
     <div className="relative min-h-screen bg-grey-50">
       {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white shadow-sm">
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
-          <h1 className="text-xl font-bold text-grey-900">커뮤니티</h1>
+          <h1 className="text-lg font-semibold text-neutral-700">커뮤니티</h1>
 
           {/* 글쓰기 버튼 */}
           <button
@@ -59,7 +59,7 @@ export default function CommunityPage() {
             className="rounded-full p-2 transition-all hover:bg-grey-100"
             title="글쓰기"
           >
-            <Edit className="h-6 w-6 text-grey-900" />
+            <Edit className="h-6 w-6 text-neutral-700" />
           </button>
         </div>
 
@@ -71,7 +71,7 @@ export default function CommunityPage() {
               'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
               activeTab === 'all'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-grey-600 hover:text-grey-900'
+                : 'border-transparent text-grey-600 hover:text-neutral-700'
             )}
           >
             전체
@@ -82,7 +82,7 @@ export default function CommunityPage() {
               'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
               activeTab === 'following'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-grey-600 hover:text-grey-900'
+                : 'border-transparent text-grey-600 hover:text-neutral-700'
             )}
           >
             팔로잉

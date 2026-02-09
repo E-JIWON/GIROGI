@@ -54,9 +54,9 @@ export default function EmergencyPage() {
   return (
     <div className="relative min-h-screen bg-grey-50">
       {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white shadow-sm">
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
-          <h1 className="text-xl font-bold text-grey-900">유혹 극복</h1>
+          <h1 className="text-lg font-semibold text-neutral-700">유혹 극복</h1>
 
           {/* 자기 연민 모드 토글 버튼 */}
           <button

@@ -74,7 +74,9 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-grey-50">
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
       {/* 프로필 헤더 */}
       <ProfileHeader
         user={currentUser}
@@ -92,7 +94,7 @@ export default function ProfilePage() {
             'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
             activeTab === 'timeline'
               ? 'border-primary text-primary'
-              : 'border-transparent text-grey-600 hover:text-grey-900'
+              : 'border-transparent text-grey-600 hover:text-neutral-700'
           )}
         >
           식사 타임라인
@@ -103,7 +105,7 @@ export default function ProfilePage() {
             'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
             activeTab === 'posts'
               ? 'border-primary text-primary'
-              : 'border-transparent text-grey-600 hover:text-grey-900'
+              : 'border-transparent text-grey-600 hover:text-neutral-700'
           )}
         >
           기록

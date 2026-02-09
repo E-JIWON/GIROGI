@@ -72,7 +72,7 @@ export function RewardStatusCard({
   }
 
   return (
-    <div className="rounded-lg bg-white p-6">
+    <div className="rounded-lg bg-[#fafafa] p-6">
       {/* 타이틀 */}
       <div className="mb-4 flex items-center gap-2">
         <Gift className="h-5 w-5 text-primary" />
