@@ -45,7 +45,7 @@ export function MissionCard({
     <div
       onClick={onTap}
       className={cn(
-        'rounded-md bg-[#fafafa] p-4 transition-all cursor-pointer',
+        'rounded-md bg-neutral-100 p-4 transition-all cursor-pointer',
         'hover:scale-[1.01] active:scale-[0.99]',
         isCompleted && 'bg-success-50'
       )}

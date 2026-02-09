@@ -72,22 +72,22 @@ export function RewardStatusCard({
   }
 
   return (
-    <div className="rounded-lg bg-[#fafafa] p-6">
+    <div className="rounded-lg bg-neutral-100 p-6">
       {/* 타이틀 */}
       <div className="mb-4 flex items-center gap-2">
-        <Gift className="h-5 w-5 text-primary" />
+        <Gift className="h-5 w-5 text-peach-600" />
         <h3 className="text-base font-semibold text-neutral-900">보상 현황</h3>
       </div>
 
       {/* 보상 현황 그리드 */}
       <div className="grid grid-cols-2 gap-3">
         {/* 과자박스 */}
-        <div className="rounded-lg bg-primary/5 p-3">
+        <div className="rounded-lg bg-peach-50 p-3">
           <div className="mb-1 flex items-center gap-1">
-            <Gift className="h-4 w-4 text-primary" />
+            <Gift className="h-4 w-4 text-peach-600" />
             <span className="text-sm font-medium text-neutral-800">과자박스</span>
           </div>
-          <p className="text-2xl font-bold text-primary mb-2">
+          <p className="text-2xl font-bold text-peach-700 mb-2">
             {snackBoxCount}
             <span className="text-base">개</span>
           </p>

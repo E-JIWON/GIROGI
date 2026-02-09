@@ -101,7 +101,7 @@ export function ComparisonChart({
   const maxValue = Math.max(...sortedData.map((item) => item.value), 1);
 
   return (
-    <div className="rounded-md border border-neutral-200 bg-white p-6">
+    <div className="rounded-md bg-neutral-100 p-6">
       {/* 헤더 */}
       <div className="mb-6 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
@@ -128,7 +128,7 @@ export function ComparisonChart({
                     className={cn(
                       'flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold',
                       isFirstPlace
-                        ? 'bg-gradient-to-r from-amber-400 to-amber-600 text-white'
+                        ? 'bg-gradient-to-r from-peach-400 to-peach-600 text-white'
                         : 'bg-neutral-200 text-neutral-700'
                     )}
                   >
@@ -167,7 +167,7 @@ export function ComparisonChart({
                   <span
                     className={cn(
                       'text-lg font-bold',
-                      isFirstPlace ? 'text-amber-600' : 'text-neutral-900'
+                      isFirstPlace ? 'text-peach-700' : 'text-neutral-900'
                     )}
                   >
                     {item.value}
@@ -182,7 +182,7 @@ export function ComparisonChart({
                   className={cn(
                     'h-full transition-all duration-500',
                     isFirstPlace
-                      ? 'bg-gradient-to-r from-amber-400 to-amber-600'
+                      ? 'bg-gradient-to-r from-peach-400 to-peach-600'
                       : isCurrentUser
                         ? 'bg-primary'
                         : 'bg-neutral-400'

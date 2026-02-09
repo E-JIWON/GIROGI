@@ -99,18 +99,18 @@ export default function OnboardingPage() {
         <div className="mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-              step >= 1 ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'
+              step >= 1 ? 'bg-primary text-white' : 'bg-neutral-200 text-neutral-700'
             }`}>
               1
             </div>
-            <div className={`w-16 h-1 ${step >= 2 ? 'bg-primary' : 'bg-gray-200'}`} />
+            <div className={`w-16 h-1 ${step >= 2 ? 'bg-primary' : 'bg-neutral-200'}`} />
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-              step >= 2 ? 'bg-primary text-white' : 'bg-gray-200 text-gray-500'
+              step >= 2 ? 'bg-primary text-white' : 'bg-neutral-200 text-neutral-700'
             }`}>
               2
             </div>
           </div>
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-neutral-700">
             {step === 1 ? '목표 이미지 선택' : '체중 정보 입력'}
           </p>
         </div>
@@ -119,25 +119,25 @@ export default function OnboardingPage() {
         {step === 1 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-neutral-900 mb-2">
                 목표하는 모습을 선택하세요
               </h1>
-              <p className="text-gray-600">
+              <p className="text-neutral-700">
                 유혹을 느낄 때 이 이미지를 보면서<br />
                 건강해진 미래의 나를 상상해보세요
               </p>
             </div>
 
             {/* 직접 업로드 */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-dashed border-gray-300">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border-2 border-dashed border-neutral-300">
               <label htmlFor="image-upload" className="cursor-pointer block">
                 <div className="flex flex-col items-center gap-3">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
                     <Camera className="w-8 h-8 text-primary" />
                   </div>
                   <div className="text-center">
-                    <p className="font-semibold text-gray-900">나만의 목표 이미지 업로드</p>
-                    <p className="text-sm text-gray-600">원하는 사진을 직접 올려보세요</p>
+                    <p className="font-semibold text-neutral-900">나만의 목표 이미지 업로드</p>
+                    <p className="text-sm text-neutral-700">원하는 사진을 직접 올려보세요</p>
                   </div>
                   {customImageUrl && (
                     <div className="relative w-full h-48 rounded-lg overflow-hidden">
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
                         fill
                         className="object-cover"
                       />
-                      <div className="absolute top-2 right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                      <div className="absolute top-2 right-2 w-8 h-8 bg-success rounded-full flex items-center justify-center">
                         <Check className="w-5 h-5 text-white" />
                       </div>
                     </div>
@@ -165,7 +165,7 @@ export default function OnboardingPage() {
 
             {/* 기본 이미지 선택 */}
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-3">
+              <p className="text-sm font-semibold text-neutral-800 mb-3">
                 또는 기본 이미지 중 선택하세요
               </p>
               <div className="grid grid-cols-2 gap-3">
@@ -179,12 +179,12 @@ export default function OnboardingPage() {
                     className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${
                       selectedImageId === image.id
                         ? 'border-primary ring-4 ring-primary/20'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-neutral-200 hover:border-neutral-300'
                     }`}
                   >
                     {/* Placeholder 배경 */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                      <p className="text-xs text-center text-gray-600 px-2">
+                      <p className="text-xs text-center text-neutral-700 px-2">
                         {image.description}
                       </p>
                     </div>
@@ -215,17 +215,17 @@ export default function OnboardingPage() {
         {step === 2 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-neutral-900 mb-2">
                 목표를 설정하세요
               </h1>
-              <p className="text-gray-600">
+              <p className="text-neutral-700">
                 구체적인 목표가 성공 확률을 높입니다
               </p>
             </div>
 
             {/* 선택한 목표 이미지 미리보기 */}
             <div className="bg-white rounded-2xl p-4 shadow-sm">
-              <p className="text-sm font-semibold text-gray-700 mb-3">선택한 목표 이미지</p>
+              <p className="text-sm font-semibold text-neutral-800 mb-3">선택한 목표 이미지</p>
               <div className="relative w-full h-48 rounded-lg overflow-hidden">
                 {customImageUrl ? (
                   <Image
@@ -236,7 +236,7 @@ export default function OnboardingPage() {
                   />
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-neutral-700">
                       {DEFAULT_GOAL_IMAGES.find(img => img.id === selectedImageId)?.description}
                     </p>
                   </div>
@@ -247,7 +247,7 @@ export default function OnboardingPage() {
             {/* 체중 입력 */}
             <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
               <div>
-                <label htmlFor="current-weight" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="current-weight" className="block text-sm font-semibold text-neutral-800 mb-2">
                   현재 체중 (kg)
                 </label>
                 <input
@@ -257,12 +257,12 @@ export default function OnboardingPage() {
                   value={currentWeight}
                   onChange={(e) => setCurrentWeight(e.target.value)}
                   placeholder="예: 70.5"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
               <div>
-                <label htmlFor="goal-weight" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="goal-weight" className="block text-sm font-semibold text-neutral-800 mb-2">
                   목표 체중 (kg)
                 </label>
                 <input
@@ -272,12 +272,12 @@ export default function OnboardingPage() {
                   value={goalWeight}
                   onChange={(e) => setGoalWeight(e.target.value)}
                   placeholder="예: 65.0"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
               <div>
-                <label htmlFor="goal-date" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label htmlFor="goal-date" className="block text-sm font-semibold text-neutral-800 mb-2">
                   목표 날짜
                 </label>
                 <input
@@ -285,14 +285,14 @@ export default function OnboardingPage() {
                   type="date"
                   value={goalDate}
                   onChange={(e) => setGoalDate(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
               {/* 감량 예상 */}
               {currentWeight && goalWeight && (
                 <div className="bg-primary/5 rounded-lg p-4">
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-neutral-800">
                     <span className="font-semibold">목표 감량:</span>{' '}
                     <span className="text-primary font-bold text-lg">
                       {(parseFloat(currentWeight) - parseFloat(goalWeight)).toFixed(1)}kg
@@ -306,7 +306,7 @@ export default function OnboardingPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => setStep(1)}
-                className="flex-1 py-4 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
+                className="flex-1 py-4 bg-neutral-100 text-neutral-800 rounded-xl font-semibold hover:bg-neutral-200 transition-colors"
               >
                 이전
               </button>

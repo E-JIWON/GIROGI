@@ -10,7 +10,7 @@
 
 import React from 'react';
 
-export type CardVariant = 'white' | 'neutral' | 'primary' | 'success' | 'warning' | 'error';
+export type CardVariant = 'white' | 'neutral' | 'primary' | 'success' | 'caution' | 'error';
 export type CardPadding = 'sm' | 'md' | 'lg';
 
 interface CleanCardProps {
@@ -27,7 +27,7 @@ const variantStyles: Record<CardVariant, string> = {
   neutral: 'bg-neutral-100',
   primary: 'bg-primary-100',
   success: 'bg-success-100',
-  warning: 'bg-warning-100',
+  caution: 'bg-peach-100',
   error: 'bg-error-100',
 };
 

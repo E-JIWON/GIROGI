@@ -83,7 +83,7 @@ export function ReactionBar({
               onClick={() => onReactionTap(type)}
               className={cn(
                 'mr-2 flex items-center rounded-full px-2 py-1 transition-all',
-                count > 0 ? 'bg-primary/10' : 'hover:bg-neutral-100'
+                count > 0 ? 'bg-info-100' : 'hover:bg-neutral-100'
               )}
             >
               <span className="text-sm">{config.emoji}</span>

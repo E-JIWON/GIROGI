@@ -185,10 +185,10 @@ export default function ChecklistPage() {
           <div className="space-y-4">
           {/* 외식 경고 배너 (주 3회 이상 시) */}
           {weeklyDiningOutCount >= 3 && (
-            <div className="flex gap-3 rounded-lg border border-warning/20 bg-warning/10 p-4">
-              <AlertTriangle className="h-6 w-6 shrink-0 text-warning" />
+            <div className="flex gap-3 rounded-lg border border-peach/20 bg-peach/10 p-4">
+              <AlertTriangle className="h-6 w-6 shrink-0 text-temptation" />
               <div>
-                <p className="font-semibold text-warning">외식 빈도 경고</p>
+                <p className="font-semibold text-temptation">외식 빈도 경고</p>
                 <p className="mt-1 text-sm text-neutral-800">
                   이번 주 외식 {weeklyDiningOutCount}회 기록되었습니다.
                   집밥 먹기를 추천합니다!

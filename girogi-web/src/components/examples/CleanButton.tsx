@@ -10,7 +10,7 @@
 
 import React from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'caution' | 'error' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface CleanButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -36,10 +36,10 @@ const variantStyles: Record<ButtonVariant, string> = {
     text-success-900
     hover:bg-success-400
   `,
-  warning: `
-    bg-warning-300
-    text-warning-900
-    hover:bg-warning-400
+  caution: `
+    bg-peach-300
+    text-neutral-900
+    hover:bg-peach-400
   `,
   error: `
     bg-error-300

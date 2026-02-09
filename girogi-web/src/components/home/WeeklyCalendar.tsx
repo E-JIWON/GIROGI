@@ -34,7 +34,7 @@ export function WeeklyCalendar({ weeklyRecords }: WeeklyCalendarProps) {
   const successRate = calculateSuccessRate();
 
   return (
-    <div className="rounded-lg bg-[#fafafa] p-6">
+    <div className="rounded-lg bg-neutral-100 p-6">
       {/* 타이틀 */}
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-base font-semibold text-neutral-900">이번 주 기록</h3>

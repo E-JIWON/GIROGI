@@ -72,8 +72,8 @@ export function BottomTabBar() {
                   className={cn(
                     'flex h-14 w-14 items-center justify-center rounded-full transition-all',
                     isActive
-                      ? 'bg-gradient-to-r from-error to-warning'
-                      : 'bg-gradient-to-r from-error/80 to-warning/80 hover:from-error hover:to-warning'
+                      ? 'bg-gradient-to-r from-error to-peach'
+                      : 'bg-gradient-to-r from-error/80 to-peach/80 hover:from-error hover:to-peach'
                   )}
                 >
                   <Icon className="h-7 w-7 text-white" />

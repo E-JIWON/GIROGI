@@ -75,7 +75,7 @@ export function ChecklistTimeSection({
   const borderColorClass = `border-${colorClass}`;
 
   return (
-    <div className="rounded-lg bg-[#fafafa] p-6">
+    <div className="rounded-lg bg-neutral-100 p-6">
       {/* 헤더 (아이콘 + 시간대 + 완료 카운터) */}
       <div className="mb-3 flex items-center gap-3">
         {/* 아이콘 원형 컨테이너 */}

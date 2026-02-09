@@ -105,7 +105,7 @@ export function TemptationTimer({
   };
 
   return (
-    <div className="rounded-md border border-neutral-200 bg-white p-6">
+    <div className="rounded-md bg-neutral-100 p-6">
       {/* 타이틀 */}
       <h3
         className={cn(

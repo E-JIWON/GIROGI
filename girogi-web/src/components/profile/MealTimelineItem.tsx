@@ -30,28 +30,28 @@ interface MealTimelineItemProps {
  */
 const MEAL_TIME_COLORS = {
   breakfast: {
-    bg: 'bg-orange-100',
-    text: 'text-orange-700',
-    border: 'border-orange-300',
-    dot: 'bg-orange-500',
+    bg: 'bg-peach-100',
+    text: 'text-peach-700',
+    border: 'border-peach-300',
+    dot: 'bg-peach-500',
   },
   lunch: {
-    bg: 'bg-amber-100',
-    text: 'text-amber-700',
-    border: 'border-amber-300',
-    dot: 'bg-amber-500',
+    bg: 'bg-primary-100',
+    text: 'text-primary-700',
+    border: 'border-primary-300',
+    dot: 'bg-primary-500',
   },
   dinner: {
-    bg: 'bg-purple-100',
-    text: 'text-purple-700',
-    border: 'border-purple-300',
-    dot: 'bg-purple-500',
+    bg: 'bg-info-100',
+    text: 'text-info-700',
+    border: 'border-info-300',
+    dot: 'bg-info-500',
   },
   snack: {
-    bg: 'bg-pink-100',
-    text: 'text-pink-700',
-    border: 'border-pink-300',
-    dot: 'bg-pink-500',
+    bg: 'bg-rose-100',
+    text: 'text-rose-700',
+    border: 'border-rose-300',
+    dot: 'bg-rose-500',
   },
 } as const;
 
@@ -107,7 +107,7 @@ export function MealTimelineItem({ mealRecord, isLast = false }: MealTimelineIte
 
       {/* 오른쪽: 식사 정보 카드 */}
       <div className="mb-6 flex-1">
-        <div className="overflow-hidden rounded-md border border-neutral-200 bg-white">
+        <div className="overflow-hidden rounded-md bg-neutral-100">
           {/* 식사 시간대 + 장소 헤더 */}
           <div className={cn('flex items-center justify-between border-b px-4 py-3', colors.border)}>
             <div className="flex items-center gap-2">

@@ -54,16 +54,16 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
       </div>
 
       {/* 허가 효과 경고 (Licensing Effect) */}
-      <div className="mb-6 rounded-md bg-warning-100 p-4">
+      <div className="mb-6 rounded-md bg-peach-100 p-4">
         <div className="flex gap-3">
-          <AlertTriangle className="h-6 w-6 shrink-0 text-warning-900" />
+          <AlertTriangle className="h-6 w-6 shrink-0 text-temptation" />
           <div>
-            <h4 className="mb-2 text-base font-bold text-warning-900">
+            <h4 className="mb-2 text-base font-bold text-temptation">
               {LICENSING_EFFECT_WARNING}
             </h4>
             <p className="text-sm leading-relaxed text-neutral-800">
               "내일부터 다시 하면 돼"라는 생각은 <strong>실패를 정당화</strong>하고 재시작을 미루게 만듭니다.
-              <strong className="text-warning-900"> 지금 이 순간</strong>부터 다시 시작하세요!
+              <strong className="text-temptation"> 지금 이 순간</strong>부터 다시 시작하세요!
             </p>
           </div>
         </div>

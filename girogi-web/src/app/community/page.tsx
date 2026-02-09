@@ -71,7 +71,7 @@ export default function CommunityPage() {
             className={cn(
               'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
               activeTab === 'all'
-                ? 'border-primary text-primary'
+                ? 'border-info-700 text-info-800'
                 : 'border-transparent text-neutral-700 hover:text-neutral-700'
             )}
           >
@@ -82,7 +82,7 @@ export default function CommunityPage() {
             className={cn(
               'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
               activeTab === 'following'
-                ? 'border-primary text-primary'
+                ? 'border-info-700 text-info-800'
                 : 'border-transparent text-neutral-700 hover:text-neutral-700'
             )}
           >
@@ -101,7 +101,7 @@ export default function CommunityPage() {
             </p>
             <button
               onClick={() => setIsDialogOpen(true)}
-              className="mt-2 flex items-center gap-2 text-sm text-primary hover:underline"
+              className="mt-2 flex items-center gap-2 text-sm text-link hover:underline"
             >
               <Edit className="h-4 w-4" />
               첫 게시글 작성하기

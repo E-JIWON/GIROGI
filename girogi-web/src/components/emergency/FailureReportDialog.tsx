@@ -116,11 +116,11 @@ export function FailureReportDialog({
             </div>
 
             {/* 허가 효과 경고 */}
-            <div className="mb-4 rounded-md bg-warning-100 p-3">
+            <div className="mb-4 rounded-md bg-peach-100 p-3">
               <div className="flex gap-2">
-                <AlertTriangle className="h-5 w-5 shrink-0 text-warning" />
+                <AlertTriangle className="h-5 w-5 shrink-0 text-temptation" />
                 <div>
-                  <p className="text-sm font-bold text-warning mb-1">
+                  <p className="text-sm font-bold text-temptation mb-1">
                     {LICENSING_EFFECT_WARNING}
                   </p>
                   <p className="text-xs text-neutral-800">

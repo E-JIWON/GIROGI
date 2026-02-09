@@ -45,7 +45,7 @@ export function PostCard({
   onMoreTap,
 }: PostCardProps) {
   return (
-    <div className="mb-4 overflow-hidden rounded-md bg-white">
+    <div className="mb-4 overflow-hidden rounded-md bg-neutral-100">
       {/* 헤더 (작성자 정보) */}
       <div className="flex items-center p-4">
         {/* 프로필 이미지 */}
@@ -180,8 +180,8 @@ function renderMotivationPost(post: Post) {
   return (
     <div className="px-4">
       {post.content && (
-        <div className="mb-3 rounded-md bg-gradient-to-r from-primary/10 to-secondary/10 p-4">
-          <p className="text-lg font-bold text-primary">{post.content}</p>
+        <div className="mb-3 rounded-md bg-gradient-to-r from-info-100 to-info-50 p-4">
+          <p className="text-lg font-bold text-info-800">{post.content}</p>
         </div>
       )}
     </div>

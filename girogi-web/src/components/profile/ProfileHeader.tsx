@@ -45,7 +45,7 @@ export function ProfileHeader({
   onEditProfileTap,
 }: ProfileHeaderProps) {
   return (
-    <div className="border-b border-neutral-200 bg-white p-6">
+    <div className="bg-neutral-100 p-6">
       <div className="mb-4 flex items-start">
         {/* 프로필 이미지 */}
         <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-primary">

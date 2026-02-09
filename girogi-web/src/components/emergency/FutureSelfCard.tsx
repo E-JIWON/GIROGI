@@ -86,10 +86,10 @@ export function FutureSelfCard({
   }, [])
 
   return (
-    <div className="rounded-lg bg-white p-6">
+    <div className="rounded-lg bg-neutral-100 p-6">
       {/* 헤더 */}
       <div className="mb-4 flex items-center gap-3">
-        <Sunrise className="h-7 w-7 text-primary-800" />
+        <Sunrise className="h-7 w-7 text-peach-700" />
         <h3 className="text-base font-semibold text-neutral-900">
           미래의 나를 떠올려보세요
         </h3>
@@ -110,7 +110,7 @@ export function FutureSelfCard({
             <p className="mt-2 text-sm text-neutral-700">
               목표 이미지를 추가하세요
             </p>
-            <button className="mt-2 flex items-center gap-1 text-sm text-primary hover:underline">
+            <button className="mt-2 flex items-center gap-1 text-sm text-link hover:underline">
               <span>추가하기</span>
             </button>
           </div>
@@ -119,11 +119,11 @@ export function FutureSelfCard({
 
       {/* 목표 정보 */}
       {hasGoalInfo ? (
-        <div className="mb-4 rounded-lg bg-primary/10 p-4">
+        <div className="mb-4 rounded-lg bg-peach-50 p-4">
           {/* 체중 차이 */}
           <div className="flex items-center justify-between">
             <span className="text-base text-neutral-700">목표까지</span>
-            <span className="text-lg font-bold text-primary">
+            <span className="text-lg font-bold text-peach-700">
               {weightDiff!.toFixed(1)}kg 남음
             </span>
           </div>
@@ -147,14 +147,14 @@ export function FutureSelfCard({
               목표를 설정하고 진행 상황을 확인하세요
             </p>
           </div>
-          <button className="text-sm font-semibold text-primary hover:underline">
+          <button className="text-sm font-semibold text-link hover:underline">
             설정
           </button>
         </div>
       )}
 
       {/* 동기부여 메시지 */}
-      <div className="rounded-md bg-warning-100 p-4">
+      <div className="rounded-md bg-peach-100 p-4">
         <div className="mb-2 flex items-center gap-2">
           <Lightbulb className="h-5 w-5 text-temptation" />
           <h4 className="text-sm font-bold text-temptation">
