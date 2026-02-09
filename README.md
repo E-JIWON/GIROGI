@@ -269,6 +269,43 @@ pnpm dev
   - 본인 강조 (Primary 색상)
   - 빈 상태 처리 (친구 없을 때)
 
+**Phase 11 완료 내역** (네비게이션 통합 및 연구 기반 개선 - Task 1):
+- ✅ 하단 네비게이션 바 구현
+  - `src/components/navigation/BottomNavigation.tsx` - 5개 탭 네비게이션
+  - 홈/체크리스트/유혹 극복/커뮤니티/프로필
+  - 중앙 강조 버튼 (유혹 극복)
+  - Active 상태 표시
+- ✅ 메인 레이아웃 구현
+  - `src/app/layout.tsx` - 전역 레이아웃 설정
+  - Pretendard 폰트 로드
+  - Providers 래퍼 (향후 Zustand, TanStack Query)
+- ✅ 라우팅 설정
+  - `src/app/(showcase)/*` - 5개 화면 라우트 그룹
+  - `/home`, `/checklist`, `/emergency`, `/community`, `/profile`
+- ✅ **연구 기반 개선 Task 1: EFT 목표 이미지 필수화**
+  - `src/lib/constants.ts` - 전역 상수 파일 생성
+    - 미션 상수 (TOTAL_CORE_MISSIONS=3, MIN_CORE_MISSIONS_FOR_SUCCESS=2)
+    - 보상 시스템 상수 (DAYS_FOR_SNACK_BOX=3, DAYS_FOR_CHEAT_DAY=7)
+    - 경고 기준 (WEEKLY_DINING_OUT_WARNING_THRESHOLD=3)
+    - **10개 기본 목표 이미지** (건강한 체형, 운동 모습, 자신감 등)
+    - **10개 EFT 동기부여 메시지** (기존 4개 + 신규 6개)
+    - **시간대별 맞춤 메시지** (아침/오후/저녁)
+    - 자기 연민 메시지, localStorage 키 상수
+  - `src/app/onboarding/page.tsx` - 온보딩 페이지 구현
+    - **2단계 프로세스**:
+      - Step 1: 목표 이미지 선택 (10개 기본 이미지 OR 커스텀 업로드)
+      - Step 2: 체중 정보 입력 (현재/목표 체중, 목표 날짜)
+    - **목표 이미지 필수화** (선택 없이 진행 불가)
+    - 이미지 업로드 기능 (FileReader API)
+    - 진행 상태 표시 (1/2 단계)
+    - 유효성 검증 (체중 숫자 확인, 목표 < 현재)
+    - localStorage 저장 (GOAL_IMAGE_KEY, CURRENT_WEIGHT_KEY, GOAL_WEIGHT_KEY, GOAL_DATE_KEY)
+    - 완료 후 /home으로 자동 이동
+- ✅ **연구 분석 보고서 권고 반영** (`.claude/250209-다이어트앱-연구기반-분석.md`)
+  - EFT 효과 강화: 목표 이미지 필수 설정으로 미래 자아 시각화 강제
+  - 동기부여 메시지 다양화: 4개 → 10개 (반복 노출 효과 감소 방지)
+  - 시간대별 맞춤: 아침/오후/저녁 상황별 메시지
+
 ---
 
 ## 📚 문서
@@ -285,4 +322,4 @@ MIT License
 
 ---
 
-**최종 수정**: 2026-02-06 (Phase 10: 공통 위젯 완료)
+**최종 수정**: 2026-02-09 (Phase 11: 네비게이션 통합 및 연구 기반 개선 Task 1 완료)
