@@ -143,15 +143,15 @@ export function ChecklistTimeSection({
                 <div
                   className={cn(
                     'text-base transition-all',
-                    item.isChecked ? 'text-neutral-500 line-through' : 'text-neutral-900'
+                    item.isChecked ? 'text-neutral-700 line-through' : 'text-neutral-900'
                   )}
                 >
                   {item.when && (
-                    <span className="font-semibold text-primary-500">🕐 {item.when}</span>
+                    <span className="font-semibold text-primary-800">🕐 {item.when}</span>
                   )}
                   {item.when && (item.where || item.what) && <span> 에 </span>}
                   {item.where && (
-                    <span className="font-semibold text-success-500">📍 {item.where}</span>
+                    <span className="font-semibold text-success-800">📍 {item.where}</span>
                   )}
                   {item.where && item.what && <span> 에서 </span>}
                   {item.what && <span>{item.what}</span>}
@@ -161,7 +161,7 @@ export function ChecklistTimeSection({
                 <span
                   className={cn(
                     'text-base transition-all',
-                    item.isChecked ? 'text-neutral-500 line-through' : 'text-neutral-900'
+                    item.isChecked ? 'text-neutral-700 line-through' : 'text-neutral-900'
                   )}
                 >
                   {item.title}

@@ -37,8 +37,8 @@ export function WeeklyCalendar({ weeklyRecords }: WeeklyCalendarProps) {
     <div className="rounded-lg bg-[#fafafa] p-6">
       {/* 타이틀 */}
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-base font-semibold text-grey-900">이번 주 기록</h3>
-        <p className="text-base font-semibold text-success">{successRate}%</p>
+        <h3 className="text-base font-semibold text-neutral-900">이번 주 기록</h3>
+        <p className="text-base font-semibold text-success-800">{successRate}%</p>
       </div>
 
       {/* 캘린더 그리드 */}
@@ -77,7 +77,7 @@ function DayColumn({ label, isSuccess }: DayColumnProps) {
   return (
     <div className="flex flex-col items-center gap-2">
       {/* 요일 라벨 */}
-      <span className="text-xs font-medium text-grey-600">{label}</span>
+      <span className="text-xs font-medium text-neutral-700">{label}</span>
 
       {/* 성공/실패 인디케이터 */}
       <div

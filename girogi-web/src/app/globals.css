@@ -67,8 +67,8 @@
   --color-success-500: #a5d6a7; /* 대체 메인 */
   --color-success-600: #81c784;
   --color-success-700: #66bb6a;
-  --color-success-800: #4caf50;
-  --color-success-900: #43a047;
+  --color-success-800: #2e7d32; /* WCAG AA 5.1:1 on white */
+  --color-success-900: #1b5e20; /* WCAG AA 7.1:1 on white */
 
   /* ========================================
      Warning (레몬 크림) - 경고, 주의
@@ -82,8 +82,8 @@
   --color-warning-500: #ffe082;
   --color-warning-600: #ffb74d;
   --color-warning-700: #ffa726;
-  --color-warning-800: #ff9800;
-  --color-warning-900: #f57c00;
+  --color-warning-800: #e65100; /* WCAG AA 3.8:1 (large text) */
+  --color-warning-900: #bf360c; /* WCAG AA 5.6:1 on white */
 
   /* ========================================
      Error (코랄) - 오류, 실패
@@ -97,8 +97,8 @@
   --color-error-500: #ef9a9a; /* 대체 메인 */
   --color-error-600: #e57373;
   --color-error-700: #ef5350;
-  --color-error-800: #f44336;
-  --color-error-900: #e53935;
+  --color-error-800: #c62828; /* WCAG AA 5.6:1 on white */
+  --color-error-900: #b71c1c; /* WCAG AA 6.6:1 on white */
 
   /* ========================================
      Info (스카이블루) - 정보
@@ -207,10 +207,10 @@
   /* ========================================
      Text Colors (라이트 모드)
      ======================================== */
-  --color-text-primary: #2c3571; /* Neutral 900 */
-  --color-text-secondary: #646b97; /* Neutral 700 */
-  --color-text-tertiary: #9ca1bd; /* Neutral 500 */
-  --color-text-disabled: #b8bcd0; /* Neutral 400 */
+  --color-text-primary: #2c3571; /* Neutral 900 — 11.3:1 on white */
+  --color-text-secondary: #485084; /* Neutral 800 — 7.6:1 on white */
+  --color-text-tertiary: #646b97; /* Neutral 700 — 5.1:1 on white */
+  --color-text-disabled: #8086aa; /* Neutral 600 — 3.5:1 on white */
 
   /* ========================================
      Surface Colors (라이트 모드)
@@ -613,7 +613,7 @@ body {
 
 /* 버튼 - 배경색으로만 구분 */
 .btn-primary {
-  background: var(--color-primary-500);
+  background: var(--color-primary-800);
   color: white;
   padding: var(--spacing-3) var(--spacing-6);
   border-radius: var(--radius-md);
@@ -622,7 +622,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-600);
+  background: var(--color-primary-900);
 }
 
 .btn-secondary {

@@ -76,7 +76,6 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-4xl bg-white min-h-screen">
-      <div className="mx-auto max-w-4xl bg-white min-h-screen">
       {/* 프로필 헤더 */}
       <ProfileHeader
         user={currentUser}
@@ -87,14 +86,14 @@ export default function ProfilePage() {
       />
 
       {/* 탭 바 */}
-      <div className="sticky top-0 z-10 flex border-b border-grey-200 bg-white">
+      <div className="sticky top-0 z-10 flex border-b border-neutral-200 bg-white">
         <button
           onClick={() => setActiveTab('timeline')}
           className={cn(
             'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
             activeTab === 'timeline'
               ? 'border-primary text-primary'
-              : 'border-transparent text-grey-600 hover:text-neutral-700'
+              : 'border-transparent text-neutral-700 hover:text-neutral-700'
           )}
         >
           식사 타임라인
@@ -105,7 +104,7 @@ export default function ProfilePage() {
             'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
             activeTab === 'posts'
               ? 'border-primary text-primary'
-              : 'border-transparent text-grey-600 hover:text-neutral-700'
+              : 'border-transparent text-neutral-700 hover:text-neutral-700'
           )}
         >
           기록
@@ -119,10 +118,10 @@ export default function ProfilePage() {
           <>
             {mealRecords.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20">
-                <p className="text-base font-medium text-grey-600">
+                <p className="text-base font-medium text-neutral-700">
                   식사 기록이 없습니다
                 </p>
-                <p className="mt-1 text-sm text-grey-500">
+                <p className="mt-1 text-sm text-neutral-700">
                   체크리스트에서 식사를 기록해보세요
                 </p>
               </div>
@@ -145,10 +144,10 @@ export default function ProfilePage() {
           <>
             {userPosts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20">
-                <p className="text-base font-medium text-grey-600">
+                <p className="text-base font-medium text-neutral-700">
                   작성한 게시글이 없습니다
                 </p>
-                <p className="mt-1 text-sm text-grey-500">
+                <p className="mt-1 text-sm text-neutral-700">
                   커뮤니티에서 경험을 공유해보세요
                 </p>
               </div>
@@ -174,6 +173,7 @@ export default function ProfilePage() {
           </>
         )}
       </main>
+      </div>
     </div>
   );
 }

@@ -68,7 +68,7 @@ export function ReactionBar({
               {REACTION_CONFIG[type as ReactionType].emoji}
             </span>
           ))}
-          <span className="ml-1 text-sm text-neutral-600">{totalCount}</span>
+          <span className="ml-1 text-sm text-neutral-700">{totalCount}</span>
         </div>
       )}
 
@@ -91,7 +91,7 @@ export function ReactionBar({
                 <span
                   className={cn(
                     'ml-1 text-xs',
-                    count > 0 ? 'font-semibold text-primary' : 'text-neutral-600'
+                    count > 0 ? 'font-semibold text-primary' : 'text-neutral-700'
                   )}
                 >
                   {count}
@@ -114,7 +114,7 @@ export function ReactionBar({
           <MessageCircle
             className={cn(
               'h-4 w-4',
-              commentCount > 0 ? 'text-neutral-800' : 'text-neutral-600'
+              commentCount > 0 ? 'text-neutral-800' : 'text-neutral-700'
             )}
           />
           <span
@@ -122,7 +122,7 @@ export function ReactionBar({
               'ml-1 text-xs',
               commentCount > 0
                 ? 'font-semibold text-neutral-800'
-                : 'text-neutral-600'
+                : 'text-neutral-700'
             )}
           >
             {commentCount > 0 ? commentCount : '댓글'}

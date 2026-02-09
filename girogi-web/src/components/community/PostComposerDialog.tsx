@@ -93,7 +93,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
                 onClick={onClose}
                 className="rounded-full p-1 hover:bg-neutral-100"
               >
-                <X className="h-6 w-6 text-neutral-600" />
+                <X className="h-6 w-6 text-neutral-700" />
               </button>
             </div>
 
@@ -142,7 +142,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
                   'w-full rounded-md border p-3 text-base',
                   error
                     ? 'border-error focus:border-error'
-                    : 'border-grey-300 focus:border-primary'
+                    : 'border-neutral-300 focus:border-primary'
                 )}
                 rows={5}
               />
@@ -155,7 +155,7 @@ export function PostComposerDialog({ isOpen, onClose }: PostComposerDialogProps)
                 // TODO: 이미지 선택 기능
                 console.log('이미지 추가 (TODO)');
               }}
-              className="mb-6 flex items-center gap-2 rounded-md border-2 border-grey-300 px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:text-primary"
+              className="mb-6 flex items-center gap-2 rounded-md border-2 border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:text-primary"
             >
               <ImagePlus className="h-5 w-5" />
               이미지 추가

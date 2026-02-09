@@ -105,7 +105,7 @@ export function TemptationTimer({
   };
 
   return (
-    <div className="rounded-md border border-grey-200 bg-white p-6">
+    <div className="rounded-md border border-neutral-200 bg-white p-6">
       {/* 타이틀 */}
       <h3
         className={cn(
@@ -117,7 +117,7 @@ export function TemptationTimer({
       </h3>
 
       {/* 설명 */}
-      <p className="mt-2 text-center text-sm text-neutral-600">
+      <p className="mt-2 text-center text-sm text-neutral-700">
         {isCompleted
           ? '유혹을 이겨내셨습니다. 아직도 먹고 싶으신가요?'
           : '충동은 보통 10분 내에 사라집니다'}
@@ -165,7 +165,7 @@ export function TemptationTimer({
                 <div className="text-5xl font-bold text-neutral-900">
                   {formatTime(remainingSeconds)}
                 </div>
-                <div className="mt-2 text-xs text-neutral-600">남은 시간</div>
+                <div className="mt-2 text-xs text-neutral-700">남은 시간</div>
               </>
             )}
           </div>
@@ -189,14 +189,14 @@ export function TemptationTimer({
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={handlePause}
-                className="flex items-center justify-center gap-2 rounded-md border-2 border-grey-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
+                className="flex items-center justify-center gap-2 rounded-md border-2 border-neutral-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
               >
                 <Pause className="h-5 w-5" />
                 일시정지
               </button>
               <button
                 onClick={handleReset}
-                className="flex items-center justify-center gap-2 rounded-md border-2 border-grey-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
+                className="flex items-center justify-center gap-2 rounded-md border-2 border-neutral-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
               >
                 <RotateCcw className="h-5 w-5" />
                 리셋
@@ -214,7 +214,7 @@ export function TemptationTimer({
               </button>
               <button
                 onClick={handleReset}
-                className="flex items-center justify-center gap-2 rounded-md border-2 border-grey-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
+                className="flex items-center justify-center gap-2 rounded-md border-2 border-neutral-300 px-4 py-3 text-base font-semibold text-neutral-700 transition-all hover:bg-neutral-50"
               >
                 <RotateCcw className="h-5 w-5" />
                 리셋

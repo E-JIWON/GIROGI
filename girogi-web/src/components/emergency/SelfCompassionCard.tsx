@@ -36,8 +36,8 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
     <div className="rounded-lg bg-error-50 p-6">
       {/* 헤더 */}
       <div className="mb-4 flex items-center gap-3">
-        <Heart className="h-8 w-8 text-error-500" fill="currentColor" />
-        <h2 className="text-2xl font-bold text-error-500">괜찮습니다</h2>
+        <Heart className="h-8 w-8 text-error-800" fill="currentColor" />
+        <h2 className="text-2xl font-bold text-error-800">괜찮습니다</h2>
       </div>
 
       {/* 자기 연민 메시지 */}
@@ -56,14 +56,14 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
       {/* 허가 효과 경고 (Licensing Effect) */}
       <div className="mb-6 rounded-md bg-warning-100 p-4">
         <div className="flex gap-3">
-          <AlertTriangle className="h-6 w-6 shrink-0 text-warning-700" />
+          <AlertTriangle className="h-6 w-6 shrink-0 text-warning-900" />
           <div>
-            <h4 className="mb-2 text-base font-bold text-warning-700">
+            <h4 className="mb-2 text-base font-bold text-warning-900">
               {LICENSING_EFFECT_WARNING}
             </h4>
             <p className="text-sm leading-relaxed text-neutral-800">
               "내일부터 다시 하면 돼"라는 생각은 <strong>실패를 정당화</strong>하고 재시작을 미루게 만듭니다.
-              <strong className="text-warning-700"> 지금 이 순간</strong>부터 다시 시작하세요!
+              <strong className="text-warning-900"> 지금 이 순간</strong>부터 다시 시작하세요!
             </p>
           </div>
         </div>
@@ -74,7 +74,7 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
         {/* 성공률 */}
         <div className="mb-3 flex items-center justify-between">
           <span className="text-base text-neutral-700">전체 성공률</span>
-          <span className="text-2xl font-bold text-success-500">{successRate}%</span>
+          <span className="text-2xl font-bold text-success-800">{successRate}%</span>
         </div>
 
         {/* 진행률 바 */}
@@ -89,25 +89,25 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
         <div className="grid grid-cols-3 gap-2">
           {/* 성공 */}
           <div className="flex flex-col items-center gap-1">
-            <CheckCircle className="h-6 w-6 text-success-500" />
-            <div className="text-sm font-bold text-success-700">{successCount}일</div>
-            <div className="text-xs text-neutral-600">성공</div>
+            <CheckCircle className="h-6 w-6 text-success-800" />
+            <div className="text-sm font-bold text-success-800">{successCount}일</div>
+            <div className="text-xs text-neutral-700">성공</div>
           </div>
 
           {/* 실패 */}
           <div className="flex flex-col items-center gap-1 bg-neutral-100 rounded py-2">
-            <XCircle className="h-6 w-6 text-error-500" />
-            <div className="text-sm font-bold text-error-700">
+            <XCircle className="h-6 w-6 text-error-800" />
+            <div className="text-sm font-bold text-error-800">
               {totalAttempts - successCount}일
             </div>
-            <div className="text-xs text-neutral-600">실패</div>
+            <div className="text-xs text-neutral-700">실패</div>
           </div>
 
           {/* 전체 */}
           <div className="flex flex-col items-center gap-1">
             <Calendar className="h-6 w-6 text-neutral-700" />
             <div className="text-sm font-bold text-neutral-700">{totalAttempts}일</div>
-            <div className="text-xs text-neutral-600">전체</div>
+            <div className="text-xs text-neutral-700">전체</div>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
         {/* 다시 시작하기 (주요 액션) */}
         <button
           onClick={handleRestart}
-          className="flex w-full items-center justify-center gap-2 rounded-md bg-error-500 px-4 py-4 text-lg font-bold text-white transition-all hover:bg-error-600 active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-error-800 px-4 py-4 text-lg font-bold text-white transition-all hover:bg-error-900 active:scale-[0.98]"
         >
           <RotateCcw className="h-6 w-6" />
           지금 바로 다시 시작하기
@@ -126,7 +126,7 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
         {/* 실패 리포트 작성 (권장) */}
         <button
           onClick={onCreateReport}
-          className="flex w-full items-center justify-center gap-2 rounded-md bg-primary-500 px-4 py-3 text-base font-semibold text-white transition-all hover:bg-primary-600 active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-primary-800 px-4 py-3 text-base font-semibold text-white transition-all hover:bg-primary-900 active:scale-[0.98]"
         >
           <FileText className="h-5 w-5" />
           실패 리포트 작성 (권장)
@@ -135,7 +135,7 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
 
       {/* 안내 메시지 */}
       <div className="mt-4 flex gap-2 rounded-md bg-primary-50 p-3">
-        <Info className="h-5 w-5 shrink-0 text-primary-500" />
+        <Info className="h-5 w-5 shrink-0 text-primary-800" />
         <p className="text-sm leading-relaxed text-neutral-800">
           <strong className="text-primary-700">실패 리포트 작성을 권장합니다.</strong> 상황, 원인, 대응 방안을 정리하면 같은 실수를 반복하지 않게 됩니다. 커뮤니티에 공유하면 응원도 받을 수 있어요!
         </p>

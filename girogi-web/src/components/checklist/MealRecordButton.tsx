@@ -40,7 +40,7 @@ export function MealRecordButton({
         'hover:shadow-md',
         hasRecord
           ? 'border-success/20 bg-success/5'
-          : 'border-grey-200 bg-white'
+          : 'border-neutral-200 bg-white'
       )}
     >
       <div className="flex items-center gap-3">
@@ -71,7 +71,7 @@ export function MealRecordButton({
           </p>
 
           {/* 서브 텍스트 */}
-          <p className="mt-1 text-sm text-neutral-600">
+          <p className="mt-1 text-sm text-neutral-700">
             {hasRecord
               ? '상세 보기 또는 수정'
               : '사진, 장소, 메뉴, 준수 행동 기록'}
@@ -81,7 +81,7 @@ export function MealRecordButton({
         {/* 화살표 아이콘 (오른쪽) */}
         <div className="shrink-0">
           <svg
-            className="h-5 w-5 text-neutral-400"
+            className="h-5 w-5 text-neutral-700"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

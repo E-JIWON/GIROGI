@@ -76,7 +76,7 @@ export function RewardStatusCard({
       {/* 타이틀 */}
       <div className="mb-4 flex items-center gap-2">
         <Gift className="h-5 w-5 text-primary" />
-        <h3 className="text-base font-semibold text-grey-900">보상 현황</h3>
+        <h3 className="text-base font-semibold text-neutral-900">보상 현황</h3>
       </div>
 
       {/* 보상 현황 그리드 */}
@@ -85,7 +85,7 @@ export function RewardStatusCard({
         <div className="rounded-lg bg-primary/5 p-3">
           <div className="mb-1 flex items-center gap-1">
             <Gift className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-grey-700">과자박스</span>
+            <span className="text-sm font-medium text-neutral-800">과자박스</span>
           </div>
           <p className="text-2xl font-bold text-primary mb-2">
             {snackBoxCount}
@@ -94,7 +94,7 @@ export function RewardStatusCard({
           {snackBoxCount > 0 && (
             <button
               onClick={() => handleUseReward('snackbox')}
-              className="w-full py-1.5 bg-primary text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              className="w-full py-1.5 bg-primary-800 text-white text-sm font-semibold rounded-lg hover:bg-primary-900 transition-colors"
             >
               사용하기
             </button>
@@ -105,30 +105,30 @@ export function RewardStatusCard({
         <div
           className={cn(
             'rounded-lg p-3',
-            canUseCheatDay ? 'bg-cheatday/10' : 'bg-grey-100'
+            canUseCheatDay ? 'bg-cheatday/10' : 'bg-neutral-100'
           )}
         >
           <div className="mb-1 flex items-center gap-1">
             <PartyPopper
               className={cn(
                 'h-4 w-4',
-                canUseCheatDay ? 'text-cheatday' : 'text-grey-600'
+                canUseCheatDay ? 'text-cheatday' : 'text-neutral-700'
               )}
             />
-            <span className="text-sm font-medium text-grey-700">치팅데이</span>
+            <span className="text-sm font-medium text-neutral-800">치팅데이</span>
           </div>
           {canUseCheatDay ? (
             <>
               <p className="text-2xl font-bold text-cheatday mb-2">사용 가능!</p>
               <button
                 onClick={() => handleUseReward('cheatday')}
-                className="w-full py-1.5 bg-cheatday text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                className="w-full py-1.5 bg-success-800 text-white text-sm font-semibold rounded-lg hover:bg-success-900 transition-colors"
               >
                 사용하기
               </button>
             </>
           ) : (
-            <p className="text-2xl font-bold text-grey-600">
+            <p className="text-2xl font-bold text-neutral-700">
               {daysUntilCheatDay}
               <span className="text-base">일 후</span>
             </p>
@@ -137,10 +137,10 @@ export function RewardStatusCard({
       </div>
 
       {/* 보상 규칙 안내 */}
-      <div className="mt-4 flex gap-2 rounded-lg bg-grey-50 p-3">
-        <Info className="h-5 w-5 shrink-0 text-grey-500" />
+      <div className="mt-4 flex gap-2 rounded-lg bg-neutral-50 p-3">
+        <Info className="h-5 w-5 shrink-0 text-neutral-700" />
         <div className="flex-1">
-          <p className="text-sm text-grey-700 leading-relaxed">
+          <p className="text-sm text-neutral-800 leading-relaxed">
             <span className="font-semibold text-primary">
               {DAYS_FOR_SNACK_BOX}일
             </span>

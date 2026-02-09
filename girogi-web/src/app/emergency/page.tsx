@@ -52,16 +52,17 @@ export default function EmergencyPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-grey-50">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
-          <h1 className="text-lg font-semibold text-neutral-700">유혹 극복</h1>
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
+        {/* 헤더 */}
+        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-8 py-4 border-b border-neutral-100">
+            <h1 className="text-lg font-semibold text-neutral-700">유혹 극복</h1>
 
           {/* 자기 연민 모드 토글 버튼 */}
           <button
             onClick={handleToggleSelfCompassionMode}
-            className="rounded-full p-2 transition-all hover:bg-grey-100"
+            className="rounded-full p-2 transition-all hover:bg-neutral-100"
             title="자기 연민 모드"
           >
             <Heart
@@ -69,16 +70,16 @@ export default function EmergencyPage() {
                 'h-6 w-6 transition-all',
                 showSelfCompassionMode
                   ? 'fill-selfcompassion text-selfcompassion'
-                  : 'text-grey-600'
+                  : 'text-neutral-700'
               )}
             />
-          </button>
-        </div>
-      </header>
+            </button>
+          </div>
+        </header>
 
-      {/* 메인 컨텐츠 */}
-      <main className="mx-auto max-w-2xl px-4 py-6">
-        <div className="space-y-6">
+        {/* 메인 컨텐츠 */}
+        <main className="px-8 py-6">
+          <div className="space-y-4">
           {/* 자기 연민 모드 */}
           {showSelfCompassionMode && (
             <SelfCompassionCard onCreateReport={handleOpenFailureReport} />
@@ -114,11 +115,12 @@ export default function EmergencyPage() {
         <span>실패 리포트</span>
       </button>
 
-      {/* 실패 리포트 다이얼로그 */}
-      <FailureReportDialog
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-      />
+        {/* 실패 리포트 다이얼로그 */}
+        <FailureReportDialog
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      </div>
     </div>
   );
 }

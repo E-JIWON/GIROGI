@@ -68,7 +68,7 @@ export function PostCard({
           <div className="text-sm font-semibold text-neutral-900">
             {author.nickname}
           </div>
-          <div className="text-xs text-neutral-600">
+          <div className="text-xs text-neutral-700">
             {formatTimestamp(post.createdAt)}
           </div>
         </div>
@@ -79,7 +79,7 @@ export function PostCard({
             onClick={onMoreTap}
             className="rounded-full p-1 hover:bg-neutral-100"
           >
-            <MoreVertical className="h-5 w-5 text-neutral-600" />
+            <MoreVertical className="h-5 w-5 text-neutral-700" />
           </button>
         )}
       </div>

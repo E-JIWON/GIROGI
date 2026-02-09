@@ -47,31 +47,32 @@ export default function CommunityPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-grey-50">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-2xl items-center justify-between px-4 py-4">
-          <h1 className="text-lg font-semibold text-neutral-700">커뮤니티</h1>
+    <div className="min-h-screen">
+      <div className="mx-auto max-w-4xl bg-white min-h-screen">
+        {/* 헤더 */}
+        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-8 py-4 border-b border-neutral-100">
+            <h1 className="text-lg font-semibold text-neutral-700">커뮤니티</h1>
 
-          {/* 글쓰기 버튼 */}
-          <button
-            onClick={() => setIsDialogOpen(true)}
-            className="rounded-full p-2 transition-all hover:bg-grey-100"
-            title="글쓰기"
-          >
-            <Edit className="h-6 w-6 text-neutral-700" />
-          </button>
-        </div>
+            {/* 글쓰기 버튼 */}
+            <button
+              onClick={() => setIsDialogOpen(true)}
+              className="rounded-full p-2 transition-all hover:bg-neutral-100"
+              title="글쓰기"
+            >
+              <Edit className="h-6 w-6 text-neutral-700" />
+            </button>
+          </div>
 
-        {/* 탭 바 */}
-        <div className="mx-auto flex max-w-2xl border-b border-grey-200">
+          {/* 탭 바 */}
+          <div className="flex border-b border-neutral-200">
           <button
             onClick={() => setActiveTab('all')}
             className={cn(
               'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
               activeTab === 'all'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-grey-600 hover:text-neutral-700'
+                : 'border-transparent text-neutral-700 hover:text-neutral-700'
             )}
           >
             전체
@@ -82,7 +83,7 @@ export default function CommunityPage() {
               'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
               activeTab === 'following'
                 ? 'border-primary text-primary'
-                : 'border-transparent text-grey-600 hover:text-neutral-700'
+                : 'border-transparent text-neutral-700 hover:text-neutral-700'
             )}
           >
             팔로잉
@@ -91,11 +92,11 @@ export default function CommunityPage() {
       </header>
 
       {/* 메인 컨텐츠 */}
-      <main className="mx-auto max-w-2xl px-4 py-6">
+        <main className="px-8 py-6">
         {posts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <Users className="h-16 w-16 text-grey-400" />
-            <p className="mt-4 text-base font-medium text-grey-600">
+            <Users className="h-16 w-16 text-neutral-700" />
+            <p className="mt-4 text-base font-medium text-neutral-700">
               아직 게시글이 없습니다
             </p>
             <button
@@ -125,13 +126,14 @@ export default function CommunityPage() {
             })}
           </div>
         )}
-      </main>
+        </main>
 
-      {/* 글쓰기 다이얼로그 */}
-      <PostComposerDialog
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-      />
+        {/* 글쓰기 다이얼로그 */}
+        <PostComposerDialog
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      </div>
     </div>
   );
 }

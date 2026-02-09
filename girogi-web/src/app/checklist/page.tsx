@@ -173,24 +173,23 @@ export default function ChecklistPage() {
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-4xl bg-white min-h-screen">
-      <div className="mx-auto max-w-4xl bg-white min-h-screen">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
-        <div className="mx-auto max-w-2xl px-4 py-4">
-          <h1 className="text-lg font-semibold text-neutral-700">오늘의 체크리스트</h1>
-        </div>
-      </header>
+        {/* 헤더 */}
+        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+          <div className="px-8 py-4 border-b border-neutral-100">
+            <h1 className="text-lg font-semibold text-neutral-700">오늘의 체크리스트</h1>
+          </div>
+        </header>
 
-      {/* 메인 컨텐츠 */}
-      <main className="mx-auto max-w-2xl px-4 py-6">
-        <div className="space-y-6">
+        {/* 메인 컨텐츠 */}
+        <main className="px-8 py-6">
+          <div className="space-y-4">
           {/* 외식 경고 배너 (주 3회 이상 시) */}
           {weeklyDiningOutCount >= 3 && (
             <div className="flex gap-3 rounded-lg border border-warning/20 bg-warning/10 p-4">
               <AlertTriangle className="h-6 w-6 shrink-0 text-warning" />
               <div>
                 <p className="font-semibold text-warning">외식 빈도 경고</p>
-                <p className="mt-1 text-sm text-grey-700">
+                <p className="mt-1 text-sm text-neutral-800">
                   이번 주 외식 {weeklyDiningOutCount}회 기록되었습니다.
                   집밥 먹기를 추천합니다!
                 </p>
@@ -262,8 +261,9 @@ export default function ChecklistPage() {
               }
             />
           </section>
-        </div>
-      </main>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

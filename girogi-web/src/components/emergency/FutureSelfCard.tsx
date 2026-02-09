@@ -89,7 +89,7 @@ export function FutureSelfCard({
     <div className="rounded-lg bg-white p-6">
       {/* 헤더 */}
       <div className="mb-4 flex items-center gap-3">
-        <Sunrise className="h-7 w-7 text-primary-500" />
+        <Sunrise className="h-7 w-7 text-primary-800" />
         <h3 className="text-base font-semibold text-neutral-900">
           미래의 나를 떠올려보세요
         </h3>
@@ -106,8 +106,8 @@ export function FutureSelfCard({
         ) : (
           // 플레이스홀더
           <div className="flex h-full flex-col items-center justify-center">
-            <ImagePlus className="h-16 w-16 text-neutral-400" />
-            <p className="mt-2 text-sm text-neutral-600">
+            <ImagePlus className="h-16 w-16 text-neutral-700" />
+            <p className="mt-2 text-sm text-neutral-700">
               목표 이미지를 추가하세요
             </p>
             <button className="mt-2 flex items-center gap-1 text-sm text-primary hover:underline">
@@ -141,7 +141,7 @@ export function FutureSelfCard({
       ) : (
         // 목표 미설정
         <div className="mb-4 flex items-center gap-3 rounded-lg bg-neutral-100 p-4">
-          <Sunrise className="h-6 w-6 shrink-0 text-neutral-600" />
+          <Sunrise className="h-6 w-6 shrink-0 text-neutral-700" />
           <div className="flex-1">
             <p className="text-sm text-neutral-700">
               목표를 설정하고 진행 상황을 확인하세요

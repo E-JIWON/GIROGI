@@ -81,7 +81,7 @@ export function BottomTabBar() {
                 <span
                   className={cn(
                     'mt-1 text-[10px] font-medium',
-                    isActive ? 'text-error' : 'text-grey-600'
+                    isActive ? 'text-error' : 'text-neutral-700'
                   )}
                 >
                   {tab.label}
@@ -100,13 +100,13 @@ export function BottomTabBar() {
               <Icon
                 className={cn(
                   'h-6 w-6 transition-colors',
-                  isActive ? 'text-primary' : 'text-grey-500'
+                  isActive ? 'text-primary' : 'text-neutral-700'
                 )}
               />
               <span
                 className={cn(
                   'text-[10px] font-medium transition-colors',
-                  isActive ? 'text-primary' : 'text-grey-600'
+                  isActive ? 'text-primary' : 'text-neutral-700'
                 )}
               >
                 {tab.label}

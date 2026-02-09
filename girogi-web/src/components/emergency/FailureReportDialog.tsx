@@ -111,7 +111,7 @@ export function FailureReportDialog({
                 onClick={onClose}
                 className="rounded-full p-1 hover:bg-neutral-100"
               >
-                <X className="h-6 w-6 text-neutral-600" />
+                <X className="h-6 w-6 text-neutral-700" />
               </button>
             </div>
 
@@ -219,7 +219,7 @@ export function FailureReportDialog({
                     <div className="text-sm font-semibold text-neutral-900">
                       커뮤니티에 공유하기
                     </div>
-                    <div className="text-xs text-neutral-600">
+                    <div className="text-xs text-neutral-700">
                       다른 사람들의 응원과 조언을 받을 수 있습니다
                     </div>
                   </div>

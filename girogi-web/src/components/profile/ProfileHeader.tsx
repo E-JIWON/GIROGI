@@ -45,7 +45,7 @@ export function ProfileHeader({
   onEditProfileTap,
 }: ProfileHeaderProps) {
   return (
-    <div className="border-b border-grey-200 bg-white p-6">
+    <div className="border-b border-neutral-200 bg-white p-6">
       <div className="mb-4 flex items-start">
         {/* 프로필 이미지 */}
         <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-primary">
@@ -79,7 +79,7 @@ export function ProfileHeader({
       {isOwnProfile ? (
         <button
           onClick={onEditProfileTap}
-          className="flex w-full items-center justify-center gap-2 rounded-md border-2 border-grey-300 px-4 py-3 text-sm font-medium text-neutral-900 transition-all hover:bg-neutral-50"
+          className="flex w-full items-center justify-center gap-2 rounded-md border-2 border-neutral-300 px-4 py-3 text-sm font-medium text-neutral-900 transition-all hover:bg-neutral-50"
         >
           <Edit className="h-4 w-4" />
           프로필 편집
@@ -117,7 +117,7 @@ function StatItem({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col items-center">
       <div className="text-lg font-bold text-neutral-900">{value}</div>
-      <div className="text-xs text-neutral-600">{label}</div>
+      <div className="text-xs text-neutral-700">{label}</div>
     </div>
   );
 }

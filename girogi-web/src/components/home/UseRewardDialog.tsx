@@ -101,7 +101,7 @@ export function UseRewardDialog({
             onClick={onClose}
             className="rounded-full p-1 hover:bg-neutral-100 transition-colors"
           >
-            <X className="h-5 w-5 text-neutral-600" />
+            <X className="h-5 w-5 text-neutral-700" />
           </button>
         </div>
 
@@ -121,7 +121,7 @@ export function UseRewardDialog({
               value={food}
               onChange={(e) => setFood(e.target.value)}
               placeholder="예: 치킨, 피자, 아이스크림"
-              className="w-full px-4 py-3 border border-grey-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-3 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
@@ -140,7 +140,7 @@ export function UseRewardDialog({
               onChange={(e) => setMemo(e.target.value)}
               placeholder="어떤 상황이었나요?"
               rows={3}
-              className="w-full px-4 py-3 border border-grey-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+              className="w-full px-4 py-3 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary resize-none"
             />
           </div>
 

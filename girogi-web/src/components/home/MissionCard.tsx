@@ -57,7 +57,7 @@ export function MissionCard({
             'flex h-12 w-12 shrink-0 items-center justify-center rounded-full transition-colors',
             isCompleted
               ? 'bg-success-500 text-white'
-              : 'bg-neutral-200 text-neutral-600'
+              : 'bg-neutral-200 text-neutral-700'
           )}
         >
           {isCompleted ? (
@@ -73,20 +73,20 @@ export function MissionCard({
             className={cn(
               'text-base font-semibold leading-tight transition-all',
               isCompleted
-                ? 'text-success-700 line-through'
+                ? 'text-success-800 line-through'
                 : 'text-neutral-900'
             )}
           >
             {title}
           </h4>
-          <p className="mt-1 text-sm text-neutral-600 leading-tight">
+          <p className="mt-1 text-sm text-neutral-700 leading-tight">
             {description}
           </p>
         </div>
 
         {/* 화살표 아이콘 (미완료 시만 표시) */}
         {!isCompleted && (
-          <ChevronRight className="h-6 w-6 shrink-0 text-neutral-400" />
+          <ChevronRight className="h-6 w-6 shrink-0 text-neutral-700" />
         )}
       </div>
     </div>
