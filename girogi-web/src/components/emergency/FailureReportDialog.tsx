@@ -3,6 +3,7 @@
  *
  * 실패 상황을 기록하고 분석하는 다이얼로그
  * - 3단계 질문 폼
+ * - 허가 효과 경고
  * - 커뮤니티 공유 체크박스
  * - 폼 검증
  *
@@ -12,8 +13,9 @@
 'use client';
 
 import { useState } from 'react';
-import { FileText, X, Save, Lightbulb } from 'lucide-react';
+import { FileText, X, Save, Lightbulb, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { LICENSING_EFFECT_WARNING } from '@/lib/constants';
 
 interface FailureReportDialogProps {
   /**
@@ -111,6 +113,21 @@ export function FailureReportDialog({
               >
                 <X className="h-6 w-6 text-grey-600" />
               </button>
+            </div>
+
+            {/* 허가 효과 경고 */}
+            <div className="mb-4 rounded-lg border-2 border-warning bg-warning/10 p-3">
+              <div className="flex gap-2">
+                <AlertTriangle className="h-5 w-5 shrink-0 text-warning" />
+                <div>
+                  <p className="text-sm font-bold text-warning mb-1">
+                    {LICENSING_EFFECT_WARNING}
+                  </p>
+                  <p className="text-xs text-grey-800">
+                    리포트를 작성하고 <strong>지금 바로</strong> 다시 시작하세요. "내일부터"는 실패의 시작입니다.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* 안내 메시지 */}

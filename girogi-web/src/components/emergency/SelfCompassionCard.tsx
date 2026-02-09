@@ -3,14 +3,16 @@
  *
  * Self-Compassion 이론을 적용한 실패 후 복귀 지원
  * - 자기 연민 메시지
+ * - 허가 효과(Licensing Effect) 경고 강화
  * - 통계 정보 (전체 성공률, 성공/실패/전체 일수)
  * - "다시 시작하기" 버튼
- * - "실패 리포트 작성" 버튼
+ * - "실패 리포트 작성" 버튼 (권장)
  *
  * Flutter: lib/presentation/widgets/emergency/self_compassion_card.dart
  */
 
-import { Heart, RotateCcw, FileText, Info, CheckCircle, XCircle, Calendar } from 'lucide-react';
+import { Heart, RotateCcw, FileText, Info, CheckCircle, XCircle, Calendar, AlertTriangle } from 'lucide-react';
+import { LICENSING_EFFECT_WARNING } from '@/lib/constants';
 
 interface SelfCompassionCardProps {
   /**
@@ -49,6 +51,22 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
           <li>• 중요한 건 다시 일어서는 것입니다</li>
           <li>• 지금 바로 다시 시작할 수 있습니다</li>
         </ul>
+      </div>
+
+      {/* 허가 효과 경고 (Licensing Effect) */}
+      <div className="mb-6 rounded-lg border-2 border-warning bg-warning/10 p-4">
+        <div className="flex gap-3">
+          <AlertTriangle className="h-6 w-6 shrink-0 text-warning" />
+          <div>
+            <h4 className="mb-2 text-base font-bold text-warning">
+              {LICENSING_EFFECT_WARNING}
+            </h4>
+            <p className="text-sm leading-relaxed text-grey-800">
+              "내일부터 다시 하면 돼"라는 생각은 <strong>실패를 정당화</strong>하고 재시작을 미루게 만듭니다.
+              <strong className="text-warning"> 지금 이 순간</strong>부터 다시 시작하세요!
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 통계 정보 */}
@@ -96,31 +114,30 @@ export function SelfCompassionCard({ onCreateReport }: SelfCompassionCardProps) 
 
       {/* 버튼 */}
       <div className="space-y-3">
-        {/* 다시 시작하기 */}
+        {/* 다시 시작하기 (주요 액션) */}
         <button
           onClick={handleRestart}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-selfcompassion px-4 py-3 text-base font-semibold text-white transition-all hover:bg-selfcompassion/90"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-selfcompassion px-4 py-4 text-lg font-bold text-white transition-all hover:bg-selfcompassion/90 shadow-md"
         >
-          <RotateCcw className="h-5 w-5" />
-          다시 시작하기
+          <RotateCcw className="h-6 w-6" />
+          지금 바로 다시 시작하기
         </button>
 
-        {/* 실패 리포트 작성 */}
+        {/* 실패 리포트 작성 (권장) */}
         <button
           onClick={onCreateReport}
-          className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-selfcompassion px-4 py-3 text-base font-semibold text-selfcompassion transition-all hover:bg-selfcompassion/5"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-base font-semibold text-white transition-all hover:bg-primary/90"
         >
           <FileText className="h-5 w-5" />
-          실패 리포트 작성
+          실패 리포트 작성 (권장)
         </button>
       </div>
 
       {/* 안내 메시지 */}
-      <div className="mt-4 flex gap-2 rounded-lg bg-info/10 p-3">
-        <Info className="h-5 w-5 shrink-0 text-info" />
-        <p className="text-xs leading-relaxed text-grey-800">
-          실패 리포트를 작성하면 같은 상황을 대비할 수 있습니다. 커뮤니티에
-          공유하여 응원을 받을 수도 있습니다.
+      <div className="mt-4 flex gap-2 rounded-lg bg-primary/10 p-3 border border-primary/20">
+        <Info className="h-5 w-5 shrink-0 text-primary" />
+        <p className="text-sm leading-relaxed text-grey-800">
+          <strong className="text-primary">실패 리포트 작성을 권장합니다.</strong> 상황, 원인, 대응 방안을 정리하면 같은 실수를 반복하지 않게 됩니다. 커뮤니티에 공유하면 응원도 받을 수 있어요!
         </p>
       </div>
     </div>

@@ -362,6 +362,28 @@ pnpm dev  # http://localhost:8282
     - Peter Gollwitzer 연구: "언제+어디서+무엇을" 구조화 → 목표 달성률 2-3배
     - 기존: 단순 체크리스트 (모호함)
     - 개선: 구조화된 행동 계획 (실행 확률 증가)
+- ✅ **연구 기반 개선 Task 5: Self-Compassion 허가 효과 경고 강화**
+  - `src/components/emergency/SelfCompassionCard.tsx` - 경고 섹션 추가
+    - **허가 효과(Licensing Effect) 경고 박스** 추가
+      - 주황색 테두리 + AlertTriangle 아이콘
+      - LICENSING_EFFECT_WARNING 상수 사용
+      - "⚠️ '내일부터'는 금물! 지금 바로 다시 시작하세요"
+    - "내일부터"의 위험성 설명 추가
+      - 실패 정당화, 재시작 미루기 방지
+      - **지금 이 순간**부터 강조
+    - **버튼 강조 개선**
+      - "지금 바로 다시 시작하기" 버튼 크게 (주요 액션)
+      - "실패 리포트 작성 (권장)" Primary 색상으로 강조
+      - 안내 메시지에 "권장" 명시
+  - `src/components/emergency/FailureReportDialog.tsx` - 경고 추가
+    - 다이얼로그 상단에 허가 효과 경고 표시
+    - "지금 바로" 다시 시작 강조
+    - 리포트 작성 → 즉시 재시작 흐름 유도
+  - **Self-Compassion 이론 강화**
+    - British Journal of Health Psychology (2021): 실패 후 복귀율 증가
+    - 기존: 자기 연민만 (너그러움)
+    - 개선: 자기 연민 + 허가 효과 방지 (즉시 행동)
+    - 균형: 자기비난 X, 미루기도 X
 
 ---
 
