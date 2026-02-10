@@ -18,10 +18,12 @@ import { cn } from '@/lib/utils';
 import { PostCard } from './_components/post-card';
 import { PostComposerDialog } from './_components/post-composer-dialog';
 import { mockPosts, mockUsers } from '@/lib/mock';
+import { useRouter } from 'next/navigation';
 
 type Tab = 'all' | 'following';
 
 export default function CommunityPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('all');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -54,14 +56,26 @@ export default function CommunityPage() {
           <div className="flex items-center justify-between px-8 py-4 border-b border-neutral-100">
             <h1 className="text-lg font-semibold text-neutral-700">커뮤니티</h1>
 
-            {/* 글쓰기 버튼 */}
-            <button
-              onClick={() => setIsDialogOpen(true)}
-              className="rounded-full p-2 transition-all hover:bg-neutral-100"
-              title="글쓰기"
-            >
-              <Edit className="h-6 w-6 text-neutral-700" />
-            </button>
+            {/* 버튼들 */}
+            <div className="flex items-center gap-2">
+              {/* 친구 목록 버튼 */}
+              <button
+                onClick={() => router.push('/friends')}
+                className="rounded-full p-2 transition-all hover:bg-neutral-100"
+                title="친구 목록"
+              >
+                <Users className="h-6 w-6 text-neutral-700" />
+              </button>
+
+              {/* 글쓰기 버튼 */}
+              <button
+                onClick={() => setIsDialogOpen(true)}
+                className="rounded-full p-2 transition-all hover:bg-neutral-100"
+                title="글쓰기"
+              >
+                <Edit className="h-6 w-6 text-neutral-700" />
+              </button>
+            </div>
           </div>
 
           {/* 탭 바 */}

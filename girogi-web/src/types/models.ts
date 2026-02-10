@@ -163,6 +163,12 @@ export interface MealRecord {
   imageUrl?: string | null;
   /** 준수한 행동 리스트 (예: ["천천히 씹기", "작은 그릇 사용"]) */
   achievements: string[];
+  /** 획득한 뱃지 ID 리스트 (예: ["badge_mackerel", "badge_salad"]) */
+  badges: string[];
+  /** 만족도 별점 (1-5, 선택사항) */
+  rating?: number;
+  /** 한줄평 (선택사항) */
+  comment?: string;
   /** 식사 등록 시각 (ISO 8601 문자열) */
   createdAt: string;
   /** 리액션 리스트 (커뮤니티 공개 시) */

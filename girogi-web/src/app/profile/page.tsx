@@ -16,14 +16,22 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ProfileHeader } from './_components/profile-header';
 import { MealTimelineItem } from './_components/meal-timeline-item';
+import { BadgeCollection } from './_components/badge-collection';
+import { AchievementList } from './_components/achievement-list';
+import { CouponList } from './_components/coupon-list';
+import { CouponUsageDialog } from './_components/coupon-usage-dialog';
 import { PostCard } from '../community/_components/post-card';
 import { mockUsers, mockDailyRecords, mockPosts } from '@/lib/mock';
 import type { MealRecord } from '@/types/models';
 
-type Tab = 'timeline' | 'posts';
+type Tab = 'timeline' | 'badges' | 'achievements' | 'coupons' | 'posts';
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<Tab>('timeline');
+  const [couponDialogState, setCouponDialogState] = useState<{
+    isOpen: boolean;
+    couponId: string | null;
+  }>({ isOpen: false, couponId: null });
 
   // Mock 데이터
   const currentUser = mockUsers[0]; // 본인 프로필 가정
@@ -73,6 +81,15 @@ export default function ProfilePage() {
     console.log(`Post ${postId}: 더보기 메뉴`);
   };
 
+  // 쿠폰 사용
+  const handleUseCoupon = (couponId: string) => {
+    setCouponDialogState({ isOpen: true, couponId });
+  };
+
+  const handleCloseCouponDialog = () => {
+    setCouponDialogState({ isOpen: false, couponId: null });
+  };
+
   return (
     <div className="min-h-screen">
       <div className="mx-auto max-w-4xl bg-white min-h-screen">
@@ -97,6 +114,39 @@ export default function ProfilePage() {
           )}
         >
           식사 타임라인
+        </button>
+        <button
+          onClick={() => setActiveTab('badges')}
+          className={cn(
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            activeTab === 'badges'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-neutral-700 hover:text-neutral-700'
+          )}
+        >
+          뱃지 컬렉션
+        </button>
+        <button
+          onClick={() => setActiveTab('achievements')}
+          className={cn(
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            activeTab === 'achievements'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-neutral-700 hover:text-neutral-700'
+          )}
+        >
+          업적
+        </button>
+        <button
+          onClick={() => setActiveTab('coupons')}
+          className={cn(
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            activeTab === 'coupons'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-neutral-700 hover:text-neutral-700'
+          )}
+        >
+          쿠폰
         </button>
         <button
           onClick={() => setActiveTab('posts')}
@@ -139,6 +189,15 @@ export default function ProfilePage() {
           </>
         )}
 
+        {/* 뱃지 컬렉션 탭 */}
+        {activeTab === 'badges' && <BadgeCollection />}
+
+        {/* 업적 탭 */}
+        {activeTab === 'achievements' && <AchievementList />}
+
+        {/* 쿠폰 탭 */}
+        {activeTab === 'coupons' && <CouponList onUseCoupon={handleUseCoupon} />}
+
         {/* 기록 탭 */}
         {activeTab === 'posts' && (
           <>
@@ -174,6 +233,13 @@ export default function ProfilePage() {
         )}
       </main>
       </div>
+
+      {/* 쿠폰 사용 다이얼로그 */}
+      <CouponUsageDialog
+        isOpen={couponDialogState.isOpen}
+        couponId={couponDialogState.couponId}
+        onClose={handleCloseCouponDialog}
+      />
     </div>
   );
 }

@@ -15,7 +15,9 @@ import { useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { ChecklistTimeSection } from './_components/checklist-time-section';
 import { MealRecordButton } from './_components/meal-record-button';
+import { MealRecordSheet } from './_components/meal-record-sheet';
 import { MealTime } from '@/types/enums';
+import { MealRecord } from '@/types/models';
 
 interface ChecklistItem {
   title: string;
@@ -150,6 +152,15 @@ export default function ChecklistPage() {
     저녁: false,
   });
 
+  // Sheet 상태
+  const [sheetState, setSheetState] = useState<{
+    isOpen: boolean;
+    mealTime: MealTime | null;
+  }>({
+    isOpen: false,
+    mealTime: null,
+  });
+
   // 주간 외식 횟수 (Mock 데이터)
   const weeklyDiningOutCount = 2;
 
@@ -164,10 +175,43 @@ export default function ChecklistPage() {
     setList(newList);
   };
 
-  // 식사 기록 핸들러 (TODO: 실제 식사 기록 페이지로 이동)
+  // 식사 기록 Sheet 열기
   const handleMealRecordTap = (mealLabel: string) => {
-    console.log(`${mealLabel} 기록하기 클릭`);
-    // TODO: 식사 기록 다이얼로그 또는 페이지로 이동
+    const mealTimeMap: Record<string, MealTime> = {
+      아침: MealTime.BREAKFAST,
+      점심: MealTime.LUNCH,
+      저녁: MealTime.DINNER,
+    };
+
+    setSheetState({
+      isOpen: true,
+      mealTime: mealTimeMap[mealLabel],
+    });
+  };
+
+  // 식사 기록 저장
+  const handleSaveMealRecord = (record: Partial<MealRecord>) => {
+    console.log('Meal record saved:', record);
+
+    // 기록 완료 표시
+    const mealTimeToLabel: Record<MealTime, string> = {
+      [MealTime.BREAKFAST]: '아침',
+      [MealTime.LUNCH]: '점심',
+      [MealTime.DINNER]: '저녁',
+      [MealTime.SNACK]: '간식',
+    };
+
+    if (record.mealTime) {
+      const label = mealTimeToLabel[record.mealTime];
+      setMealRecords((prev) => ({ ...prev, [label]: true }));
+    }
+
+    // TODO: DailyRecord에 추가
+  };
+
+  // Sheet 닫기
+  const handleCloseSheet = () => {
+    setSheetState({ isOpen: false, mealTime: null });
   };
 
   return (
@@ -264,6 +308,16 @@ export default function ChecklistPage() {
           </div>
         </main>
       </div>
+
+      {/* 식사 기록 Sheet */}
+      {sheetState.mealTime && (
+        <MealRecordSheet
+          isOpen={sheetState.isOpen}
+          mealTime={sheetState.mealTime}
+          onClose={handleCloseSheet}
+          onSave={handleSaveMealRecord}
+        />
+      )}
     </div>
   );
 }

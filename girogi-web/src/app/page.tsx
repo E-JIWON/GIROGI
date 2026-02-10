@@ -14,7 +14,9 @@
 
 import { useState, useEffect } from 'react';
 import { Apple, Utensils, Moon } from 'lucide-react';
-import { StreakCounter } from './home/_components/streak-counter';
+import { StreakWidget } from './home/_components/streak-widget';
+import { WeeklyProgress } from './home/_components/weekly-progress';
+import { WeeklyFeedback } from './home/_components/weekly-feedback';
 import { MissionCard } from './home/_components/mission-card';
 import { WeeklyCalendar } from './home/_components/weekly-calendar';
 import { RewardStatusCard } from './home/_components/reward-status-card';
@@ -24,6 +26,8 @@ import {
 } from '@/lib/mock/dailyRecords';
 import { mockCurrentUser } from '@/lib/mock/users';
 import { SNACK_BOX_COUNT_KEY } from '@/lib/constants';
+import { calculateWeeklyMealStats } from '@/lib/utils/meal-stats';
+import { useStreakStore } from '@/stores/streakStore';
 
 interface Mission {
   id: string;
@@ -34,15 +38,16 @@ interface Mission {
 }
 
 export default function Home() {
-  // Streak 데이터
-  const currentStreak = calculateMockCurrentStreak();
-  const bestStreak = mockCurrentUser.bestStreak || 12; // TODO: 실제 최고 기록 계산
+  const streakStore = useStreakStore();
 
   // 주간 기록 데이터 (최근 7일)
   const weeklyRecords = mockDailyRecords
     .slice(0, 7)
     .reverse()
     .map((record) => record.isSuccessDay);
+
+  // 주간 식사 통계
+  const weeklyMealStats = calculateWeeklyMealStats(mockDailyRecords);
 
   // 과자박스 개수 (localStorage에서 불러오기)
   const [snackBoxCount, setSnackBoxCount] = useState(0);
@@ -58,7 +63,12 @@ export default function Home() {
       setSnackBoxCount(initialCount);
       localStorage.setItem(SNACK_BOX_COUNT_KEY, String(initialCount));
     }
-  }, []);
+
+    // Streak 데이터 초기화 (Mock 데이터 기반)
+    const recordDates = mockDailyRecords.map((record) => record.date);
+    streakStore.updateStreak(recordDates);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 마운트 시 한 번만 실행
 
   // 핵심 미션 3개
   const [missions, setMissions] = useState<Mission[]>([
@@ -119,11 +129,19 @@ export default function Home() {
         {/* 메인 컨텐츠 */}
         <main className="px-8 py-6">
           <div className="space-y-4">
-          {/* Streak 카운터 */}
-          <StreakCounter
-            currentStreak={currentStreak}
-            bestStreak={bestStreak}
-          />
+          {/* 듀오링고 스타일 Streak 위젯 */}
+          <StreakWidget />
+
+          {/* 주간 진행도 + 피드백 그리드 */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <WeeklyProgress />
+            <WeeklyFeedback
+              homeCount={weeklyMealStats.homeCount}
+              cafeteriaCount={weeklyMealStats.cafeteriaCount}
+              restaurantCount={weeklyMealStats.restaurantCount}
+              deliveryCount={weeklyMealStats.deliveryCount}
+            />
+          </div>
 
           {/* 핵심 미션 섹션 */}
           <section>
@@ -150,7 +168,7 @@ export default function Home() {
           {/* 보상 현황 */}
           <RewardStatusCard
             snackBoxCount={snackBoxCount}
-            consecutiveDietDays={currentStreak}
+            consecutiveDietDays={streakStore.streakData.currentStreak}
             userId={mockCurrentUser.id}
             onRewardUsed={handleRewardUsed}
           />
