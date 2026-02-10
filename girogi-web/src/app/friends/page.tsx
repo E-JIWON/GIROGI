@@ -36,7 +36,7 @@ export default function FriendsPage() {
 
   // 검색 필터링
   const filteredFriends = friends.filter((friend) =>
-    friend?.username?.toLowerCase().includes(searchQuery.toLowerCase())
+    friend?.nickname?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // 정렬
@@ -46,7 +46,7 @@ export default function FriendsPage() {
       const bStreak = friendStreaks.get(b.id) || 0;
       return bStreak - aStreak; // 내림차순
     } else {
-      return a.username.localeCompare(b.username);
+      return a.nickname.localeCompare(b.nickname);
     }
   });
 

@@ -1,66 +1,94 @@
 /**
- * 친구 프로필 비교 페이지
+ * 친구 프로필 페이지
  *
- * 본인 vs 친구 통계 비교
- * - Streak 비교
- * - 뱃지/업적 비교
- * - 응원 메시지
+ * /profile과 동일한 탭 구조 + "비교" 탭 추가
+ * - 식사 타임라인
+ * - 뱃지 컬렉션
+ * - 업적
+ * - 비교 (몸무게, Streak, 뱃지/업적)
+ * - 기록
  */
 
 'use client';
 
-import { use } from 'react';
+import { use, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { ProfileHeader } from '@/app/profile/_components/profile-header';
+import { MealTimelineItem } from '@/app/profile/_components/meal-timeline-item';
+import { BadgeCollection } from '@/app/profile/_components/badge-collection';
+import { AchievementList } from '@/app/profile/_components/achievement-list';
+import { PostCard } from '@/app/community/_components/post-card';
+import { WeightComparison } from '@/components/friend/weight-comparison';
 import { StreakComparison } from '@/components/friend/streak-comparison';
 import { BadgeComparison } from '@/components/friend/badge-comparison';
 import { EncouragementCard } from '@/components/friend/encouragement-card';
 import { FriendProfile } from '@/types/friend';
 import { calculateComparison } from '@/lib/utils/friend-comparison';
-import { mockUsers, mockDailyRecords } from '@/lib/mock';
+import { mockUsers, mockDailyRecords, mockPosts, mockCurrentUserStats } from '@/lib/mock';
 import { useStreakStore } from '@/stores/streakStore';
 import { useBadgeStore } from '@/stores/badgeStore';
 import { useAchievementStore } from '@/stores/achievementStore';
 import { useRouter } from 'next/navigation';
+import type { MealRecord, WeightRecord } from '@/types';
 
-export default function FriendComparisonPage({
+type Tab = 'timeline' | 'badges' | 'achievements' | 'compare' | 'posts';
+
+export default function FriendProfilePage({
   params,
 }: {
   params: Promise<{ friendId: string }>;
 }) {
   const { friendId } = use(params);
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<Tab>('timeline');
 
   // 본인 데이터
   const myStreakData = useStreakStore((state) => state.streakData);
   const myBadgeCount = useBadgeStore((state) => state.getTotalBadgeTypes());
   const myAchievementCount = useAchievementStore((state) => state.userAchievements.length);
-  const myUser = mockUsers[0]; // 본인
+  const myUser = mockUsers[0];
 
-  // 친구 데이터 (Mock)
+  // 친구 데이터
   const friendUser = mockUsers.find((u) => u.id === friendId);
 
   if (!friendUser) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-neutral-500">친구를 찾을 수 없습니다.</p>
+        <div className="text-center">
+          <p className="text-lg font-medium text-neutral-700">친구를 찾을 수 없습니다</p>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="mt-4 text-primary-600 hover:underline"
+          >
+            뒤로 가기
+          </button>
+        </div>
       </div>
     );
   }
 
-  // Mock: 친구의 Streak 데이터 (실제로는 API에서 가져와야 함)
+  // 친구의 식사 기록 (Mock)
+  const mealRecords: MealRecord[] = [];
+  mockDailyRecords.forEach((record) => {
+    if (record.meals) mealRecords.push(...record.meals);
+  });
+  mealRecords.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  // 친구의 게시글 (Mock)
+  const friendPosts = mockPosts.filter((post) => post.authorId === friendId);
+
+  // Mock: 친구의 Streak & 비교 데이터
   const friendStreakData = {
-    currentStreak: 12,
-    longestStreak: 18,
-    totalDays: 45,
+    currentStreak: friendUser.currentStreak,
+    longestStreak: friendUser.bestStreak,
+    totalDays: friendUser.totalSuccessDays,
     lastRecordDate: new Date().toISOString(),
-    weeklyStatus: [true, true, true, true, true, true, false],
+    weeklyStatus: [true, true, true, true, true, false, false],
   };
 
-  const friendBadgeCount = 15; // Mock
-  const friendAchievementCount = 3; // Mock
-  const friendTotalDays = 45; // Mock
-
-  // 프로필 데이터 구성
+  // 비교 프로필 구성
   const myProfile: FriendProfile = {
     user: myUser,
     streakData: myStreakData,
@@ -72,72 +100,168 @@ export default function FriendComparisonPage({
   const friendProfile: FriendProfile = {
     user: friendUser,
     streakData: friendStreakData,
-    badgeCount: friendBadgeCount,
-    achievementCount: friendAchievementCount,
-    totalDays: friendTotalDays,
+    badgeCount: Math.floor(Math.random() * 20) + 5,
+    achievementCount: Math.floor(Math.random() * 5),
+    totalDays: friendUser.totalSuccessDays,
   };
 
-  // 현재 Streak 기준으로 비교 (유틸리티 함수 사용)
   const comparison = calculateComparison(myProfile, friendProfile);
 
+  // Mock: 친구 체중 히스토리
+  const friendWeightHistory: WeightRecord[] = (() => {
+    const startWeight = 80.0;
+    const days = 30;
+    const history: WeightRecord[] = [];
+    for (let i = 0; i < days; i += 3) {
+      const progress = i / days;
+      const weight = startWeight - (startWeight - 75.0) * progress * 0.5;
+      const variation = (Math.random() - 0.5) * 0.6;
+      history.push({
+        id: `fw_${i}`,
+        date: new Date(Date.now() - (days - i) * 24 * 60 * 60 * 1000).toISOString(),
+        weight: Math.round((weight + variation) * 10) / 10,
+      });
+    }
+    return history;
+  })();
+
+  // 팔로우 토글
+  const handleFollowTap = () => {
+    console.log('팔로우 토글:', friendId);
+  };
+
+  // 리액션 / 댓글 / 더보기
+  const handleReaction = (postId: string, type: string) => console.log(`${postId}: ${type}`);
+  const handleComment = (postId: string) => console.log(`${postId}: 댓글`);
+  const handleMore = (postId: string) => console.log(`${postId}: 더보기`);
+
+  // 탭 정의
+  const tabs: { value: Tab; label: string }[] = [
+    { value: 'timeline', label: '타임라인' },
+    { value: 'badges', label: '뱃지' },
+    { value: 'achievements', label: '업적' },
+    { value: 'compare', label: '비교' },
+    { value: 'posts', label: '기록' },
+  ];
+
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-4xl bg-white min-h-screen">
-        {/* 헤더 */}
-        <div className="sticky top-0 z-10 border-b border-neutral-200 bg-white px-4 py-4">
-          <div className="flex items-center gap-3">
+        {/* 뒤로가기 헤더 */}
+        <div className="flex items-center gap-3 border-b border-neutral-100 px-4 py-3">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-600 transition-colors hover:bg-neutral-100"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="text-lg font-bold text-neutral-800">{friendUser.nickname}</h1>
+        </div>
+
+        {/* 프로필 헤더 (내 프로필과 동일한 컴포넌트 재사용) */}
+        <ProfileHeader
+          user={friendUser}
+          isOwnProfile={false}
+          isFollowing={myUser.following.includes(friendId)}
+          onFollowTap={handleFollowTap}
+        />
+
+        {/* 탭 바 */}
+        <div className="sticky top-0 z-10 flex border-b border-neutral-200 bg-white">
+          {tabs.map(({ value, label }) => (
             <button
-              type="button"
-              onClick={() => router.back()}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-neutral-600 transition-colors hover:bg-neutral-100"
+              key={value}
+              onClick={() => setActiveTab(value)}
+              className={cn(
+                'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+                activeTab === value
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-neutral-700 hover:text-neutral-700'
+              )}
             >
-              <ArrowLeft className="h-5 w-5" />
+              {label}
             </button>
-            <div>
-              <h1 className="text-lg font-bold text-neutral-800">친구 비교</h1>
-              <p className="text-sm text-neutral-600">
-                나 vs {friendProfile.user.username}
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* 메인 컨텐츠 */}
-        <main className="mx-auto max-w-2xl space-y-6 px-4 py-6">
-          {/* 응원 메시지 */}
-          <EncouragementCard comparison={comparison} />
+        <main className="mx-auto max-w-2xl px-4 py-6">
+          {/* 식사 타임라인 */}
+          {activeTab === 'timeline' && (
+            <>
+              {mealRecords.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20">
+                  <p className="text-base font-medium text-neutral-700">식사 기록이 없습니다</p>
+                </div>
+              ) : (
+                <div className="space-y-0">
+                  {mealRecords.map((mealRecord, index) => (
+                    <MealTimelineItem
+                      key={`${mealRecord.mealTime}-${index}`}
+                      mealRecord={mealRecord}
+                      isLast={index === mealRecords.length - 1}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
 
-          {/* Streak 비교 */}
-          <StreakComparison comparison={comparison} />
+          {/* 뱃지 컬렉션 */}
+          {activeTab === 'badges' && <BadgeCollection />}
 
-          {/* 뱃지/업적 비교 */}
-          <BadgeComparison comparison={comparison} />
+          {/* 업적 */}
+          {activeTab === 'achievements' && <AchievementList />}
 
-          {/* 친구 프로필 보기 버튼 */}
-          <div className="rounded-xl border-2 border-neutral-200 bg-white p-6">
-            <div className="mb-4 text-center">
-              <div className="mb-2 text-4xl">{friendProfile.user.profileImageUrl || '👤'}</div>
-              <h3 className="text-lg font-bold text-neutral-800">
-                {friendProfile.user.username}
-              </h3>
-              <p className="text-sm text-neutral-600">{friendProfile.user.bio || '소개가 없습니다.'}</p>
+          {/* 비교 콘텐츠 */}
+          {activeTab === 'compare' && (
+            <div className="space-y-8">
+              {/* 응원 메시지 */}
+              <EncouragementCard comparison={comparison} />
+
+              {/* 체중 비교 */}
+              <WeightComparison
+                myWeightHistory={mockCurrentUserStats.weightHistory}
+                friendWeightHistory={friendWeightHistory}
+                friendName={friendUser.nickname}
+              />
+
+              {/* Streak 비교 */}
+              <StreakComparison comparison={comparison} />
+
+              {/* 뱃지/업적 비교 */}
+              <BadgeComparison comparison={comparison} />
             </div>
+          )}
 
-            <button
-              type="button"
-              onClick={() => router.push(`/profile/${friendId}`)}
-              className="w-full rounded-xl border-2 border-primary-500 bg-white py-3 font-semibold text-primary-600 transition-all hover:bg-primary-50"
-            >
-              프로필 전체 보기
-            </button>
-          </div>
-
-          {/* 격려 문구 */}
-          <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-center">
-            <p className="text-sm text-blue-700">
-              💡 친구와 함께하면 다이어트 성공률이 2배 높아져요!
-            </p>
-          </div>
+          {/* 기록 */}
+          {activeTab === 'posts' && (
+            <>
+              {friendPosts.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20">
+                  <p className="text-base font-medium text-neutral-700">작성한 게시글이 없습니다</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {friendPosts.map((post) => {
+                    const author = mockUsers.find((u) => u.id === post.authorId);
+                    if (!author) return null;
+                    return (
+                      <PostCard
+                        key={post.id}
+                        post={post}
+                        author={author}
+                        onReactionTap={(type) => handleReaction(post.id, type)}
+                        onCommentTap={() => handleComment(post.id)}
+                        onMoreTap={() => handleMore(post.id)}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </>
+          )}
         </main>
       </div>
     </div>

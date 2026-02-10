@@ -150,7 +150,7 @@ export function StreakComparison({ comparison }: StreakComparisonProps) {
             {/* 친구 */}
             <div>
               <div className="mb-1 flex items-center justify-between">
-                <span className="text-sm text-neutral-600">{friendProfile.user.username}</span>
+                <span className="text-sm text-neutral-600">{friendProfile.user.nickname}</span>
                 <span
                   className={cn(
                     'text-sm font-bold',

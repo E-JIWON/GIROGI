@@ -3,6 +3,7 @@
 /** @desc 프로필 헤더 */
 
 import { Edit, UserPlus, UserMinus } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import type { User } from '@/types';
 
 interface ProfileHeaderProps {
@@ -35,6 +36,8 @@ export function ProfileHeader({
   onFollowTap,
   onEditProfileTap,
 }: ProfileHeaderProps) {
+  const router = useRouter();
+
   return (
     <div className="bg-neutral-100 p-6">
       <div className="mb-4 flex items-start">
@@ -53,10 +56,14 @@ export function ProfileHeader({
           )}
         </div>
 
-        {/* 통계 (팔로워, 팔로잉) */}
+        {/* 통계 (팔로워, 팔로잉) - 클릭 시 친구 목록으로 이동 */}
         <div className="ml-4 flex flex-1 justify-around">
-          <StatItem label="팔로워" value={user.followers.length.toString()} />
-          <StatItem label="팔로잉" value={user.following.length.toString()} />
+          <button type="button" onClick={() => router.push('/friends')} className="transition-opacity hover:opacity-70">
+            <StatItem label="팔로워" value={user.followers.length.toString()} />
+          </button>
+          <button type="button" onClick={() => router.push('/friends')} className="transition-opacity hover:opacity-70">
+            <StatItem label="팔로잉" value={user.following.length.toString()} />
+          </button>
         </div>
       </div>
 

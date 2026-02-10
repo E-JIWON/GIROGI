@@ -65,12 +65,12 @@ export function FriendListCard({ friend, friendStreak, myStreak }: FriendListCar
       <div className="flex items-center gap-4">
         {/* 프로필 이미지 */}
         <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary-400 to-blue-500 text-2xl text-white">
-          {friend.profileImageUrl || friend.username.slice(0, 1)}
+          {friend.profileImageUrl || friend.nickname.slice(0, 1)}
         </div>
 
         {/* 정보 */}
         <div className="flex-1">
-          <h4 className="text-base font-bold text-neutral-800">{friend.username}</h4>
+          <h4 className="text-base font-bold text-neutral-800">{friend.nickname}</h4>
           <div className="mt-1 flex items-center gap-2">
             <div className="flex items-center gap-1 text-sm text-neutral-600">
               <Flame className="h-4 w-4 text-orange-500" />

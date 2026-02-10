@@ -22,7 +22,7 @@ export function EncouragementCard({ comparison }: EncouragementCardProps) {
 
   // 응원 메시지 생성
   const getMessage = (): EncouragementMessage => {
-    const friendName = friendProfile.user.username;
+    const friendName = friendProfile.user.nickname;
 
     if (winner === 'me') {
       if (difference >= 7) {

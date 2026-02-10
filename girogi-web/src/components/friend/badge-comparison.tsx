@@ -137,7 +137,7 @@ export function BadgeComparison({ comparison }: BadgeComparisonProps) {
           />
           <CircularChart
             percentage={friendBadgeRate}
-            label={friendProfile.user.username}
+            label={friendProfile.user.nickname}
             value={friendProfile.badgeCount}
             total={totalBadgeTypes}
             color="primary"
@@ -170,7 +170,7 @@ export function BadgeComparison({ comparison }: BadgeComparisonProps) {
           />
           <CircularChart
             percentage={friendAchievementRate}
-            label={friendProfile.user.username}
+            label={friendProfile.user.nickname}
             value={friendProfile.achievementCount}
             total={totalAchievements}
             color="yellow"
