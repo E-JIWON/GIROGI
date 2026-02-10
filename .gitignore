@@ -38,3 +38,12 @@ next-env.d.ts
 
 # ide
 .vscode
+.idea
+
+# Flutter/Dart
+**/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/*.iml

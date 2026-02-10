@@ -1,17 +1,17 @@
 # GIROGI 개발 가이드
 
 > Claude가 작업할 때 참고하는 핵심 문서
-> **버전**: 3.0 (Next.js 기준)
-> **최종 수정**: 2026-02-09
+> **버전**: 4.0 (Next.js + Flutter WebView)
+> **최종 수정**: 2026-02-10
 
 ---
 
 ## 🎯 프로젝트 개요
 
 **이름**: GIROGI (기로기)
-**플랫폼**: Next.js 웹 애플리케이션 (PWA 예정)
+**플랫폼**: Next.js 웹앱 + Flutter WebView 네이티브 앱
 **목적**: 심리학 연구 기반의 과학적 다이어트 앱
-**현황**: Next.js 전환 완료, 5개 주요 화면 구현됨
+**현황**: Next.js 5개 주요 화면 구현 + Flutter WebView 껍데기 세팅 완료
 
 ### 핵심 차별점
 
@@ -23,7 +23,7 @@
 
 ## 🏗️ 기술 스택
 
-### 필수 스택
+### 웹 (girogi-web)
 
 ```yaml
 Framework: Next.js 16 (App Router + React 19)
@@ -36,17 +36,34 @@ Validation: Zod v4 (1.37KB)
 Icons: Lucide React (Tree-shakable)
 ```
 
+### 앱 (girogi-app)
+
+```yaml
+Framework: Flutter 3.38+ (WebView shell)
+Language: Dart 3.10+
+WebView: flutter_inappwebview ^6.1.5
+Notifications: flutter_local_notifications ^18.0.0
+Network: connectivity_plus ^6.1.0
+Platforms: iOS, Android, macOS, Windows
+```
+
 ### 개발 환경
 
 ```bash
-# 개발 서버 시작 (http://localhost:8282)
-npm run dev
+# 웹 개발 서버 (http://localhost:8282)
+cd girogi-web && npm run dev
 
-# 프로덕션 빌드
-npm run build
+# Flutter 앱 실행 (웹 개발서버 필요)
+cd girogi-app && flutter run
 
-# 린팅
-npm run lint
+# 웹 프로덕션 빌드
+cd girogi-web && npm run build
+
+# 앱 릴리즈 빌드
+cd girogi-app && flutter build ios --release
+cd girogi-app && flutter build appbundle --release
+cd girogi-app && flutter build macos --release
+cd girogi-app && flutter build windows --release
 ```
 
 **상세**: [docs/TECH_STACK.md](docs/TECH_STACK.md)
@@ -56,28 +73,31 @@ npm run lint
 ## 📁 프로젝트 구조
 
 ```
-girogi-web/src/
-├── app/                    # Next.js 16 App Router
-│   ├── layout.tsx          # 루트 레이아웃
-│   ├── page.tsx            # 홈 페이지 (/)
-│   ├── home/               # ✅ 홈 대시보드
-│   ├── checklist/          # ✅ 체크리스트 화면
-│   ├── emergency/          # ✅ 유혹 극복 화면
-│   ├── community/          # ✅ 커뮤니티 화면
-│   └── profile/            # ✅ 프로필 화면
+GIROGI/
+├── girogi-web/              # Next.js 웹앱
+│   └── src/
+│       ├── app/             # App Router (home, checklist, emergency, community, profile)
+│       ├── components/      # UI 컴포넌트 (화면별 폴더 분리)
+│       ├── lib/             # API, 훅, 유틸리티, native-bridge.ts
+│       ├── stores/          # Zustand 스토어
+│       └── types/           # TypeScript 타입, Zod 스키마, flutter-webview.d.ts
 │
-├── components/             # UI 컴포넌트
-│   ├── home/               # 홈 전용 (StreakCounter, MissionCard 등)
-│   ├── checklist/          # 체크리스트 전용
-│   ├── emergency/          # 유혹 극복 전용
-│   ├── community/          # 커뮤니티 전용
-│   ├── profile/            # 프로필 전용
-│   ├── navigation/         # 하단 탭바
-│   └── common/             # 공통 컴포넌트
+├── girogi-app/              # Flutter WebView 껍데기
+│   ├── lib/
+│   │   ├── main.dart        # 엔트리포인트
+│   │   ├── app.dart         # MaterialApp 설정
+│   │   ├── config/          # app_config.dart (dev/prod URL)
+│   │   ├── screens/         # webview_screen, splash_screen, offline_screen
+│   │   └── services/        # bridge_service, notification_service, connectivity_service
+│   ├── ios/                 # iOS 설정
+│   ├── android/             # Android 설정 (minSdk 24)
+│   ├── macos/               # macOS 설정
+│   └── windows/             # Windows 설정
 │
-├── lib/                    # API, 훅, 유틸리티
-├── stores/                 # Zustand 스토어
-└── types/                  # TypeScript 타입 및 Zod 스키마
+├── archive/                 # 기존 Flutter MVP 코드 보관
+│   └── flutter-mvp/
+├── docs/                    # 프로젝트 문서
+└── CLAUDE.md                # 이 문서
 ```
 
 ---
@@ -131,18 +151,21 @@ girogi-web/src/
 - ✅ **디자인 시스템** 완성 (Tailwind 4.0 테마)
 - ✅ **컴포넌트 구조** 갖춰짐 (화면별 폴더 분리)
 - ✅ **필수 라이브러리** 설치 (Zustand, TanStack Query, Zod 등)
+- ✅ **Flutter WebView 껍데기** 세팅 (girogi-app/)
+- ✅ **JS ↔ Dart 브릿지** 구현 (알림, 햅틱, 앱 정보)
+- ✅ **네이티브 기능**: 푸시알림, 오프라인 처리, 스플래시
+- ✅ **프로젝트 구조 정리**: Flutter MVP → archive/
 
 ### 현재 작업 중
 
 - ⏳ **API 연동** (현재 Mock 데이터)
 - ⏳ **인증 시스템** (로그인, 회원가입)
-- ⏳ **PWA 설정** (오프라인 지원, 설치 가능)
 
 ### 미구현 (백엔드 필요)
 
 - ❌ Firebase/Supabase 연동
 - ❌ 이미지 업로드
-- ❌ 푸시 알림 (PWA 제약 있음)
+- ❌ 앱스토어 배포 (Flutter 빌드 + 심사)
 
 ---
 
@@ -313,11 +336,11 @@ style: 스타일 변경
   - 4단계 로드맵 (Phase 1-4)
   - 우선순위별 정리 (구현 난이도 + 효과 기준)
 
-### Flutter 시점 문서 (아카이브)
+### Flutter MVP 아카이브
 
-- `docs/archive/` 폴더에 보관
+- `archive/flutter-mvp/` 폴더에 보관
 - Flutter MVP 개발 히스토리 (Phase 1-11)
-- 참고용으로만 사용 (더 이상 개발하지 않음)
+- 참고용으로만 사용 (girogi-app이 새 Flutter 프로젝트)
 
 ---
 
@@ -348,10 +371,10 @@ style: 스타일 변경
 
 ---
 
-**문서 버전**: 3.0 (Next.js 기준)
+**문서 버전**: 4.0 (Next.js + Flutter WebView)
 **이전 버전**: `docs/archive/CLAUDE_FULL.md` (Flutter 기준)
-**최종 수정**: 2026-02-09
+**최종 수정**: 2026-02-10
 
 > 이 문서는 Claude가 GIROGI 프로젝트를 이해하고 작업하기 위한 핵심 가이드입니다.
-> Next.js 전환이 완료되었으며, 5개 주요 화면이 구현되어 있습니다.
+> Next.js 웹앱(girogi-web)과 Flutter WebView 껍데기(girogi-app) 구조입니다.
 > 다음 단계는 연구 분석 보고서의 개선 제안을 코드에 반영하는 것입니다.

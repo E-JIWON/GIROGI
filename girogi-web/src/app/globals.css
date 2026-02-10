@@ -613,3 +613,16 @@ body {
 }
 
 /* 3단계 배경 계층: body(#edeef3) → content(white) → card(neutral-100) */
+
+/**
+ * ========================================
+ * WebView 최적화 (Flutter 앱 내 실행 시)
+ * ========================================
+ */
+html,
+body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
