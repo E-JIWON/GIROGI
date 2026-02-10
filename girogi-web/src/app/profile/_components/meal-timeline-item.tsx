@@ -1,13 +1,6 @@
-/**
- * MealTimelineItem 컴포넌트
- *
- * 프로필 화면의 식사 타임라인 항목
- * - 왼쪽: 시간 + 타임라인 점 + 연결선
- * - 오른쪽: 식사 정보 카드
- * - 식사 시간대별 색상 구분 (아침=주황, 점심=황갈색, 저녁=보라)
- *
- * Flutter: lib/presentation/widgets/profile/meal_timeline_item.dart
- */
+'use client';
+
+/** @desc 식사 타임라인 항목 */
 
 import { Utensils, Home, ShoppingBag } from 'lucide-react';
 import type { MealRecord } from '@/types/models';

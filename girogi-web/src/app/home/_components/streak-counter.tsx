@@ -1,11 +1,6 @@
-/**
- * StreakCounter 컴포넌트
- *
- * 연속 성공 일수를 강조하여 표시하는 카운터 위젯
- * 도파민 자극을 위한 그라데이션 배경과 큰 숫자 표시
- *
- * Flutter: lib/presentation/widgets/home/streak_counter.dart
- */
+'use client';
+
+/** @desc 연속 성공 일수 카운터 */
 
 import { Flame } from 'lucide-react';
 

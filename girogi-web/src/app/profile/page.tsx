@@ -14,9 +14,9 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ProfileHeader } from '@/components/profile/ProfileHeader';
-import { MealTimelineItem } from '@/components/profile/MealTimelineItem';
-import { PostCard } from '@/components/community/PostCard';
+import { ProfileHeader } from './_components/profile-header';
+import { MealTimelineItem } from './_components/meal-timeline-item';
+import { PostCard } from '../community/_components/post-card';
 import { mockUsers, mockDailyRecords, mockPosts } from '@/lib/mock';
 import type { MealRecord } from '@/types/models';
 

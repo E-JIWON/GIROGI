@@ -182,3 +182,77 @@ export const REWARD_USAGE_KEY = 'girogi_reward_usage'
 
 /** 현재 과자박스 개수 localStorage 키 */
 export const SNACK_BOX_COUNT_KEY = 'girogi_snack_box_count'
+
+// ============================================
+// 색상 매핑 (Color Mappings)
+// ============================================
+
+/** 시간대별 색상 매핑 */
+export const TIME_SLOT_COLORS = {
+  morning: {
+    bg: 'bg-orange-500/10',
+    text: 'text-orange-500',
+    border: 'border-orange-500',
+    icon: 'text-orange-500',
+  },
+  afternoon: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-500',
+    border: 'border-amber-500',
+    icon: 'text-amber-500',
+  },
+  evening: {
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-500',
+    border: 'border-blue-500',
+    icon: 'text-blue-500',
+  },
+  night: {
+    bg: 'bg-indigo-500/10',
+    text: 'text-indigo-500',
+    border: 'border-indigo-500',
+    icon: 'text-indigo-500',
+  },
+} as const
+
+/** 식사 타입별 색상 매핑 */
+export const MEAL_TYPE_COLORS = {
+  breakfast: {
+    bg: 'bg-orange-50',
+    text: 'text-orange-500',
+    icon: 'text-orange-500',
+  },
+  lunch: {
+    bg: 'bg-amber-50',
+    text: 'text-amber-600',
+    icon: 'text-amber-600',
+  },
+  dinner: {
+    bg: 'bg-blue-50',
+    text: 'text-blue-600',
+    icon: 'text-blue-600',
+  },
+  snack: {
+    bg: 'bg-purple-50',
+    text: 'text-purple-600',
+    icon: 'text-purple-600',
+  },
+} as const
+
+/** 보상 타입별 색상 매핑 */
+export const REWARD_COLORS = {
+  snackBox: {
+    bg50: 'bg-purple-50',
+    bg100: 'bg-purple-100',
+    bg500: 'bg-purple-500',
+    text: 'text-purple-600',
+    textWhite: 'text-white',
+  },
+  cheatDay: {
+    bg50: 'bg-primary-50',
+    bg100: 'bg-primary-100',
+    bg500: 'bg-primary-500',
+    text: 'text-primary',
+    textWhite: 'text-white',
+  },
+} as const

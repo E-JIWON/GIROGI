@@ -1,13 +1,6 @@
-/**
- * ReactionBar 컴포넌트
- *
- * 게시글에 대한 6종 감정 리액션과 댓글 수를 표시
- * - 6개 리액션: 👍❤️💪😭😂🤝
- * - 리액션 요약 (상위 3개)
- * - 댓글 버튼
- *
- * Flutter: lib/presentation/widgets/community/reaction_bar.dart
- */
+'use client';
+
+/** @desc 게시글 리액션 바 */
 
 import { MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';

@@ -1,13 +1,4 @@
-/**
- * FutureSelfCard 컴포넌트
- *
- * Episodic Future Thinking (EFT) 이론을 적용한 미래 자아 시각화
- * - 목표 이미지 표시 (없으면 플레이스홀더)
- * - 목표 정보 (목표 체중, 현재 체중, 남은 일수)
- * - 동기부여 메시지 (랜덤 선택 + 시간대별 맞춤)
- *
- * Flutter: lib/presentation/widgets/emergency/future_self_card.dart
- */
+/** @desc 미래 자아 시각화 카드 (EFT) */
 
 'use client'
 

@@ -1,12 +1,6 @@
-/**
- * MissionCard 컴포넌트
- *
- * 일일 핵심 미션을 표시하는 카드
- * 3개 미션 중 2개 이상 달성 시 성공일로 인정됨
- *
- * Tiny Habits 이론 적용: 작은 행동 단위로 구성
- * Flutter: lib/presentation/widgets/home/mission_card.dart
- */
+'use client';
+
+/** @desc 일일 핵심 미션 카드 (Tiny Habits) */
 
 import { Check, ChevronRight, LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';

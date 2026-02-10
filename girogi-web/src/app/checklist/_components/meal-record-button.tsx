@@ -1,13 +1,6 @@
-/**
- * MealRecordButton 컴포넌트
- *
- * 식사 기록 버튼
- * - 미기록: 흰색 카드 + 레스토랑 아이콘 + "기록하기"
- * - 기록 완료: 초록색 카드 + 체크 아이콘 + "기록 완료"
- * - 클릭 시 식사 기록 상세 페이지로 이동 (또는 다이얼로그)
- *
- * Flutter: lib/presentation/widgets/checklist/meal_record_button.dart
- */
+'use client';
+
+/** @desc 식사 기록 버튼 */
 
 import { CheckCircle2, UtensilsCrossed } from 'lucide-react';
 import { cn } from '@/lib/utils';

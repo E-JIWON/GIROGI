@@ -17,7 +17,7 @@ interface CleanButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   variant?: ButtonVariant;
   size?: ButtonSize;
   children: React.ReactNode;
-  fullWidth?: boolean;
+  isFullWidth?: boolean;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -63,7 +63,7 @@ export const CleanButton: React.FC<CleanButtonProps> = ({
   variant = 'primary',
   size = 'md',
   children,
-  fullWidth = false,
+  isFullWidth = false,
   className = '',
   disabled = false,
   ...props
@@ -73,7 +73,7 @@ export const CleanButton: React.FC<CleanButtonProps> = ({
       className={`
         ${variantStyles[variant]}
         ${sizeStyles[size]}
-        ${fullWidth ? 'w-full' : ''}
+        ${isFullWidth ? 'w-full' : ''}
         font-medium
         transition-all duration-300
         disabled:opacity-50 disabled:cursor-not-allowed

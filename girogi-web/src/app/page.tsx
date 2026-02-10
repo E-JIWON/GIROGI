@@ -14,10 +14,10 @@
 
 import { useState, useEffect } from 'react';
 import { Apple, Utensils, Moon } from 'lucide-react';
-import { StreakCounter } from '@/components/home/StreakCounter';
-import { MissionCard } from '@/components/home/MissionCard';
-import { WeeklyCalendar } from '@/components/home/WeeklyCalendar';
-import { RewardStatusCard } from '@/components/home/RewardStatusCard';
+import { StreakCounter } from './home/_components/streak-counter';
+import { MissionCard } from './home/_components/mission-card';
+import { WeeklyCalendar } from './home/_components/weekly-calendar';
+import { RewardStatusCard } from './home/_components/reward-status-card';
 import {
   mockDailyRecords,
   calculateMockCurrentStreak,

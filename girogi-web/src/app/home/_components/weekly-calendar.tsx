@@ -1,11 +1,6 @@
-/**
- * WeeklyCalendar 컴포넌트
- *
- * 주간 성공률을 캘린더 형태로 시각화
- * 최근 7일간의 성공/실패 기록을 표시
- *
- * Flutter: lib/presentation/widgets/home/weekly_calendar.dart
- */
+'use client';
+
+/** @desc 주간 성공률 캘린더 */
 
 import { Check, X } from 'lucide-react';
 import { cn } from '@/lib/utils';

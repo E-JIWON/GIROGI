@@ -19,7 +19,7 @@ interface CleanCardProps {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
-  hoverable?: boolean;
+  isHoverable?: boolean;
 }
 
 const variantStyles: Record<CardVariant, string> = {
@@ -43,7 +43,7 @@ export const CleanCard: React.FC<CleanCardProps> = ({
   children,
   className = '',
   onClick,
-  hoverable = false,
+  isHoverable = false,
 }) => {
   return (
     <div
@@ -51,7 +51,7 @@ export const CleanCard: React.FC<CleanCardProps> = ({
         ${variantStyles[variant]}
         ${paddingStyles[padding]}
         rounded-2xl
-        ${onClick || hoverable ? 'cursor-pointer transition-all duration-300 hover:scale-[1.02]' : ''}
+        ${onClick || isHoverable ? 'cursor-pointer transition-all duration-300 hover:scale-[1.02]' : ''}
         ${className}
       `.trim().replace(/\s+/g, ' ')}
       onClick={onClick}

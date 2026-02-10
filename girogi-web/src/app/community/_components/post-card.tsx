@@ -1,16 +1,9 @@
-/**
- * PostCard 컴포넌트
- *
- * 커뮤니티 피드에 표시되는 게시글 카드
- * - 5가지 타입별 렌더링: experience, failure, motivation, mealRecord, shorts
- * - 헤더 (프로필 이미지, 닉네임, 시간, 더보기)
- * - ReactionBar 통합
- *
- * Flutter: lib/presentation/widgets/community/post_card.dart
- */
+'use client';
+
+/** @desc 커뮤니티 게시글 카드 */
 
 import { MoreVertical, Heart, Play, ImageOff } from 'lucide-react';
-import { ReactionBar } from './ReactionBar';
+import { ReactionBar } from './reaction-bar';
 import type { Post, User } from '@/types';
 import { PostType } from '@/types/enums';
 

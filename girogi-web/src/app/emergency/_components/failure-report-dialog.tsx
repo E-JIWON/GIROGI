@@ -1,14 +1,4 @@
-/**
- * FailureReportDialog 컴포넌트
- *
- * 실패 상황을 기록하고 분석하는 다이얼로그
- * - 3단계 질문 폼
- * - 허가 효과 경고
- * - 커뮤니티 공유 체크박스
- * - 폼 검증
- *
- * Flutter: lib/presentation/widgets/emergency/failure_report_dialog.dart
- */
+/** @desc 실패 리포트 작성 다이얼로그 */
 
 'use client';
 
@@ -35,7 +25,7 @@ export function FailureReportDialog({
   const [situation, setSituation] = useState('');
   const [reason, setReason] = useState('');
   const [solution, setSolution] = useState('');
-  const [shareWithCommunity, setShareWithCommunity] = useState(false);
+  const [shouldShareWithCommunity, setShouldShareWithCommunity] = useState(false);
 
   const [errors, setErrors] = useState<{
     situation?: string;
@@ -71,14 +61,14 @@ export function FailureReportDialog({
       situation,
       reason,
       solution,
-      shareWithCommunity,
+      shouldShareWithCommunity,
     });
 
     // 초기화 및 닫기
     setSituation('');
     setReason('');
     setSolution('');
-    setShareWithCommunity(false);
+    setShouldShareWithCommunity(false);
     setErrors({});
     onClose();
   };
@@ -211,8 +201,8 @@ export function FailureReportDialog({
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
-                    checked={shareWithCommunity}
-                    onChange={(e) => setShareWithCommunity(e.target.checked)}
+                    checked={shouldShareWithCommunity}
+                    onChange={(e) => setShouldShareWithCommunity(e.target.checked)}
                     className="mt-1 h-4 w-4 cursor-pointer accent-primary"
                   />
                   <div className="flex-1">

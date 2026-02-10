@@ -1,13 +1,4 @@
-/**
- * BottomTabBar 컴포넌트
- *
- * 하단 네비게이션 바
- * - 5개 탭: 홈, 체크리스트, 유혹 극복, 커뮤니티, 프로필
- * - 유혹 극복 탭은 중앙에 크게 배치 (FAB 스타일)
- * - 현재 활성 탭 강조 (Primary 색상)
- *
- * Flutter: lib/presentation/navigation/main_navigation.dart
- */
+/** @desc 하단 네비게이션 바 */
 
 'use client';
 

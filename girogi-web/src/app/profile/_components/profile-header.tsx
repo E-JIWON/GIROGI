@@ -1,15 +1,6 @@
-/**
- * ProfileHeader 컴포넌트
- *
- * 프로필 헤더 (사용자 정보, 통계, 버튼)
- * - 프로필 이미지 (CircleAvatar 80px)
- * - 게시글/팔로워/팔로잉 통계 3열
- * - 닉네임, 바이오
- * - 본인: "프로필 편집" 버튼
- * - 타인: "팔로우" 버튼
- *
- * Flutter: lib/presentation/widgets/profile/profile_header.dart
- */
+'use client';
+
+/** @desc 프로필 헤더 */
 
 import { Edit, UserPlus, UserMinus } from 'lucide-react';
 import type { User } from '@/types';

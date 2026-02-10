@@ -1,17 +1,12 @@
-/**
- * ChecklistTimeSection 컴포넌트
- *
- * 시간대별 체크리스트 섹션 (아침/점심/저녁/운동)
- * - 시간대 아이콘 + 라벨 + 완료 카운터
- * - 체크리스트 항목 리스트 (When-Where-What 형식)
- * - 완료 항목 취소선 + 회색 처리
- *
- * Flutter: lib/presentation/widgets/checklist/checklist_time_section.dart
- */
+'use client';
+
+/** @desc 시간대별 체크리스트 섹션 (Implementation Intention) */
 
 import { Check } from 'lucide-react';
+
 import { MealTime } from '@/types/enums';
 import { cn } from '@/lib/utils';
+import { TIME_SLOT_COLORS } from '@/lib/constants';
 
 interface ChecklistItemDisplay {
   title: string;
@@ -48,15 +43,17 @@ const getMealTimeIcon = (mealTime: MealTime): string => {
   return icons[mealTime] || '🏃'; // 운동은 이모지 대신 lucide-react 사용
 };
 
-/** 시간대별 색상 매핑 (Tailwind 클래스) */
-const getMealTimeColor = (mealTime: MealTime): string => {
-  const colors = {
-    [MealTime.BREAKFAST]: 'orange-500',
-    [MealTime.LUNCH]: 'amber-500',
-    [MealTime.DINNER]: 'purple-600',
-    [MealTime.SNACK]: 'pink-500',
-  };
-  return colors[mealTime] || 'blue-500'; // 운동 = 파랑
+/** @desc 시간대별 색상 클래스 반환 */
+const getMealTimeColorClasses = (mealTime: MealTime) => {
+  const timeSlotMap = {
+    [MealTime.BREAKFAST]: 'morning',
+    [MealTime.LUNCH]: 'afternoon',
+    [MealTime.DINNER]: 'evening',
+    [MealTime.SNACK]: 'night',
+  } as const;
+
+  const timeSlot = timeSlotMap[mealTime] || 'morning';
+  return TIME_SLOT_COLORS[timeSlot];
 };
 
 export function ChecklistTimeSection({
@@ -68,23 +65,15 @@ export function ChecklistTimeSection({
   const completedCount = items.filter((item) => item.isChecked).length;
   const totalCount = items.length;
 
-  // 시간대 색상
-  const colorClass = getMealTimeColor(mealTime);
-  const bgColorClass = `bg-${colorClass}/10`;
-  const textColorClass = `text-${colorClass}`;
-  const borderColorClass = `border-${colorClass}`;
+  // 시간대 색상 클래스
+  const colorClasses = getMealTimeColorClasses(mealTime);
 
   return (
     <div className="rounded-lg bg-neutral-100 p-6">
       {/* 헤더 (아이콘 + 시간대 + 완료 카운터) */}
       <div className="mb-3 flex items-center gap-3">
         {/* 아이콘 원형 컨테이너 */}
-        <div
-          className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full',
-            bgColorClass
-          )}
-        >
+        <div className={cn('flex h-10 w-10 items-center justify-center rounded-full', colorClasses.bg)}>
           <span className="text-xl">{getMealTimeIcon(mealTime)}</span>
         </div>
 
@@ -96,13 +85,7 @@ export function ChecklistTimeSection({
         </h3>
 
         {/* 완료 카운터 */}
-        <span
-          className={cn(
-            'rounded-full px-3 py-1 text-sm font-semibold',
-            bgColorClass,
-            textColorClass
-          )}
-        >
+        <span className={cn('rounded-full px-3 py-1 text-sm font-semibold', colorClasses.bg, colorClasses.text)}>
           {completedCount}/{totalCount}
         </span>
       </div>
@@ -123,11 +106,8 @@ export function ChecklistTimeSection({
             <div
               className={cn(
                 'flex h-6 w-6 shrink-0 items-center justify-center rounded-md transition-all',
-                item.isChecked
-                  ? `bg-${colorClass}`
-                  : 'bg-neutral-200'
-              )}
-            >
+                item.isChecked ? colorClasses.bg.replace('/10', '') : 'bg-neutral-200',
+              )}>
               {item.isChecked && <Check className="h-4 w-4 text-white" strokeWidth={3} />}
             </div>
 

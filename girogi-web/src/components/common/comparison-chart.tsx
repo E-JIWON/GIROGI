@@ -1,14 +1,4 @@
-/**
- * ComparisonChart 컴포넌트
- *
- * 듀오링고 스타일 친구 비교 차트
- * - 가로 막대 그래프로 친구들과 통계 비교
- * - 4가지 타입: 연속 성공 일수, 전체 성공률, 주간 성공 일수, 총 다이어트 일수
- * - 1등 강조 (그라데이션)
- * - 순위 표시
- *
- * Flutter: lib/presentation/widgets/common/comparison_chart.dart
- */
+/** @desc 친구 비교 차트 (듀오링고 스타일) */
 
 import { Trophy, TrendingUp } from 'lucide-react';
 import type { User, UserStats } from '@/types';

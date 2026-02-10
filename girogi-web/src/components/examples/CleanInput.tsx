@@ -16,7 +16,7 @@ interface CleanInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   inputSize?: InputSize;
-  fullWidth?: boolean;
+  isFullWidth?: boolean;
 }
 
 const sizeStyles: Record<InputSize, string> = {
@@ -29,12 +29,12 @@ export const CleanInput: React.FC<CleanInputProps> = ({
   label,
   error,
   inputSize = 'md',
-  fullWidth = false,
+  isFullWidth = false,
   className = '',
   ...props
 }) => {
   return (
-    <div className={`${fullWidth ? 'w-full' : ''} relative`}>
+    <div className={`${isFullWidth ? 'w-full' : ''} relative`}>
       {label && (
         <label className="block text-sm font-medium text-neutral-700 mb-2">
           {label}
@@ -45,7 +45,7 @@ export const CleanInput: React.FC<CleanInputProps> = ({
         <input
           className={`
             ${sizeStyles[inputSize]}
-            ${fullWidth ? 'w-full' : ''}
+            ${isFullWidth ? 'w-full' : ''}
             ${error ? 'bg-error-50' : 'bg-neutral-50'}
             text-neutral-900
             transition-colors duration-150

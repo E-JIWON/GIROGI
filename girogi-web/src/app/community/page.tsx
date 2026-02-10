@@ -15,8 +15,8 @@
 import { useState } from 'react';
 import { Edit, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PostCard } from '@/components/community/PostCard';
-import { PostComposerDialog } from '@/components/community/PostComposerDialog';
+import { PostCard } from './_components/post-card';
+import { PostComposerDialog } from './_components/post-composer-dialog';
 import { mockPosts, mockUsers } from '@/lib/mock';
 
 type Tab = 'all' | 'following';

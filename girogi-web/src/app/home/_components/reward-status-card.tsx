@@ -1,20 +1,16 @@
-/**
- * RewardStatusCard 컴포넌트
- *
- * 보상 현황을 표시하는 카드
- * - 과자박스: 3일마다 1개 획득 (치팅데이에 사용)
- * - 치팅데이: 7일 연속 성공 시 1회 사용 가능
- *
- * Flutter: lib/presentation/widgets/home/reward_status_card.dart
- */
+/** @desc 보상 현황 카드 (Temptation Bundling) */
 
 'use client'
 
 import { useState } from 'react'
 import { Gift, PartyPopper, Info } from 'lucide-react'
+
 import { cn } from '@/lib/utils'
-import { UseRewardDialog } from './UseRewardDialog'
+import { DAYS_FOR_SNACK_BOX, DAYS_FOR_CHEAT_DAY } from '@/lib/constants'
+
 import type { RewardType } from '@/types/models'
+
+import { UseRewardDialog } from './use-reward-dialog'
 
 interface RewardStatusCardProps {
   /**
@@ -34,11 +30,6 @@ interface RewardStatusCardProps {
    */
   onRewardUsed?: () => void;
 }
-
-/** 과자박스 획득 주기 (일) */
-const DAYS_FOR_SNACK_BOX = 3;
-/** 치팅데이 주기 (일) */
-const DAYS_FOR_CHEAT_DAY = 7;
 
 export function RewardStatusCard({
   snackBoxCount,

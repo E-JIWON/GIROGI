@@ -9,47 +9,102 @@
 
 | 항목 | 기존 프로젝트 스타일 | GIROGI 현재 상태 | 판정 |
 |------|---------------------|------------------|------|
-| 파일 네이밍 | kebab-case (`card-topic.tsx`) | PascalCase (`MissionCard.tsx`) | !! 불일치 |
+| 파일 네이밍 | kebab-case (`card-topic.tsx`) | ✅ kebab-case 적용 완료 | ✅ 완료 |
 | 폴더 구조 | `_` prefix (`_hook/`, `_types/`, `_components/`) | prefix 없음 | !! 불일치 |
-| `'use client'` | 필요한 곳에 빠짐없이 선언 | 대부분 누락 | !!! 심각 |
-| import 순서 | ESLint 규칙으로 강제 | 비일관적 | !! 불일치 |
-| JSDoc | `/** @desc */` 한국어 주석 | 일반 `//` 주석 | ! 차이 |
-| useCallback/useMemo | 적극적으로 사용 | 전혀 미사용 | !! 불일치 |
-| memo() | 순수 표시 컴포넌트에 적용 | 전혀 미사용 | ! 차이 |
-| 에러 핸들링 | try-catch + toast/modal | 미처리 또는 alert() | !! 불일치 |
-| 타입 안전성 | strict, `as const`, Pick, Union | 기본 수준 | ! 차이 |
-| 상수 관리 | `as const` + 중앙 집중 | 파일 간 중복 | !! 불일치 |
-| Tailwind 동적 클래스 | classnames 라이브러리 사용 | 문자열 보간 (동작 안 함) | !!! 심각 |
-| 스토리지 | wrapper 함수 + try-catch | 직접 호출, 에러 처리 없음 | !! 불일치 |
+| `'use client'` | 필요한 곳에 빠짐없이 선언 | ✅ 13개 파일 추가 완료 | ✅ 완료 |
+| import 순서 | ESLint 규칙으로 강제 | ✅ ESLint 규칙 추가 완료 | ✅ 완료 |
+| JSDoc | `/** @desc */` 한국어 주석 | 일부 적용 | 🔄 진행 중 |
+| useCallback/useMemo | 적극적으로 사용 | 보류 (사용자 요청) | ⏸️ 보류 |
+| memo() | 순수 표시 컴포넌트에 적용 | 보류 (사용자 요청) | ⏸️ 보류 |
+| 에러 핸들링 | try-catch + toast/modal | ✅ Toast/Modal 시스템 구축 | ✅ 완료 |
+| 타입 안전성 | strict, `as const`, Pick, Union | ✅ `as const` 적용 완료 | ✅ 완료 |
+| 상수 관리 | `as const` + 중앙 집중 | ✅ 중복 제거, 색상 매핑 통합 | ✅ 완료 |
+| Tailwind 동적 클래스 | classnames 라이브러리 사용 | ✅ clsx + 매핑 객체 적용 | ✅ 완료 |
+| 스토리지 | wrapper 함수 + try-catch | ✅ storage.ts 래퍼 생성 | ✅ 완료 |
 | Boolean 네이밍 | `is*`, `has*`, `show*` 일관적 | 비일관적 | ! 차이 |
 | cleanup/메모리 | useEffect cleanup, AbortController | 미처리 | ! 차이 |
 
-**판정 기준**: `!!!` 심각(빌드/런타임 오류) / `!!` 불일치(스타일 위반) / `!` 차이(개선 권장)
+**판정 기준**: ✅ 완료 / 🔄 진행 중 / ⏸️ 보류 / `!!` 불일치 / `!` 차이
+
+---
+
+## ✅ 완료된 수정 사항 (2026-02-10)
+
+### 1. 파일 네이밍 (kebab-case) ✅
+- 19개 컴포넌트 파일 이름 변경
+- 모든 import 경로 자동 업데이트
+- Git 이력 보존 (`git mv` 사용)
+
+### 2. 'use client' 디렉티브 ✅
+- 13개 클라이언트 컴포넌트에 추가
+- Next.js 16 하이드레이션 에러 해결
+
+### 3. ESLint import/order 규칙 ✅
+- `eslint-plugin-import` 설치
+- import 그룹핑 및 자동 정렬 설정
+- 빌트인 → 외부 → 내부 → 타입 순서
+
+### 4. 상수 관리 개선 ✅
+- 중복 상수 제거 (`RewardStatusCard.tsx`의 `DAYS_FOR_*`)
+- 색상 매핑 통합 (`TIME_SLOT_COLORS`, `MEAL_TYPE_COLORS`, `REWARD_COLORS`)
+- `as const` 적용으로 타입 안전성 확보
+
+### 5. Tailwind 동적 클래스 수정 ✅
+- ❌ `bg-${color}` (동작 안 함)
+- ✅ 매핑 객체 + `clsx` 사용
+- 수정 파일: `checklist-time-section.tsx`, `use-reward-dialog.tsx`
+
+### 6. localStorage 래퍼 함수 ✅
+- `lib/utils/storage.ts` 생성
+- `loadFromStorage`, `saveToStorage`, `removeFromStorage` 함수
+- try-catch + SSR 대응 (`typeof window` 체크)
+- `use-reward-dialog.tsx`에 적용
+
+### 7. Toast/Modal 시스템 ✅
+- 공통 컴포넌트: `components/common/modal.tsx`, `toast.tsx`
+- Context Provider: `lib/context/modal-context.tsx`
+- `useModal()` 훅으로 전역 사용 가능
+
+### 8. Prettier 설정 ✅
+- `.prettierrc` 생성 (printWidth: 120)
+- singleQuote, trailingComma, bracketSpacing 설정
+
+---
+
+## 🔜 남은 작업 (선택사항)
+
+### 1. 폴더 구조 재구성 (feature co-location)
+현재 `components/` 폴더를 각 `app/*/` 폴더 안에 `_components/`, `_hook/`, `_types/`로 이동
+→ 사용자 판단에 따라 진행 여부 결정
+
+### 2. JSDoc 주석 통일
+장황한 주석을 `/** @desc 간결한 설명 */` 형식으로 변경
+→ 일부 파일에만 적용됨, 전체 적용 필요 시 요청
+
+### 3. Boolean 네이밍 통일
+`is*`, `has*`, `show*` prefix로 일관성 확보
+→ 현재 비일관적인 변수명 존재
+
+### 4. useEffect cleanup 추가
+필요한 곳에 cleanup 함수 추가 (interval, event listener 등)
+→ `TemptationTimer.tsx` 등에 필요
+
+### 5. localStorage 래퍼 함수 전체 적용
+`OnboardingPage.tsx`, 기타 페이지에도 storage.ts 래퍼 적용
+→ 현재 일부 파일에만 적용됨
+
+### 6. alert() → Toast/Modal 교체
+기존 `alert()` 호출을 새로 만든 Toast/Modal 시스템으로 교체
+→ `use-reward-dialog.tsx` 등에 남아있음
 
 ---
 
 ## 1. 가독성 / 유지보수성
 
-### 1-1. 파일 네이밍 컨벤션 불일치
+### ~~1-1. 파일 네이밍 컨벤션 불일치~~ ✅ 완료
 
-**기존 스타일** (chatgpt-webapp):
-```
-card-topic.tsx          # kebab-case
-chat-message-box.tsx
-form-name.tsx
-button-more.tsx
-```
-
-**GIROGI 현재**:
-```
-MissionCard.tsx         # PascalCase
-StreakCounter.tsx
-WeeklyCalendar.tsx
-RewardStatusCard.tsx
-```
-
-> CLAUDE.md에서 "컴포넌트: PascalCase.tsx"로 정의했으므로 의도적 선택이라면 무방하나,
-> 기존 프로젝트와 스타일 통일이 필요하다면 kebab-case로 변경 고려.
+**수정 완료**: 19개 파일을 kebab-case로 변경 (`MissionCard.tsx` → `mission-card.tsx`)
+모든 import 경로도 자동으로 업데이트됨.
 
 ### 1-2. 폴더 구조
 

@@ -56,7 +56,7 @@ export default function DesignShowcasePage() {
         </div>
 
         {/* 색상 조합 안내 */}
-        <CleanCard variant="ivory" padding="lg">
+        <CleanCard variant="white" padding="lg">
           <h2 className="text-2xl font-bold text-neutral-900 mb-4">
             🌈 최종 색상 팔레트
           </h2>
@@ -323,7 +323,7 @@ export default function DesignShowcasePage() {
               <div className="flex gap-3 flex-wrap">
                 <CleanButton>Normal</CleanButton>
                 <CleanButton disabled>Disabled</CleanButton>
-                <CleanButton fullWidth>Full Width</CleanButton>
+                <CleanButton isFullWidth>Full Width</CleanButton>
               </div>
             </div>
           </div>
@@ -369,7 +369,7 @@ export default function DesignShowcasePage() {
             <h3 className="text-lg font-semibold text-neutral-800 mb-3">
               호버 효과
             </h3>
-            <CleanCard variant="primary" padding="md" hoverable>
+            <CleanCard variant="primary" padding="md" isHoverable>
               <p className="text-primary-800">
                 마우스를 올려보세요! (scale-up 효과)
               </p>
@@ -387,14 +387,14 @@ export default function DesignShowcasePage() {
             <CleanInput
               label="이름"
               placeholder="이름을 입력하세요"
-              fullWidth
+              isFullWidth
             />
 
             <CleanInput
               label="이메일"
               type="email"
               placeholder="email@example.com"
-              fullWidth
+              isFullWidth
             />
 
             <CleanInput
@@ -407,7 +407,7 @@ export default function DesignShowcasePage() {
                 validateInput(e.target.value);
               }}
               error={inputError}
-              fullWidth
+              isFullWidth
             />
 
             <div>
@@ -415,9 +415,9 @@ export default function DesignShowcasePage() {
                 크기
               </h3>
               <div className="space-y-3">
-                <CleanInput inputSize="sm" placeholder="Small" fullWidth />
-                <CleanInput inputSize="md" placeholder="Medium" fullWidth />
-                <CleanInput inputSize="lg" placeholder="Large" fullWidth />
+                <CleanInput inputSize="sm" placeholder="Small" isFullWidth />
+                <CleanInput inputSize="md" placeholder="Medium" isFullWidth />
+                <CleanInput inputSize="lg" placeholder="Large" isFullWidth />
               </div>
             </div>
           </div>

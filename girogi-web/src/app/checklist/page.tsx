@@ -13,8 +13,8 @@
 
 import { useState } from 'react';
 import { AlertTriangle } from 'lucide-react';
-import { ChecklistTimeSection } from '@/components/checklist/ChecklistTimeSection';
-import { MealRecordButton } from '@/components/checklist/MealRecordButton';
+import { ChecklistTimeSection } from './_components/checklist-time-section';
+import { MealRecordButton } from './_components/meal-record-button';
 import { MealTime } from '@/types/enums';
 
 interface ChecklistItem {

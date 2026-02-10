@@ -1,14 +1,4 @@
-/**
- * PostComposerDialog 컴포넌트
- *
- * 새로운 게시글을 작성하는 다이얼로그
- * - 게시글 타입 선택 (experience, motivation, mealRecord)
- * - 내용 입력
- * - 이미지 추가 버튼 (TODO)
- * - 게시 버튼
- *
- * Flutter: lib/presentation/widgets/community/post_composer_dialog.dart
- */
+/** @desc 게시글 작성 다이얼로그 */
 
 'use client';
 

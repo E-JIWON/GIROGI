@@ -15,10 +15,10 @@
 import { useState } from 'react';
 import { Heart, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { TemptationTimer } from '@/components/emergency/TemptationTimer';
-import { FutureSelfCard } from '@/components/emergency/FutureSelfCard';
-import { SelfCompassionCard } from '@/components/emergency/SelfCompassionCard';
-import { FailureReportDialog } from '@/components/emergency/FailureReportDialog';
+import { TemptationTimer } from './_components/temptation-timer';
+import { FutureSelfCard } from './_components/future-self-card';
+import { SelfCompassionCard } from './_components/self-compassion-card';
+import { FailureReportDialog } from './_components/failure-report-dialog';
 
 export default function EmergencyPage() {
   const [showSelfCompassionMode, setShowSelfCompassionMode] = useState(false);

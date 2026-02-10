@@ -1,14 +1,4 @@
-/**
- * CommentSection 컴포넌트
- *
- * 댓글 목록 및 입력 UI
- * - 댓글 목록 (스크롤 가능)
- * - 각 댓글: 프로필 이미지 + 닉네임 + 시간 + 내용
- * - 하단: 댓글 입력 필드 + 전송 버튼
- * - 더보기 메뉴 (신고/삭제)
- *
- * Flutter: lib/presentation/widgets/common/comment_section.dart
- */
+/** @desc 댓글 섹션 */
 
 'use client';
 

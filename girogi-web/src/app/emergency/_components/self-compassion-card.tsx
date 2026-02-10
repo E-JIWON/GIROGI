@@ -1,15 +1,6 @@
-/**
- * SelfCompassionCard 컴포넌트
- *
- * Self-Compassion 이론을 적용한 실패 후 복귀 지원
- * - 자기 연민 메시지
- * - 허가 효과(Licensing Effect) 경고 강화
- * - 통계 정보 (전체 성공률, 성공/실패/전체 일수)
- * - "다시 시작하기" 버튼
- * - "실패 리포트 작성" 버튼 (권장)
- *
- * Flutter: lib/presentation/widgets/emergency/self_compassion_card.dart
- */
+'use client';
+
+/** @desc 실패 후 복귀 지원 카드 (Self-Compassion) */
 
 import { Heart, RotateCcw, FileText, Info, CheckCircle, XCircle, Calendar, AlertTriangle } from 'lucide-react';
 import { LICENSING_EFFECT_WARNING } from '@/lib/constants';

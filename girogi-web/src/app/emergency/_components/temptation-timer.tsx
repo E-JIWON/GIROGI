@@ -1,13 +1,4 @@
-/**
- * TemptationTimer 컴포넌트
- *
- * 10분 타이머로 충동을 지연시키는 위젯
- * - 원형 진행률 표시 (SVG로 구현)
- * - 시작/일시정지/재시작/리셋 버튼
- * - 완료 후 선택지: "유혹 사라짐" 또는 "자기 연민 모드"
- *
- * Flutter: lib/presentation/widgets/emergency/temptation_timer.dart
- */
+/** @desc 10분 충동 지연 타이머 */
 
 'use client';
 

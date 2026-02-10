@@ -1,20 +1,15 @@
-/**
- * UseRewardDialog 컴포넌트
- *
- * 보상(과자박스/치팅데이) 사용 다이얼로그
- * - 무엇을 먹었는지 기록
- * - 메모 추가 (선택사항)
- * - localStorage에 사용 내역 저장
- *
- * Temptation Bundling 이론 적용
- */
+/** @desc 보상 사용 다이얼로그 (Temptation Bundling) */
 
 'use client'
 
 import { useState } from 'react'
 import { X, Gift, PartyPopper } from 'lucide-react'
+import clsx from 'clsx'
+
 import type { RewardType, RewardUsage } from '@/types/models'
-import { REWARD_USAGE_KEY, SNACK_BOX_COUNT_KEY } from '@/lib/constants'
+
+import { REWARD_USAGE_KEY, SNACK_BOX_COUNT_KEY, REWARD_COLORS } from '@/lib/constants'
+import { loadFromStorage, saveToStorage } from '@/lib/utils/storage'
 
 interface UseRewardDialogProps {
   /** 다이얼로그 표시 여부 */
@@ -60,19 +55,14 @@ export function UseRewardDialog({
     }
 
     // localStorage에 저장
-    const existingUsages = localStorage.getItem(REWARD_USAGE_KEY)
-    const usages: RewardUsage[] = existingUsages
-      ? JSON.parse(existingUsages)
-      : []
+    const usages = loadFromStorage<RewardUsage[]>(REWARD_USAGE_KEY, [])
     usages.push(usage)
-    localStorage.setItem(REWARD_USAGE_KEY, JSON.stringify(usages))
+    saveToStorage(REWARD_USAGE_KEY, usages)
 
     // 과자박스 사용 시 개수 차감
     if (rewardType === 'snackbox') {
-      const currentCount = parseInt(
-        localStorage.getItem(SNACK_BOX_COUNT_KEY) || '0'
-      )
-      localStorage.setItem(SNACK_BOX_COUNT_KEY, String(currentCount - 1))
+      const currentCount = loadFromStorage<number>(SNACK_BOX_COUNT_KEY, 0)
+      saveToStorage(SNACK_BOX_COUNT_KEY, currentCount - 1)
     }
 
     // 완료 콜백
@@ -86,7 +76,7 @@ export function UseRewardDialog({
 
   const title = rewardType === 'snackbox' ? '과자박스 사용' : '치팅데이 사용'
   const Icon = rewardType === 'snackbox' ? Gift : PartyPopper
-  const color = rewardType === 'snackbox' ? 'primary' : 'cheatday'
+  const colorClasses = rewardType === 'snackbox' ? REWARD_COLORS.snackBox : REWARD_COLORS.cheatDay
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -94,7 +84,7 @@ export function UseRewardDialog({
         {/* 헤더 */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Icon className={`h-6 w-6 text-${color}`} />
+            <Icon className={clsx('h-6 w-6', colorClasses.text)} />
             <h2 className="text-xl font-bold text-neutral-900">{title}</h2>
           </div>
           <button
@@ -145,7 +135,7 @@ export function UseRewardDialog({
           </div>
 
           {/* 안내 메시지 */}
-          <div className={`rounded-md bg-${color}/5 p-3`}>
+          <div className={clsx('rounded-md p-3', colorClasses.bg50)}>
             <p className="text-sm text-neutral-700">
               {rewardType === 'snackbox'
                 ? '과자박스를 사용하면 개수가 1개 차감됩니다.'
@@ -162,10 +152,7 @@ export function UseRewardDialog({
             >
               취소
             </button>
-            <button
-              type="submit"
-              className={`flex-1 py-3 bg-${color} text-white rounded-md font-semibold hover:opacity-90 transition-opacity`}
-            >
+            <button type="submit" className={clsx('flex-1 py-3 rounded-md font-semibold hover:opacity-90 transition-opacity', colorClasses.bg500, colorClasses.textWhite)}>
               사용하기
             </button>
           </div>
