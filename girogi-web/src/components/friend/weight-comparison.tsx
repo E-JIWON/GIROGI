@@ -1,10 +1,10 @@
 /**
  * 몸무게 비교 컴포넌트
  *
- * 나 vs 친구 체중 추이 비교
- * - 미니 라인 차트 (SVG)
- * - 감량 수치 비교
- * - 추이 그래프
+ * 나 vs 친구 체중 7일 추이 비교
+ * - 단일 SVG 차트에 두 라인 겹침
+ * - 나: 초록, 친구: 빨강
+ * - Y축/X축 + 상대 범위 (min~max)
  */
 
 'use client';
@@ -24,7 +24,6 @@ export function WeightComparison({
   friendWeightHistory,
   friendName,
 }: WeightComparisonProps) {
-  // 데이터가 없으면 빈 상태
   if (myWeightHistory.length === 0 && friendWeightHistory.length === 0) {
     return (
       <div className="py-12 text-center text-neutral-500">
@@ -33,6 +32,15 @@ export function WeightComparison({
       </div>
     );
   }
+
+  // 최근 7일치만 추출
+  const getLast7Days = (history: WeightRecord[]): WeightRecord[] => {
+    const sorted = [...history].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    return sorted.slice(-7);
+  };
+
+  const myData = getLast7Days(myWeightHistory);
+  const friendData = getLast7Days(friendWeightHistory);
 
   // 감량 수치 계산
   const getWeightChange = (history: WeightRecord[]) => {
@@ -43,69 +51,136 @@ export function WeightComparison({
     return { start, end, change: Math.round((end - start) * 10) / 10 };
   };
 
-  const myChange = getWeightChange(myWeightHistory);
-  const friendChange = getWeightChange(friendWeightHistory);
+  const myChange = getWeightChange(myData);
+  const friendChange = getWeightChange(friendData);
 
-  // 감량률 계산
   const myChangePercent = myChange.start > 0 ? Math.round(((myChange.start - myChange.end) / myChange.start) * 1000) / 10 : 0;
   const friendChangePercent = friendChange.start > 0 ? Math.round(((friendChange.start - friendChange.end) / friendChange.start) * 1000) / 10 : 0;
 
-  // 감량 승자
   const changeWinner = myChangePercent > friendChangePercent ? 'me' : myChangePercent < friendChangePercent ? 'friend' : ('tie' as const);
 
-  // SVG 미니 차트 생성
-  const MiniChart = ({ data, color }: { data: WeightRecord[]; color: string }) => {
-    if (data.length < 2) return null;
-
-    const sorted = [...data].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    const weights = sorted.map((d) => d.weight);
-    const minW = Math.min(...weights) - 0.5;
-    const maxW = Math.max(...weights) + 0.5;
-    const range = maxW - minW || 1;
-
-    const width = 280;
-    const height = 80;
-    const padding = 8;
-
-    const points = weights.map((w, i) => {
-      const x = padding + (i / (weights.length - 1)) * (width - padding * 2);
-      const y = padding + (1 - (w - minW) / range) * (height - padding * 2);
-      return `${x},${y}`;
-    });
-
-    const pathD = points.map((p, i) => (i === 0 ? `M${p}` : `L${p}`)).join(' ');
-
-    // 그라데이션 영역
-    const areaPath = `${pathD} L${padding + (width - padding * 2)},${height - padding} L${padding},${height - padding} Z`;
-
-    return (
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height: 80 }}>
-        <defs>
-          <linearGradient id={`gradient-${color}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-            <stop offset="100%" stopColor={color} stopOpacity="0.02" />
-          </linearGradient>
-        </defs>
-        {/* 영역 채우기 */}
-        <path d={areaPath} fill={`url(#gradient-${color})`} />
-        {/* 라인 */}
-        <path d={pathD} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        {/* 포인트 */}
-        {points.map((p, i) => {
-          const [x, y] = p.split(',').map(Number);
-          return (
-            <circle key={i} cx={x} cy={y} r={i === points.length - 1 ? 4 : 2.5} fill={color} stroke="white" strokeWidth="1.5" />
-          );
-        })}
-      </svg>
-    );
-  };
-
-  // 트렌드 아이콘
   const TrendIcon = ({ change }: { change: number }) => {
     if (change < 0) return <TrendingDown className="h-5 w-5 text-green-600" />;
     if (change > 0) return <TrendingUp className="h-5 w-5 text-red-500" />;
     return <Minus className="h-5 w-5 text-neutral-400" />;
+  };
+
+  // ── 통합 차트 ──
+  const CombinedChart = () => {
+    const myWeights = myData.map((d) => d.weight);
+    const friendWeights = friendData.map((d) => d.weight);
+    const allWeights = [...myWeights, ...friendWeights];
+
+    if (allWeights.length < 2) return null;
+
+    const dataMin = Math.min(...allWeights);
+    const dataMax = Math.max(...allWeights);
+    const padding = (dataMax - dataMin) * 0.1 || 0.5;
+    const minW = dataMin - padding;
+    const maxW = dataMax + padding;
+    const range = maxW - minW;
+
+    // 차트 크기
+    const width = 320;
+    const height = 180;
+    const left = 44; // Y축 라벨 공간
+    const right = 12;
+    const top = 16;
+    const bottom = 28; // X축 라벨 공간
+    const chartW = width - left - right;
+    const chartH = height - top - bottom;
+
+    // X축에 쓸 날짜 (7일 기준 - 더 많은 쪽 사용)
+    const dateSource = myData.length >= friendData.length ? myData : friendData;
+    const xLabels = dateSource.map((d) => {
+      const date = new Date(d.date);
+      return `${date.getMonth() + 1}/${date.getDate()}`;
+    });
+    const maxPoints = Math.max(myData.length, friendData.length);
+
+    // 포인트 좌표 계산
+    const toPoints = (weights: number[]) =>
+      weights.map((w, i) => ({
+        x: left + (weights.length > 1 ? (i / (weights.length - 1)) * chartW : chartW / 2),
+        y: top + (1 - (w - minW) / range) * chartH,
+      }));
+
+    const myPoints = toPoints(myWeights);
+    const friendPoints = toPoints(friendWeights);
+
+    const toPath = (pts: { x: number; y: number }[]) =>
+      pts.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
+
+    // Y축 눈금 (4단계)
+    const yTicks = Array.from({ length: 5 }, (_, i) => {
+      const val = minW + (range * i) / 4;
+      return { val: Math.round(val * 10) / 10, y: top + chartH - (chartH * i) / 4 };
+    });
+
+    return (
+      <div className="rounded-2xl border border-neutral-200 bg-white p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <h4 className="text-sm font-bold text-neutral-700">7일 체중 추이</h4>
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1 text-xs text-neutral-500">
+              <span className="inline-block h-2 w-4 rounded-sm bg-green-500" /> 나
+            </span>
+            <span className="flex items-center gap-1 text-xs text-neutral-500">
+              <span className="inline-block h-2 w-4 rounded-sm bg-red-500" /> {friendName}
+            </span>
+          </div>
+        </div>
+
+        <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height: 200 }}>
+          {/* Y축 선 */}
+          <line x1={left} y1={top} x2={left} y2={top + chartH} stroke="#d4d4d4" strokeWidth="1" />
+
+          {/* X축 선 */}
+          <line x1={left} y1={top + chartH} x2={left + chartW} y2={top + chartH} stroke="#d4d4d4" strokeWidth="1" />
+
+          {/* Y축 눈금 + 라벨 + 가이드라인 */}
+          {yTicks.map(({ val, y }, i) => (
+            <g key={i}>
+              <line x1={left - 4} y1={y} x2={left} y2={y} stroke="#a3a3a3" strokeWidth="1" />
+              <line x1={left} y1={y} x2={left + chartW} y2={y} stroke="#e5e5e5" strokeWidth="0.5" strokeDasharray="4,3" />
+              <text x={left - 7} y={y + 4} textAnchor="end" fontSize="9" fill="#737373">
+                {val}
+              </text>
+            </g>
+          ))}
+
+          {/* X축 라벨 */}
+          {xLabels.map((label, i) => {
+            const x = left + (maxPoints > 1 ? (i / (maxPoints - 1)) * chartW : chartW / 2);
+            return (
+              <text key={i} x={x} y={top + chartH + 16} textAnchor="middle" fontSize="9" fill="#737373">
+                {label}
+              </text>
+            );
+          })}
+
+          {/* 친구 라인 (빨강, 아래 레이어) */}
+          {friendPoints.length >= 2 && (
+            <>
+              <path d={toPath(friendPoints)} fill="none" stroke="#EF4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              {friendPoints.map((p, i) => (
+                <circle key={`f${i}`} cx={p.x} cy={p.y} r={i === friendPoints.length - 1 ? 4 : 2.5} fill="#EF4444" stroke="white" strokeWidth="1.5" />
+              ))}
+            </>
+          )}
+
+          {/* 나 라인 (초록, 위 레이어) */}
+          {myPoints.length >= 2 && (
+            <>
+              <path d={toPath(myPoints)} fill="none" stroke="#22C55E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              {myPoints.map((p, i) => (
+                <circle key={`m${i}`} cx={p.x} cy={p.y} r={i === myPoints.length - 1 ? 4 : 2.5} fill="#22C55E" stroke="white" strokeWidth="1.5" />
+              ))}
+            </>
+          )}
+        </svg>
+      </div>
+    );
   };
 
   return (
@@ -114,7 +189,7 @@ export function WeightComparison({
       <div className="text-center">
         <Scale className="mx-auto mb-2 h-8 w-8 text-indigo-600" />
         <h3 className="text-lg font-bold text-neutral-800">체중 변화 비교</h3>
-        <p className="text-sm text-neutral-500">누가 더 열심히 했을까요?</p>
+        <p className="text-sm text-neutral-500">최근 7일 추이</p>
       </div>
 
       {/* 감량 수치 비교 카드 */}
@@ -122,7 +197,7 @@ export function WeightComparison({
         {/* 나 */}
         <div className={cn(
           'rounded-2xl border-2 p-4 text-center',
-          changeWinner === 'me' ? 'border-green-400 bg-gradient-to-br from-green-50 to-emerald-50' : 'border-neutral-200 bg-white'
+          changeWinner === 'me' ? 'border-green-400 bg-green-50' : 'border-neutral-200 bg-white'
         )}>
           <p className="mb-1 text-sm font-medium text-neutral-600">나</p>
           <div className="mb-2 flex items-center justify-center gap-1">
@@ -149,7 +224,7 @@ export function WeightComparison({
         {/* 친구 */}
         <div className={cn(
           'rounded-2xl border-2 p-4 text-center',
-          changeWinner === 'friend' ? 'border-green-400 bg-gradient-to-br from-green-50 to-emerald-50' : 'border-neutral-200 bg-white'
+          changeWinner === 'friend' ? 'border-green-400 bg-green-50' : 'border-neutral-200 bg-white'
         )}>
           <p className="mb-1 text-sm font-medium text-neutral-600">{friendName}</p>
           <div className="mb-2 flex items-center justify-center gap-1">
@@ -174,37 +249,16 @@ export function WeightComparison({
         </div>
       </div>
 
-      {/* 동점 */}
       {changeWinner === 'tie' && (
-        <div className="text-center text-sm text-purple-600">동률! 🤝 둘 다 화이팅!</div>
+        <div className="text-center text-sm text-purple-600">동률! 둘 다 화이팅!</div>
       )}
 
-      {/* 나의 체중 추이 차트 */}
-      {myWeightHistory.length >= 2 && (
-        <div className="rounded-2xl border border-neutral-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <h4 className="text-sm font-bold text-neutral-700">나의 추이</h4>
-            <span className="text-xs text-neutral-500">{myWeightHistory.length}회 기록</span>
-          </div>
-          <MiniChart data={myWeightHistory} color="#4F46E5" />
-        </div>
-      )}
+      {/* 통합 7일 추이 차트 */}
+      <CombinedChart />
 
-      {/* 친구 체중 추이 차트 */}
-      {friendWeightHistory.length >= 2 && (
-        <div className="rounded-2xl border border-neutral-200 bg-gradient-to-br from-pink-50 to-rose-50 p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <h4 className="text-sm font-bold text-neutral-700">{friendName}의 추이</h4>
-            <span className="text-xs text-neutral-500">{friendWeightHistory.length}회 기록</span>
-          </div>
-          <MiniChart data={friendWeightHistory} color="#E11D48" />
-        </div>
-      )}
-
-      {/* 격려 문구 */}
       <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-center">
         <p className="text-sm text-indigo-700">
-          💡 체중은 하루 1~2kg 변동이 정상이에요. 추이가 중요합니다!
+          체중은 하루 1~2kg 변동이 정상이에요. 추이가 중요합니다!
         </p>
       </div>
     </div>

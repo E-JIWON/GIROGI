@@ -41,7 +41,7 @@ export default function FriendProfilePage({
 }) {
   const { friendId } = use(params);
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<Tab>('timeline');
+  const [activeTab, setActiveTab] = useState<Tab>('compare');
 
   // 본인 데이터
   const myStreakData = useStreakStore((state) => state.streakData);
@@ -137,10 +137,10 @@ export default function FriendProfilePage({
 
   // 탭 정의
   const tabs: { value: Tab; label: string }[] = [
+    { value: 'compare', label: '비교' },
     { value: 'timeline', label: '타임라인' },
     { value: 'badges', label: '뱃지' },
     { value: 'achievements', label: '업적' },
-    { value: 'compare', label: '비교' },
     { value: 'posts', label: '기록' },
   ];
 
