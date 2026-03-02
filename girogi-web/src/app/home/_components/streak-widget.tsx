@@ -27,7 +27,7 @@ export function StreakWidget({ className }: StreakWidgetProps) {
   const weekDays = ['월', '화', '수', '목', '금', '토', '일'];
 
   return (
-    <div className={cn('rounded-lg border border-neutral-200 bg-white p-6', className)}>
+    <div className={cn('rounded-2xl bg-white p-6', className)}>
       {/* 헤더 */}
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-base font-semibold text-neutral-700">연속 기록</h2>

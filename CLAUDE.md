@@ -1,8 +1,8 @@
 # GIROGI 개발 가이드
 
 > Claude가 작업할 때 참고하는 핵심 문서
-> **버전**: 4.0 (Next.js + Flutter WebView)
-> **최종 수정**: 2026-02-10
+> **버전**: 5.0 (PC 대시보드 UI 전환)
+> **최종 수정**: 2026-02-26
 
 ---
 
@@ -148,85 +148,50 @@ GIROGI/
 ### 완료된 작업
 
 - ✅ **5개 주요 화면** 구현 (home, checklist, emergency, community, profile)
-- ✅ **디자인 시스템** 완성 (Tailwind 4.0 테마)
+- ✅ **디자인 시스템** 완성 (Tailwind 4.0 테마, Galmuri11 폰트)
 - ✅ **컴포넌트 구조** 갖춰짐 (화면별 폴더 분리)
 - ✅ **필수 라이브러리** 설치 (Zustand, TanStack Query, Zod 등)
 - ✅ **Flutter WebView 껍데기** 세팅 (girogi-app/)
 - ✅ **JS ↔ Dart 브릿지** 구현 (알림, 햅틱, 앱 정보)
 - ✅ **네이티브 기능**: 푸시알림, 오프라인 처리, 스플래시
-- ✅ **프로젝트 구조 정리**: Flutter MVP → archive/
+- ✅ **식사 기록 시스템** + 게이미피케이션
+- ✅ **친구 프로필 페이지** + 비교 콘텐츠
+- ✅ **체중 비교 차트** (단일 겹침 그래프)
 
-### 현재 작업 중
+### 현재 레이아웃 (변경 예정)
 
-- ⏳ **API 연동** (현재 Mock 데이터)
-- ⏳ **인증 시스템** (로그인, 회원가입)
-
-### 미구현 (백엔드 필요)
-
-- ❌ Firebase/Supabase 연동
-- ❌ 이미지 업로드
-- ❌ 앱스토어 배포 (Flutter 빌드 + 심사)
+- 모바일 중심: `max-w-2xl` (896px), 하단 탭바
+- 세로 스택 레이아웃, PC에서 공간 낭비 심함
 
 ---
 
-## 🚀 다음 할 일
+## 🚀 현재 진행: PC 대시보드 UI 전환
 
-> `.claude/250209-다이어트앱-연구기반-분석.md` 보고서 기반
+> **상세 계획**: [docs/PC_DASHBOARD_UI_PLAN.md](docs/PC_DASHBOARD_UI_PLAN.md)
 
-### 🔥 최우선 (연구 효과 극대화)
+### 목표
 
-**1. EFT 목표 이미지 필수화**
-- 온보딩 시 목표 이미지 설정 강제
-- 기본 이미지 10개 제공 (헬스 모델, 운동복 입은 사람 등)
-- 파일: `src/app/onboarding/page.tsx` (신규 생성)
-- 예상 효과: EFT ⭐⭐⭐⭐☆ → ⭐⭐⭐⭐⭐
+모바일 중심 UI → PC 친화적 **사이드바 + 위젯 대시보드** 레이아웃
 
-**2. 보상 사용 메커니즘 구현**
-- "과자박스 사용하기" 버튼 추가
-- 사용 시 기록 남기기 (언제, 무엇을 먹었는지)
-- 파일: `src/components/home/RewardStatusCard.tsx` 수정
-- 예상 효과: Temptation Bundling 완성
+### 핵심 변경
 
-**3. EFT 동기부여 메시지 다양화**
-- 10가지 메시지를 랜덤으로 표시
-- 시간대별 맞춤 메시지 (아침/점심/저녁)
-- 파일: `src/lib/constants.ts` + `FutureSelfCard.tsx`
-- 예상 효과: 반복 노출 시 효과 감소 방지
+| 항목 | Before | After |
+|------|--------|-------|
+| 네비게이션 | 하단 탭바 | 왼쪽 사이드바 (데스크탑) |
+| 콘텐츠 | 세로 스택, max-w-2xl | 위젯 그리드, 전체 너비 |
+| 반응형 | 거의 없음 | lg (1024px) 기준 전환 |
 
-### ⭐ 중요 (연구 의도 정확도 향상)
+### 구현 단계
 
-**4. Implementation Intention "When-Where-What" 형식화**
-- 체크리스트 항목: "🕐 10:30에 💼 사무실에서 💧 물 500ml"
-- 사용자 커스터마이징 가능
-- 파일: `src/app/checklist/page.tsx` 수정
-- 예상 효과: Implementation Intention ⭐⭐⭐☆☆ → ⭐⭐⭐⭐⭐
+- ✅ **Phase 1**: 레이아웃 인프라 (사이드바 + 루트 레이아웃 수정)
+- ✅ **Phase 2**: 위젯 시스템 (WidgetCard 래퍼 + 기존 컴포넌트 래핑)
+- ✅ **Phase 3**: 대시보드 페이지 (홈 위젯 그리드화)
+- ✅ **Phase 4**: 서브 페이지 적용 (체크리스트, 유혹극복, 커뮤니티, 프로필)
 
-**5. Self-Compassion 허가 효과 경고 강화**
-- "⚠️ '내일부터'는 금물! 지금 바로 다시 시작하세요" 문구 추가
-- 실패 리포트 작성 권장 팝업
-- 파일: `src/components/emergency/SelfCompassionCard.tsx`
+### 주요 파일
 
-**6. Tiny Habits 점진적 증가 로직**
-- 1주차: 스쿼트 1개 → 2주차: 3개 → 3주차: 5개
-- 파일: `src/lib/constants.ts` + `MissionCard.tsx`
-
-### 💡 권장 (사용자 경험 개선)
-
-**7. 환경 설계 온보딩 체크리스트**
-- "배달앱 삭제했나요?" (Yes/No)
-- "과자를 눈에 안 보이는 곳에 뒀나요?"
-- 파일: `src/app/onboarding/page.tsx`
-
-**8. Slow Eating 타이머**
-- 식사 시작 시 20분 타이머
-- 20분 경과 시 "천천히 잘 드셨네요!" 칭찬
-- 파일: `src/components/checklist/` (신규)
-
-**9. 푸시 알림 시스템 (PWA 제약 고려)**
-- 10:30 물 리마인더
-- 저녁 8시 "지금 먹으면 늦어요" 경고
-- 23:55 "Streak 위험!" 긴급 알림
-- 파일: `src/lib/notifications.ts` (신규)
+**신규**: `sidebar.tsx`, `top-bar.tsx`, `widget-card.tsx`
+**수정**: `layout.tsx`, `page.tsx`, 각 서브페이지
 
 ---
 
@@ -322,25 +287,18 @@ style: 스타일 변경
 
 ## 📚 참고 문서
 
-### 필수 문서 (읽는 순서)
+### 현재 작업 문서
 
-1. **`CLAUDE.md`** (이 문서) ← 먼저 읽기
-2. **`docs/TECH_STACK.md`** ← 개발 시작 전
-3. **`docs/RESEARCH_STRATEGIES.md`** ← 기능 구현 시
-4. **`.claude/250209-다이어트앱-연구기반-분석.md`** ← 상세 분석 필요시
+1. **`CLAUDE.md`** (이 문서) ← 항상 먼저 읽기
+2. **`docs/PC_DASHBOARD_UI_PLAN.md`** ← PC UI 전환 작업 시
 
-### 미래 기능 아이디어
+### 아카이브 (필요할 때만 참조)
 
-- **`docs/FUTURE_FEATURES.md`** ← 나중에 구현하면 좋은 추가 기능
-  - 심리학 연구 기반 10가지 추천 기능 (사진 일기, 습관 스택킹, 책임 파트너 등)
-  - 4단계 로드맵 (Phase 1-4)
-  - 우선순위별 정리 (구현 난이도 + 효과 기준)
-
-### Flutter MVP 아카이브
-
-- `archive/flutter-mvp/` 폴더에 보관
-- Flutter MVP 개발 히스토리 (Phase 1-11)
-- 참고용으로만 사용 (girogi-app이 새 Flutter 프로젝트)
+- `docs/TECH_STACK.md` - 기술 스택 선정 이유
+- `docs/RESEARCH_STRATEGIES.md` - 심리학 이론 상세
+- `docs/FUTURE_FEATURES.md` - 미래 기능 아이디어
+- `docs/archive/` - 과거 계획 문서들 (완료됨)
+- `.claude/250209-*`, `.claude/250210-*` - 과거 분석 보고서 (완료됨)
 
 ---
 
@@ -371,10 +329,8 @@ style: 스타일 변경
 
 ---
 
-**문서 버전**: 4.0 (Next.js + Flutter WebView)
-**이전 버전**: `docs/archive/CLAUDE_FULL.md` (Flutter 기준)
-**최종 수정**: 2026-02-10
+**문서 버전**: 5.0 (PC 대시보드 UI 전환)
+**최종 수정**: 2026-02-26
 
 > 이 문서는 Claude가 GIROGI 프로젝트를 이해하고 작업하기 위한 핵심 가이드입니다.
-> Next.js 웹앱(girogi-web)과 Flutter WebView 껍데기(girogi-app) 구조입니다.
-> 다음 단계는 연구 분석 보고서의 개선 제안을 코드에 반영하는 것입니다.
+> 현재 작업: 모바일 중심 UI → PC 친화적 사이드바 + 위젯 대시보드 전환

@@ -215,21 +215,19 @@ export default function ChecklistPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-4xl bg-white min-h-screen">
-        {/* 헤더 */}
-        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+    <div className="min-h-screen bg-white lg:bg-transparent">
+        {/* 모바일 헤더 */}
+        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm lg:hidden">
           <div className="px-8 py-4 border-b border-neutral-100">
             <h1 className="text-lg font-semibold text-neutral-700">오늘의 체크리스트</h1>
           </div>
         </header>
 
         {/* 메인 컨텐츠 */}
-        <main className="px-8 py-6">
-          <div className="space-y-4">
+        <main className="px-4 py-4 lg:px-6">
           {/* 외식 경고 배너 (주 3회 이상 시) */}
           {weeklyDiningOutCount >= 3 && (
-            <div className="flex gap-3 rounded-lg border border-peach/20 bg-peach/10 p-4">
+            <div className="mb-4 flex gap-3 rounded-2xl bg-peach-50 p-4">
               <AlertTriangle className="h-6 w-6 shrink-0 text-temptation" />
               <div>
                 <p className="font-semibold text-temptation">외식 빈도 경고</p>
@@ -241,73 +239,74 @@ export default function ChecklistPage() {
             </div>
           )}
 
-          {/* 아침 섹션 */}
-          <section>
-            <ChecklistTimeSection
-              mealTime={MealTime.BREAKFAST}
-              items={breakfastChecklist}
-              onToggle={(index) =>
-                handleToggle(breakfastChecklist, setBreakfastChecklist, index)
-              }
-            />
-            <div className="mt-3">
-              <MealRecordButton
-                mealLabel="아침"
-                hasRecord={mealRecords['아침']}
-                onTap={() => handleMealRecordTap('아침')}
+          {/* 모바일: 세로 스택 / 데스크탑: 2x2 그리드 */}
+          <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
+            {/* 아침 섹션 */}
+            <section className="rounded-2xl bg-white p-5">
+              <ChecklistTimeSection
+                mealTime={MealTime.BREAKFAST}
+                items={breakfastChecklist}
+                onToggle={(index) =>
+                  handleToggle(breakfastChecklist, setBreakfastChecklist, index)
+                }
               />
-            </div>
-          </section>
+              <div className="mt-3">
+                <MealRecordButton
+                  mealLabel="아침"
+                  hasRecord={mealRecords['아침']}
+                  onTap={() => handleMealRecordTap('아침')}
+                />
+              </div>
+            </section>
 
-          {/* 점심 섹션 */}
-          <section>
-            <ChecklistTimeSection
-              mealTime={MealTime.LUNCH}
-              items={lunchChecklist}
-              onToggle={(index) =>
-                handleToggle(lunchChecklist, setLunchChecklist, index)
-              }
-            />
-            <div className="mt-3">
-              <MealRecordButton
-                mealLabel="점심"
-                hasRecord={mealRecords['점심']}
-                onTap={() => handleMealRecordTap('점심')}
+            {/* 점심 섹션 */}
+            <section className="rounded-2xl bg-white p-5">
+              <ChecklistTimeSection
+                mealTime={MealTime.LUNCH}
+                items={lunchChecklist}
+                onToggle={(index) =>
+                  handleToggle(lunchChecklist, setLunchChecklist, index)
+                }
               />
-            </div>
-          </section>
+              <div className="mt-3">
+                <MealRecordButton
+                  mealLabel="점심"
+                  hasRecord={mealRecords['점심']}
+                  onTap={() => handleMealRecordTap('점심')}
+                />
+              </div>
+            </section>
 
-          {/* 저녁 섹션 */}
-          <section>
-            <ChecklistTimeSection
-              mealTime={MealTime.DINNER}
-              items={dinnerChecklist}
-              onToggle={(index) =>
-                handleToggle(dinnerChecklist, setDinnerChecklist, index)
-              }
-            />
-            <div className="mt-3">
-              <MealRecordButton
-                mealLabel="저녁"
-                hasRecord={mealRecords['저녁']}
-                onTap={() => handleMealRecordTap('저녁')}
+            {/* 저녁 섹션 */}
+            <section className="rounded-2xl bg-white p-5">
+              <ChecklistTimeSection
+                mealTime={MealTime.DINNER}
+                items={dinnerChecklist}
+                onToggle={(index) =>
+                  handleToggle(dinnerChecklist, setDinnerChecklist, index)
+                }
               />
-            </div>
-          </section>
+              <div className="mt-3">
+                <MealRecordButton
+                  mealLabel="저녁"
+                  hasRecord={mealRecords['저녁']}
+                  onTap={() => handleMealRecordTap('저녁')}
+                />
+              </div>
+            </section>
 
-          {/* 운동 섹션 (식사 기록 버튼 없음) */}
-          <section>
-            <ChecklistTimeSection
-              mealTime={MealTime.BREAKFAST} // TODO: MealTime enum에 EXERCISE 추가 필요
-              items={exerciseChecklist}
-              onToggle={(index) =>
-                handleToggle(exerciseChecklist, setExerciseChecklist, index)
-              }
-            />
-          </section>
+            {/* 운동 섹션 (식사 기록 버튼 없음) */}
+            <section className="rounded-2xl bg-white p-5">
+              <ChecklistTimeSection
+                mealTime={MealTime.BREAKFAST} // TODO: MealTime enum에 EXERCISE 추가 필요
+                items={exerciseChecklist}
+                onToggle={(index) =>
+                  handleToggle(exerciseChecklist, setExerciseChecklist, index)
+                }
+              />
+            </section>
           </div>
         </main>
-      </div>
 
       {/* 식사 기록 Sheet */}
       {sheetState.mealTime && (

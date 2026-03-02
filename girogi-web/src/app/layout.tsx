@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { BottomTabBar } from '@/components/navigation/bottom-tab-bar';
+import { Sidebar } from '@/components/navigation/sidebar';
+import { TopBar } from '@/components/navigation/top-bar';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -22,10 +24,28 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="antialiased">
-        <div className="pb-16 min-h-screen">
-          <div className="max-w-2xl mx-auto">{children}</div>
+        {/* Desktop: 사이드바 (lg 이상) */}
+        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-60">
+          <Sidebar />
         </div>
-        <BottomTabBar />
+
+        {/* 메인 영역 */}
+        <div className="min-h-screen pb-16 lg:pb-0 lg:pl-60">
+          {/* Desktop: 상단 바 */}
+          <div className="hidden lg:block">
+            <TopBar />
+          </div>
+
+          {/* 콘텐츠 */}
+          <div className="max-w-2xl mx-auto lg:max-w-none lg:mx-0">
+            {children}
+          </div>
+        </div>
+
+        {/* Mobile: 하단 탭바 (lg 미만) */}
+        <div className="lg:hidden">
+          <BottomTabBar />
+        </div>
       </body>
     </html>
   );

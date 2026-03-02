@@ -91,8 +91,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-4xl bg-white min-h-screen">
+    <div className="min-h-screen bg-white lg:bg-transparent">
       {/* 프로필 헤더 */}
       <ProfileHeader
         user={currentUser}
@@ -103,11 +102,11 @@ export default function ProfilePage() {
       />
 
       {/* 탭 바 */}
-      <div className="sticky top-0 z-10 flex border-b border-neutral-200 bg-white">
+      <div className="sticky top-0 z-10 flex border-b border-neutral-200 bg-white lg:px-6">
         <button
           onClick={() => setActiveTab('timeline')}
           className={cn(
-            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all lg:flex-none lg:px-4',
             activeTab === 'timeline'
               ? 'border-primary text-primary'
               : 'border-transparent text-neutral-700 hover:text-neutral-700'
@@ -118,7 +117,7 @@ export default function ProfilePage() {
         <button
           onClick={() => setActiveTab('badges')}
           className={cn(
-            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all lg:flex-none lg:px-4',
             activeTab === 'badges'
               ? 'border-primary text-primary'
               : 'border-transparent text-neutral-700 hover:text-neutral-700'
@@ -129,7 +128,7 @@ export default function ProfilePage() {
         <button
           onClick={() => setActiveTab('achievements')}
           className={cn(
-            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all lg:flex-none lg:px-4',
             activeTab === 'achievements'
               ? 'border-primary text-primary'
               : 'border-transparent text-neutral-700 hover:text-neutral-700'
@@ -140,7 +139,7 @@ export default function ProfilePage() {
         <button
           onClick={() => setActiveTab('coupons')}
           className={cn(
-            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all lg:flex-none lg:px-4',
             activeTab === 'coupons'
               ? 'border-primary text-primary'
               : 'border-transparent text-neutral-700 hover:text-neutral-700'
@@ -151,7 +150,7 @@ export default function ProfilePage() {
         <button
           onClick={() => setActiveTab('posts')}
           className={cn(
-            'flex-1 border-b-2 py-3 text-sm font-medium transition-all',
+            'flex-1 border-b-2 py-3 text-sm font-medium transition-all lg:flex-none lg:px-4',
             activeTab === 'posts'
               ? 'border-primary text-primary'
               : 'border-transparent text-neutral-700 hover:text-neutral-700'
@@ -162,7 +161,8 @@ export default function ProfilePage() {
       </div>
 
       {/* 메인 컨텐츠 */}
-      <main className="mx-auto max-w-2xl px-4 py-6">
+      <main className="px-4 py-4 lg:px-6">
+        <div className="mx-auto lg:max-w-3xl">
         {/* 식사 타임라인 탭 */}
         {activeTab === 'timeline' && (
           <>
@@ -231,8 +231,8 @@ export default function ProfilePage() {
             )}
           </>
         )}
+        </div>
       </main>
-      </div>
 
       {/* 쿠폰 사용 다이얼로그 */}
       <CouponUsageDialog

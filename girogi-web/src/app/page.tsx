@@ -20,6 +20,7 @@ import { WeeklyFeedback } from './home/_components/weekly-feedback';
 import { MissionCard } from './home/_components/mission-card';
 import { WeeklyCalendar } from './home/_components/weekly-calendar';
 import { RewardStatusCard } from './home/_components/reward-status-card';
+import { WidgetCard } from '@/components/common/widget-card';
 import {
   mockDailyRecords,
   calculateMockCurrentStreak,
@@ -117,37 +118,30 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Notion 스타일 콘텐츠 영역 */}
-      <div className="mx-auto max-w-4xl bg-white min-h-screen">
-        {/* 헤더 */}
-        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
-          <div className="px-8 py-4 border-b border-neutral-100">
-            <h1 className="text-lg font-semibold text-neutral-700">GIROGI</h1>
-          </div>
-        </header>
+      {/* 모바일 헤더 (데스크탑에서는 TopBar가 대신함) */}
+      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm lg:hidden">
+        <div className="px-8 py-4 border-b border-neutral-100">
+          <h1 className="text-lg font-semibold text-neutral-700">GIROGI</h1>
+        </div>
+      </header>
 
-        {/* 메인 컨텐츠 */}
-        <main className="px-8 py-6">
-          <div className="space-y-4">
-          {/* 듀오링고 스타일 Streak 위젯 */}
-          <StreakWidget />
+      {/* 메인 컨텐츠 */}
+      <main className="px-4 py-4 lg:px-6">
+        {/* 모바일: 세로 스택 / 데스크탑: 3열 위젯 그리드 */}
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3">
 
-          {/* 주간 진행도 + 피드백 그리드 */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {/* 스트릭 위젯 (1열) */}
+          <WidgetCard noPadding>
+            <StreakWidget />
+          </WidgetCard>
+
+          {/* 이번 주 진행도 (2열) */}
+          <WidgetCard span={2} noPadding>
             <WeeklyProgress />
-            <WeeklyFeedback
-              homeCount={weeklyMealStats.homeCount}
-              cafeteriaCount={weeklyMealStats.cafeteriaCount}
-              restaurantCount={weeklyMealStats.restaurantCount}
-              deliveryCount={weeklyMealStats.deliveryCount}
-            />
-          </div>
+          </WidgetCard>
 
-          {/* 핵심 미션 섹션 */}
-          <section>
-            <h2 className="mb-3 text-base font-semibold text-neutral-700">
-              오늘의 핵심 미션
-            </h2>
+          {/* 오늘의 핵심 미션 (2열) */}
+          <WidgetCard span={2} title="오늘의 핵심 미션">
             <div className="space-y-2">
               {missions.map((mission) => (
                 <MissionCard
@@ -160,21 +154,35 @@ export default function Home() {
                 />
               ))}
             </div>
-          </section>
+          </WidgetCard>
 
-          {/* 주간 캘린더 */}
-          <WeeklyCalendar weeklyRecords={weeklyRecords} />
+          {/* 보상 현황 (1열) */}
+          <WidgetCard noPadding>
+            <RewardStatusCard
+              snackBoxCount={snackBoxCount}
+              consecutiveDietDays={streakStore.streakData.currentStreak}
+              userId={mockCurrentUser.id}
+              onRewardUsed={handleRewardUsed}
+            />
+          </WidgetCard>
 
-          {/* 보상 현황 */}
-          <RewardStatusCard
-            snackBoxCount={snackBoxCount}
-            consecutiveDietDays={streakStore.streakData.currentStreak}
-            userId={mockCurrentUser.id}
-            onRewardUsed={handleRewardUsed}
-          />
-          </div>
-        </main>
-      </div>
+          {/* 주간 캘린더 (2열) */}
+          <WidgetCard span={2} noPadding>
+            <WeeklyCalendar weeklyRecords={weeklyRecords} />
+          </WidgetCard>
+
+          {/* 주간 식사 피드백 (1열) */}
+          <WidgetCard noPadding>
+            <WeeklyFeedback
+              homeCount={weeklyMealStats.homeCount}
+              cafeteriaCount={weeklyMealStats.cafeteriaCount}
+              restaurantCount={weeklyMealStats.restaurantCount}
+              deliveryCount={weeklyMealStats.deliveryCount}
+            />
+          </WidgetCard>
+
+        </div>
+      </main>
     </div>
   );
 }

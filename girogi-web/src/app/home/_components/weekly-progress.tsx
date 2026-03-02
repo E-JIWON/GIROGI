@@ -43,7 +43,7 @@ export function WeeklyProgress({ className }: WeeklyProgressProps) {
   };
 
   return (
-    <div className={cn('rounded-lg border border-neutral-200 bg-white p-6', className)}>
+    <div className={cn('rounded-2xl bg-white p-6', className)}>
       {/* 헤더 */}
       <h3 className="mb-4 text-base font-semibold text-neutral-700">이번 주 진행도</h3>
 

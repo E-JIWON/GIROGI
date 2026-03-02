@@ -52,10 +52,9 @@ export default function EmergencyPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-4xl bg-white min-h-screen">
-        {/* 헤더 */}
-        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm">
+    <div className="min-h-screen bg-white lg:bg-transparent">
+        {/* 모바일 헤더 */}
+        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm lg:hidden">
           <div className="flex items-center justify-between px-8 py-4 border-b border-neutral-100">
             <h1 className="text-lg font-semibold text-neutral-700">유혹 극복</h1>
 
@@ -77,39 +76,62 @@ export default function EmergencyPage() {
           </div>
         </header>
 
+        {/* 데스크탑: 자기 연민 토글 (헤더 대신) */}
+        <div className="hidden lg:flex lg:justify-end lg:px-8 lg:pt-4">
+          <button
+            onClick={handleToggleSelfCompassionMode}
+            className="flex items-center gap-2 rounded-full px-4 py-2 transition-all hover:bg-neutral-100"
+            title="자기 연민 모드"
+          >
+            <Heart
+              className={cn(
+                'h-5 w-5 transition-all',
+                showSelfCompassionMode
+                  ? 'fill-selfcompassion text-selfcompassion'
+                  : 'text-neutral-700'
+              )}
+            />
+            <span className="text-sm text-neutral-700">자기 연민 모드</span>
+          </button>
+        </div>
+
         {/* 메인 컨텐츠 */}
-        <main className="px-8 py-6">
-          <div className="space-y-4">
+        <main className="px-4 py-4 lg:px-6">
           {/* 자기 연민 모드 */}
           {showSelfCompassionMode && (
-            <SelfCompassionCard onCreateReport={handleOpenFailureReport} />
+            <div className="lg:max-w-2xl">
+              <SelfCompassionCard onCreateReport={handleOpenFailureReport} />
+            </div>
           )}
 
-          {/* 일반 모드 */}
+          {/* 일반 모드: 모바일 세로 / 데스크탑 가로 */}
           {!showSelfCompassionMode && (
-            <>
-              {/* 1. 10분 타이머 */}
-              <TemptationTimer
-                onTimerComplete={handleTimerComplete}
-                onSelfCompassionMode={handleSelfCompassionMode}
-              />
+            <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
+              {/* 10분 타이머 */}
+              <div className="rounded-2xl bg-white p-5">
+                <TemptationTimer
+                  onTimerComplete={handleTimerComplete}
+                  onSelfCompassionMode={handleSelfCompassionMode}
+                />
+              </div>
 
-              {/* 2. 미래 자아 시각화 */}
-              <FutureSelfCard
-                goalImageUrl={goalImageUrl}
-                targetWeight={targetWeight}
-                currentWeight={currentWeight}
-                targetDate={targetDate}
-              />
-            </>
+              {/* 미래 자아 시각화 */}
+              <div className="rounded-2xl bg-white p-5">
+                <FutureSelfCard
+                  goalImageUrl={goalImageUrl}
+                  targetWeight={targetWeight}
+                  currentWeight={currentWeight}
+                  targetDate={targetDate}
+                />
+              </div>
+            </div>
           )}
-        </div>
       </main>
 
       {/* 플로팅 액션 버튼 (FAB) - 실패 리포트 */}
       <button
         onClick={handleOpenFailureReport}
-        className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-selfcompassion px-6 py-4 text-base font-semibold text-white shadow-lg transition-all hover:bg-selfcompassion/90 hover:shadow-xl"
+        className="fixed bottom-6 right-6 flex items-center gap-2 rounded-full bg-selfcompassion px-6 py-4 text-base font-semibold text-white shadow-lg transition-all hover:bg-selfcompassion/90 hover:shadow-xl lg:bottom-8 lg:right-8"
       >
         <FileText className="h-5 w-5" />
         <span>실패 리포트</span>
@@ -120,7 +142,6 @@ export default function EmergencyPage() {
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
         />
-      </div>
     </div>
   );
 }
