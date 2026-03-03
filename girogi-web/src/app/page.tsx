@@ -2,9 +2,8 @@
  * 홈 페이지
  *
  * 주요 기능:
- * - Streak 카운터 (연속 성공 일수)
- * - 핵심 미션 3개 (3개 중 2개 이상 완료 시 성공)
- * - 주간 캘린더 (7일 성공/실패 기록)
+ * - Streak 카운터 (연속 성공 일수) + 식사 리포트
+ * - 핵심 미션 3개 (체크리스트 연동)
  * - 보상 현황 (과자박스, 치팅데이)
  *
  * Flutter: lib/presentation/screens/home/home_screen.dart
@@ -13,13 +12,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Apple, Utensils, Moon } from 'lucide-react';
+import { Apple, Utensils, Moon, ChevronRight } from 'lucide-react';
+import { format } from 'date-fns';
+import Link from 'next/link';
 import { StreakWidget } from './home/_components/streak-widget';
-import { WeeklyProgress } from './home/_components/weekly-progress';
 import { WeeklyFeedback } from './home/_components/weekly-feedback';
 import { MissionCard } from './home/_components/mission-card';
-import { WeeklyCalendar } from './home/_components/weekly-calendar';
 import { RewardStatusCard } from './home/_components/reward-status-card';
+import { TodayMealsWidget } from './home/_components/today-meals-widget';
 import { WidgetCard } from '@/components/common/widget-card';
 import {
   mockDailyRecords,
@@ -41,12 +41,6 @@ interface Mission {
 export default function Home() {
   const streakStore = useStreakStore();
 
-  // 주간 기록 데이터 (최근 7일)
-  const weeklyRecords = mockDailyRecords
-    .slice(0, 7)
-    .reverse()
-    .map((record) => record.isSuccessDay);
-
   // 주간 식사 통계
   const weeklyMealStats = calculateWeeklyMealStats(mockDailyRecords);
 
@@ -66,12 +60,15 @@ export default function Home() {
     }
 
     // Streak 데이터 초기화 (Mock 데이터 기반)
-    const recordDates = mockDailyRecords.map((record) => record.date);
+    // ISO 문자열 → yyyy-MM-dd 변환 (streakStore가 yyyy-MM-dd로 비교)
+    const recordDates = mockDailyRecords.map((record) =>
+      format(new Date(record.date), 'yyyy-MM-dd')
+    );
     streakStore.updateStreak(recordDates);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // 마운트 시 한 번만 실행
 
-  // 핵심 미션 3개
+  // 핵심 미션 3개 (체크리스트 페이지에서 설정한 항목)
   const [missions, setMissions] = useState<Mission[]>([
     {
       id: 'mission1',
@@ -107,6 +104,9 @@ export default function Home() {
     );
   };
 
+  // 완료된 미션 수
+  const completedCount = missions.filter((m) => m.isCompleted).length;
+
   // 보상 사용 후 핸들러
   const handleRewardUsed = () => {
     // localStorage에서 최신 과자박스 개수 불러오기
@@ -118,7 +118,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* 모바일 헤더 (데스크탑에서는 TopBar가 대신함) */}
+      {/* 모바일 헤더 */}
       <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm lg:hidden">
         <div className="px-8 py-4 border-b border-neutral-100">
           <h1 className="text-lg font-semibold text-neutral-700">GIROGI</h1>
@@ -130,18 +130,43 @@ export default function Home() {
         {/* 모바일: 세로 스택 / 데스크탑: 3열 위젯 그리드 */}
         <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3">
 
-          {/* 스트릭 위젯 (1열) */}
-          <WidgetCard noPadding>
+          {/* 연속 기록 (2열) */}
+          <WidgetCard span={2} noPadding>
             <StreakWidget />
           </WidgetCard>
 
-          {/* 이번 주 진행도 (2열) */}
-          <WidgetCard span={2} noPadding>
-            <WeeklyProgress />
+          {/* 이번 주 식사 리포트 (1열) */}
+          <WidgetCard noPadding>
+            <WeeklyFeedback
+              homeCount={weeklyMealStats.homeCount}
+              cafeteriaCount={weeklyMealStats.cafeteriaCount}
+              restaurantCount={weeklyMealStats.restaurantCount}
+              deliveryCount={weeklyMealStats.deliveryCount}
+            />
+          </WidgetCard>
+
+          {/* 오늘의 식사 (1열) */}
+          <WidgetCard noPadding>
+            <TodayMealsWidget />
           </WidgetCard>
 
           {/* 오늘의 핵심 미션 (2열) */}
-          <WidgetCard span={2} title="오늘의 핵심 미션">
+          <WidgetCard
+            span={2}
+            title="오늘의 핵심 미션"
+            action={
+              <Link
+                href="/checklist"
+                className="flex items-center gap-1 text-sm text-primary-700 hover:text-primary-800"
+              >
+                체크리스트
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            }
+          >
+            <p className="mb-3 text-sm text-neutral-500">
+              체크리스트에서 설정한 핵심 미션이에요. 3개 중 2개만 달성하면 오늘 성공!
+            </p>
             <div className="space-y-2">
               {missions.map((mission) => (
                 <MissionCard
@@ -154,6 +179,15 @@ export default function Home() {
                 />
               ))}
             </div>
+            {/* 달성 상태 */}
+            <div className="mt-3 rounded-lg bg-neutral-50 p-3 text-center">
+              <p className="text-sm text-neutral-600">
+                오늘 <span className="font-semibold text-primary-700">{completedCount}/3</span> 달성
+                {completedCount >= 2 && (
+                  <span className="ml-2 font-semibold text-success-700">오늘 성공!</span>
+                )}
+              </p>
+            </div>
           </WidgetCard>
 
           {/* 보상 현황 (1열) */}
@@ -163,21 +197,6 @@ export default function Home() {
               consecutiveDietDays={streakStore.streakData.currentStreak}
               userId={mockCurrentUser.id}
               onRewardUsed={handleRewardUsed}
-            />
-          </WidgetCard>
-
-          {/* 주간 캘린더 (2열) */}
-          <WidgetCard span={2} noPadding>
-            <WeeklyCalendar weeklyRecords={weeklyRecords} />
-          </WidgetCard>
-
-          {/* 주간 식사 피드백 (1열) */}
-          <WidgetCard noPadding>
-            <WeeklyFeedback
-              homeCount={weeklyMealStats.homeCount}
-              cafeteriaCount={weeklyMealStats.cafeteriaCount}
-              restaurantCount={weeklyMealStats.restaurantCount}
-              deliveryCount={weeklyMealStats.deliveryCount}
             />
           </WidgetCard>
 

@@ -30,6 +30,32 @@ function formatDateKey(date: Date): string {
 }
 
 /**
+ * 점심 메뉴 풀 (다양성)
+ */
+const LUNCH_MENUS: { menu: string; place: MealPlace; achievements: string[] }[] = [
+  { menu: '제육볶음, 현미밥, 미역국', place: MealPlace.CAFETERIA, achievements: ['천천히 먹기', '30회 씹기'] },
+  { menu: '비빔밥, 두부조림', place: MealPlace.CAFETERIA, achievements: ['채소 먼저 먹기'] },
+  { menu: '초밥 6피스, 우동', place: MealPlace.RESTAURANT, achievements: ['배부름 80%에서 멈추기'] },
+  { menu: '닭가슴살 샐러드', place: MealPlace.HOME, achievements: ['천천히 먹기', '채소 먼저 먹기'] },
+  { menu: '김치찌개, 밥, 계란말이', place: MealPlace.CAFETERIA, achievements: ['30회 씹기'] },
+  { menu: '떡볶이, 순대', place: MealPlace.DELIVERY, achievements: [] },
+  { menu: '샌드위치, 샐러드', place: MealPlace.HOME, achievements: ['채소 먼저 먹기', '천천히 먹기'] },
+];
+
+/**
+ * 저녁 메뉴 풀 (다양성)
+ */
+const DINNER_MENUS: { menu: string; place: MealPlace; achievements: string[] }[] = [
+  { menu: '된장찌개, 계란, 나물', place: MealPlace.HOME, achievements: ['작은 그릇 사용', '8시 전 식사'] },
+  { menu: '닭가슴살, 고구마, 브로콜리', place: MealPlace.HOME, achievements: ['작은 그릇 사용', '천천히 먹기'] },
+  { menu: '삼겹살, 쌈채소', place: MealPlace.RESTAURANT, achievements: ['배부름 80%에서 멈추기'] },
+  { menu: '두부김치, 잡곡밥', place: MealPlace.HOME, achievements: ['작은 그릇 사용', '8시 전 식사'] },
+  { menu: '치킨 반마리', place: MealPlace.DELIVERY, achievements: [] },
+  { menu: '연어 포케, 현미밥', place: MealPlace.HOME, achievements: ['천천히 먹기', '채소 먼저 먹기'] },
+  { menu: '순두부찌개, 밥', place: MealPlace.HOME, achievements: ['작은 그릇 사용'] },
+];
+
+/**
  * 특정 날짜의 Mock MealRecord 생성
  */
 function createMockMeal(
@@ -40,17 +66,21 @@ function createMockMeal(
   const mealId = `meal_${dayIndex}_${mealTime}`;
   const isLunch = mealTime === MealTime.LUNCH;
 
-  const hour = isLunch ? 12 : 19; // 점심 12시, 저녁 7시
+  const hour = isLunch ? 12 : 19;
   const mealDate = new Date(date);
   mealDate.setHours(hour, 0, 0, 0);
+
+  const menuPool = isLunch ? LUNCH_MENUS : DINNER_MENUS;
+  const menuData = menuPool[dayIndex % menuPool.length];
 
   return {
     id: mealId,
     mealTime,
-    place: isLunch ? MealPlace.CAFETERIA : MealPlace.HOME,
-    menu: isLunch ? '제육볶음, 밥' : '된장찌개, 계란',
+    place: menuData.place,
+    menu: menuData.menu,
     imageUrl: null,
-    achievements: isLunch ? ['천천히 먹기', '30회 씹기'] : ['작은 그릇 사용'],
+    achievements: menuData.achievements,
+    badges: [],
     createdAt: mealDate.toISOString(),
     reactions: [],
     comments: [],

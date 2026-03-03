@@ -12,6 +12,7 @@ import {
   TimeSlot,
   PostType,
   SharedRecordType,
+  EmotionType,
 } from './enums';
 import { Comment, Reaction } from './common';
 
@@ -42,107 +43,10 @@ export interface ChecklistItem {
 }
 
 /**
- * 기본 체크리스트 항목 제공
- *
- * 앱 초기 설치 시 제공되는 기본 체크리스트 템플릿
+ * @deprecated defaultChecklistItems를 직접 import하지 마세요.
+ * 대신 `@/lib/config/checklist-config`에서 CHECKLIST_ITEMS를 사용하세요.
  */
-export const defaultChecklistItems: ChecklistItem[] = [
-  // 아침
-  {
-    id: 'morning_water',
-    title: '10:30 물 500ml', // 레거시
-    when: '10:30',
-    where: '사무실',
-    what: '물 500ml 마시기',
-    icon: '💧',
-    timeSlot: TimeSlot.MORNING,
-    isCoreMission: false,
-  },
-  // 점심
-  {
-    id: 'lunch_salad',
-    title: '샐러드 두 젓가락 먹기', // 레거시
-    when: '식사 시작',
-    where: '식당',
-    what: '샐러드 두 젓가락 먹기',
-    icon: '🥗',
-    timeSlot: TimeSlot.LUNCH,
-    isCoreMission: false,
-  },
-  {
-    id: 'lunch_chew',
-    title: '천천히 씹기 (20번 이상)', // 레거시
-    when: '식사 중',
-    where: '식당',
-    what: '한 입당 30회 씹기',
-    icon: '😋',
-    timeSlot: TimeSlot.LUNCH,
-    isCoreMission: false,
-  },
-  // 퇴근 (핵심 미션)
-  {
-    id: 'afterwork_fruit',
-    title: '바나나 or 사과 먹기', // 레거시
-    when: '퇴근 직후',
-    where: '집',
-    what: '과일 1개 먹기',
-    icon: '🍎',
-    timeSlot: TimeSlot.AFTER_WORK,
-    isCoreMission: true,
-  },
-  // 저녁 (핵심 미션)
-  {
-    id: 'dinner_small_bowl',
-    title: '작은 그릇 사용', // 레거시
-    when: '식사 준비',
-    where: '주방',
-    what: '작은 그릇 사용하기',
-    icon: '🍽️',
-    timeSlot: TimeSlot.DINNER,
-    isCoreMission: true,
-  },
-  {
-    id: 'dinner_no_tv',
-    title: 'TV 없이 먹기', // 레거시
-    when: '식사 중',
-    where: '식탁',
-    what: 'TV 끄고 집중해서 먹기',
-    icon: '📺',
-    timeSlot: TimeSlot.DINNER,
-    isCoreMission: false,
-  },
-  {
-    id: 'dinner_chew',
-    title: '천천히 씹기', // 레거시
-    when: '식사 중',
-    where: '식탁',
-    what: '한 입당 30회 씹기',
-    icon: '😋',
-    timeSlot: TimeSlot.DINNER,
-    isCoreMission: false,
-  },
-  // 운동 (핵심 미션 - 택1)
-  {
-    id: 'exercise_boxing',
-    title: '복싱', // 레거시
-    when: '저녁 7시',
-    where: '헬스장',
-    what: '복싱 30분',
-    icon: '🥊',
-    timeSlot: TimeSlot.EXERCISE,
-    isCoreMission: true,
-  },
-  {
-    id: 'exercise_squat',
-    title: '스쿼트 1개', // 레거시
-    when: '저녁 시간',
-    where: '집',
-    what: '스쿼트 1개',
-    icon: '🏋️',
-    timeSlot: TimeSlot.EXERCISE,
-    isCoreMission: true,
-  },
-];
+export { CHECKLIST_ITEMS as defaultChecklistItems } from '@/lib/config/checklist-config';
 
 /**
  * 식사 기록
@@ -556,6 +460,42 @@ export function createSharedRecordPost(
     comments: [],
     createdAt: createdAt || new Date().toISOString(),
   };
+}
+
+/**
+ * 대안 행동
+ *
+ * 감정별 맞춤 대안 행동 제안
+ */
+export interface AlternativeAction {
+  /** 대안 행동 ID */
+  id: string;
+  /** 아이콘 이모지 */
+  icon: string;
+  /** 대안 행동 제목 */
+  title: string;
+  /** 설명 */
+  description: string;
+}
+
+/**
+ * 유혹 극복 기록
+ *
+ * 감정 체크인 + 대안 행동 + 타이머 결과를 기록
+ */
+export interface TemptationRecord {
+  /** 고유 식별자 */
+  id: string;
+  /** 기록 일시 (ISO 8601) */
+  recordedAt: string;
+  /** 감정 타입 */
+  emotion: EmotionType;
+  /** 선택한 대안 행동 ID (선택사항) */
+  alternativeActionId?: string | null;
+  /** 타이머 사용 여부 */
+  usedTimer: boolean;
+  /** 극복 성공 여부 */
+  succeeded: boolean;
 }
 
 /**

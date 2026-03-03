@@ -2,7 +2,7 @@
  * 체크리스트 페이지
  *
  * 주요 기능:
- * - 시간대별 체크리스트 (아침/점심/저녁/운동)
+ * - 시간대별 체크리스트 (아침/점심/퇴근/저녁/운동)
  * - 식사 기록 버튼 (사진, 장소, 메뉴, 준수 행동)
  * - 외식 경고 (주 3회 이상 시)
  *
@@ -11,146 +11,41 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { ChecklistTimeSection } from './_components/checklist-time-section';
 import { MealRecordButton } from './_components/meal-record-button';
 import { MealRecordSheet } from './_components/meal-record-sheet';
-import { MealTime } from '@/types/enums';
-import { MealRecord } from '@/types/models';
+import { MealRecordSummary } from './_components/meal-record-summary';
+import { MealTime, TimeSlot, TimeSlotDisplayNames } from '@/types/enums';
+import type { MealRecord } from '@/types/models';
+import {
+  CHECKLIST_ITEMS,
+  CHECKLIST_TIME_SLOT_ORDER,
+  MEAL_RECORD_TIME_SLOTS,
+} from '@/lib/config/checklist-config';
+import { useMealRecordStore } from '@/stores/mealRecordStore';
 
-interface ChecklistItem {
-  title: string;
-  isChecked: boolean;
-  when?: string;
-  where?: string;
-  what?: string;
-  icon?: string;
-}
-
-interface MealRecords {
-  [key: string]: boolean;
-}
+/** TimeSlot → MealTime 매핑 (식사 관련 슬롯만) */
+const TIME_SLOT_TO_MEAL_TIME: Partial<Record<TimeSlot, MealTime>> = {
+  [TimeSlot.MORNING]: MealTime.BREAKFAST,
+  [TimeSlot.LUNCH]: MealTime.LUNCH,
+  [TimeSlot.DINNER]: MealTime.DINNER,
+};
 
 export default function ChecklistPage() {
-  // 아침 체크리스트 (When-Where-What 형식)
-  const [breakfastChecklist, setBreakfastChecklist] = useState<ChecklistItem[]>([
-    {
-      title: '물 한 잔 마시기',
-      when: '기상 후',
-      where: '침실',
-      what: '물 한 잔 마시기',
-      icon: '💧',
-      isChecked: true,
-    },
-    {
-      title: '체중 측정하기',
-      when: '아침 식사 전',
-      where: '화장실',
-      what: '체중 측정하기',
-      icon: '⚖️',
-      isChecked: true,
-    },
-    {
-      title: '스트레칭 5분',
-      when: '아침 시간',
-      where: '거실',
-      what: '스트레칭 5분',
-      icon: '🧘',
-      isChecked: false,
-    },
-  ]);
-
-  // 점심 체크리스트 (When-Where-What 형식)
-  const [lunchChecklist, setLunchChecklist] = useState<ChecklistItem[]>([
-    {
-      title: '식사 30회 이상 씹기',
-      when: '식사 중',
-      where: '식당',
-      what: '한 입당 30회 씹기',
-      icon: '😋',
-      isChecked: false,
-    },
-    {
-      title: '채소 먼저 먹기',
-      when: '식사 시작',
-      where: '식당',
-      what: '채소 반찬 먼저 먹기',
-      icon: '🥗',
-      isChecked: false,
-    },
-    {
-      title: '배부를 때까지만 먹기',
-      when: '식사 중',
-      where: '식당',
-      what: '80% 배부름에 멈추기',
-      icon: '🍽️',
-      isChecked: false,
-    },
-  ]);
-
-  // 저녁 체크리스트 (When-Where-What 형식)
-  const [dinnerChecklist, setDinnerChecklist] = useState<ChecklistItem[]>([
-    {
-      title: '8시 전 식사 완료',
-      when: '오후 8시 전',
-      where: '집',
-      what: '저녁 식사 완료',
-      icon: '⏰',
-      isChecked: false,
-    },
-    {
-      title: '천천히 먹기',
-      when: '식사 중',
-      where: '식탁',
-      what: '20분 이상 천천히 먹기',
-      icon: '🐌',
-      isChecked: false,
-    },
-    {
-      title: '과식하지 않기',
-      when: '식사 중',
-      where: '식탁',
-      what: '작은 그릇 사용하기',
-      icon: '🍽️',
-      isChecked: false,
-    },
-  ]);
-
-  // 운동 체크리스트 (When-Where-What 형식)
-  const [exerciseChecklist, setExerciseChecklist] = useState<ChecklistItem[]>([
-    {
-      title: '계단 이용하기',
-      when: '출퇴근 시',
-      where: '건물',
-      what: '엘리베이터 대신 계단 이용',
-      icon: '🚶',
-      isChecked: false,
-    },
-    {
-      title: '스트레칭 10분',
-      when: '저녁 시간',
-      where: '집',
-      what: '전신 스트레칭 10분',
-      icon: '🧘',
-      isChecked: false,
-    },
-    {
-      title: '산책 20분',
-      when: '저녁 식사 후',
-      where: '근처 공원',
-      what: '가볍게 산책 20분',
-      icon: '🚶‍♂️',
-      isChecked: false,
-    },
-  ]);
-
-  // 식사 기록 여부 (아침/점심/저녁)
-  const [mealRecords, setMealRecords] = useState<MealRecords>({
-    아침: true,
-    점심: false,
-    저녁: false,
+  // 단일 checkStates: Record<itemId, boolean>
+  const [checkStates, setCheckStates] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const item of CHECKLIST_ITEMS) {
+      initial[item.id] = false;
+    }
+    return initial;
   });
+
+  // 식사 기록 스토어
+  const mealRecordStore = useMealRecordStore();
+  const todayStr = new Date().toISOString().slice(0, 10);
 
   // Sheet 상태
   const [sheetState, setSheetState] = useState<{
@@ -164,54 +59,66 @@ export default function ChecklistPage() {
   // 주간 외식 횟수 (Mock 데이터)
   const weeklyDiningOutCount = 2;
 
-  // 체크리스트 토글 핸들러
-  const handleToggle = (
-    list: ChecklistItem[],
-    setList: React.Dispatch<React.SetStateAction<ChecklistItem[]>>,
-    index: number
-  ) => {
-    const newList = [...list];
-    newList[index].isChecked = !newList[index].isChecked;
-    setList(newList);
+  // 체크리스트 토글 핸들러 (id 기반)
+  const handleToggle = (id: string) => {
+    setCheckStates((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  // 시간대별 항목을 isChecked와 합쳐서 생성
+  const getItemsForSlot = (timeSlot: TimeSlot) => {
+    return CHECKLIST_ITEMS
+      .filter((item) => item.timeSlot === timeSlot)
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        when: item.when,
+        where: item.where,
+        what: item.what,
+        icon: item.icon,
+        isChecked: checkStates[item.id] ?? false,
+      }));
   };
 
   // 식사 기록 Sheet 열기
-  const handleMealRecordTap = (mealLabel: string) => {
-    const mealTimeMap: Record<string, MealTime> = {
-      아침: MealTime.BREAKFAST,
-      점심: MealTime.LUNCH,
-      저녁: MealTime.DINNER,
-    };
-
-    setSheetState({
-      isOpen: true,
-      mealTime: mealTimeMap[mealLabel],
-    });
+  const handleMealRecordTap = (timeSlot: TimeSlot) => {
+    const mealTime = TIME_SLOT_TO_MEAL_TIME[timeSlot];
+    if (!mealTime) return;
+    setSheetState({ isOpen: true, mealTime });
   };
 
   // 식사 기록 저장
   const handleSaveMealRecord = (record: Partial<MealRecord>) => {
-    console.log('Meal record saved:', record);
-
-    // 기록 완료 표시
-    const mealTimeToLabel: Record<MealTime, string> = {
-      [MealTime.BREAKFAST]: '아침',
-      [MealTime.LUNCH]: '점심',
-      [MealTime.DINNER]: '저녁',
-      [MealTime.SNACK]: '간식',
-    };
-
-    if (record.mealTime) {
-      const label = mealTimeToLabel[record.mealTime];
-      setMealRecords((prev) => ({ ...prev, [label]: true }));
+    if (record.mealTime && record.place && record.menu) {
+      mealRecordStore.addRecord({
+        mealTime: record.mealTime,
+        place: record.place,
+        menu: record.menu,
+        rating: record.rating,
+        comment: record.comment,
+        badges: record.badges ?? [],
+        achievements: record.achievements ?? [],
+      });
     }
-
-    // TODO: DailyRecord에 추가
   };
 
   // Sheet 닫기
   const handleCloseSheet = () => {
     setSheetState({ isOpen: false, mealTime: null });
+  };
+
+  // 해당 시간대에 식사 기록이 있는지 확인
+  const hasMealRecordForSlot = (timeSlot: TimeSlot): boolean => {
+    const mealTime = TIME_SLOT_TO_MEAL_TIME[timeSlot];
+    if (!mealTime) return false;
+    return mealRecordStore.hasMealRecord(todayStr, mealTime);
+  };
+
+  // 해당 시간대의 식사 기록 조회
+  const getMealRecordForSlot = (timeSlot: TimeSlot): MealRecord | undefined => {
+    const mealTime = TIME_SLOT_TO_MEAL_TIME[timeSlot];
+    if (!mealTime) return undefined;
+    const records = mealRecordStore.getRecordsByDate(todayStr);
+    return records.find((r) => r.mealTime === mealTime);
   };
 
   return (
@@ -239,72 +146,38 @@ export default function ChecklistPage() {
             </div>
           )}
 
-          {/* 모바일: 세로 스택 / 데스크탑: 2x2 그리드 */}
+          {/* 모바일: 세로 스택 / 데스크탑: 2~3 그리드 */}
           <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
-            {/* 아침 섹션 */}
-            <section className="rounded-2xl bg-white p-5">
-              <ChecklistTimeSection
-                mealTime={MealTime.BREAKFAST}
-                items={breakfastChecklist}
-                onToggle={(index) =>
-                  handleToggle(breakfastChecklist, setBreakfastChecklist, index)
-                }
-              />
-              <div className="mt-3">
-                <MealRecordButton
-                  mealLabel="아침"
-                  hasRecord={mealRecords['아침']}
-                  onTap={() => handleMealRecordTap('아침')}
-                />
-              </div>
-            </section>
+            {CHECKLIST_TIME_SLOT_ORDER.map((timeSlot) => {
+              const isMealSlot = MEAL_RECORD_TIME_SLOTS.includes(timeSlot);
+              const hasRecord = hasMealRecordForSlot(timeSlot);
+              const mealRecord = getMealRecordForSlot(timeSlot);
 
-            {/* 점심 섹션 */}
-            <section className="rounded-2xl bg-white p-5">
-              <ChecklistTimeSection
-                mealTime={MealTime.LUNCH}
-                items={lunchChecklist}
-                onToggle={(index) =>
-                  handleToggle(lunchChecklist, setLunchChecklist, index)
-                }
-              />
-              <div className="mt-3">
-                <MealRecordButton
-                  mealLabel="점심"
-                  hasRecord={mealRecords['점심']}
-                  onTap={() => handleMealRecordTap('점심')}
-                />
-              </div>
-            </section>
+              return (
+                <section key={timeSlot} className="rounded-2xl bg-white p-5">
+                  <ChecklistTimeSection
+                    timeSlot={timeSlot}
+                    items={getItemsForSlot(timeSlot)}
+                    onToggle={handleToggle}
+                  />
 
-            {/* 저녁 섹션 */}
-            <section className="rounded-2xl bg-white p-5">
-              <ChecklistTimeSection
-                mealTime={MealTime.DINNER}
-                items={dinnerChecklist}
-                onToggle={(index) =>
-                  handleToggle(dinnerChecklist, setDinnerChecklist, index)
-                }
-              />
-              <div className="mt-3">
-                <MealRecordButton
-                  mealLabel="저녁"
-                  hasRecord={mealRecords['저녁']}
-                  onTap={() => handleMealRecordTap('저녁')}
-                />
-              </div>
-            </section>
-
-            {/* 운동 섹션 (식사 기록 버튼 없음) */}
-            <section className="rounded-2xl bg-white p-5">
-              <ChecklistTimeSection
-                mealTime={MealTime.BREAKFAST} // TODO: MealTime enum에 EXERCISE 추가 필요
-                items={exerciseChecklist}
-                onToggle={(index) =>
-                  handleToggle(exerciseChecklist, setExerciseChecklist, index)
-                }
-              />
-            </section>
+                  {/* 식사 관련 슬롯에만 식사 기록 버튼 표시 */}
+                  {isMealSlot && (
+                    <div className="mt-3 space-y-2">
+                      <MealRecordButton
+                        mealLabel={TimeSlotDisplayNames[timeSlot]}
+                        hasRecord={hasRecord}
+                        onTap={() => handleMealRecordTap(timeSlot)}
+                      />
+                      {/* 기록 완료 시 요약 표시 */}
+                      {hasRecord && mealRecord && (
+                        <MealRecordSummary record={mealRecord} />
+                      )}
+                    </div>
+                  )}
+                </section>
+              );
+            })}
           </div>
         </main>
 
