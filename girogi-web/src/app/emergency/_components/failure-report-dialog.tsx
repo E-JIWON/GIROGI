@@ -7,6 +7,8 @@ import { FileText, X, Save, Lightbulb, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { LICENSING_EFFECT_WARNING } from '@/lib/constants';
 
+import { EmotionType, EmotionTypeDisplayNames, EmotionTypeIcons } from '@/types/enums';
+
 interface FailureReportDialogProps {
   /**
    * 다이얼로그 표시 여부
@@ -16,11 +18,21 @@ interface FailureReportDialogProps {
    * 닫기 콜백
    */
   onClose: () => void;
+  /**
+   * 감정 체크인에서 선택된 감정 (자동 표시)
+   */
+  prefilledEmotion?: EmotionType | null;
+  /**
+   * 이번 달 해당 감정 충동 횟수
+   */
+  monthlyEmotionCount?: number;
 }
 
 export function FailureReportDialog({
   isOpen,
   onClose,
+  prefilledEmotion,
+  monthlyEmotionCount,
 }: FailureReportDialogProps) {
   const [situation, setSituation] = useState('');
   const [reason, setReason] = useState('');
@@ -119,6 +131,23 @@ export function FailureReportDialog({
                 </div>
               </div>
             </div>
+
+            {/* 감정 패턴 표시 */}
+            {prefilledEmotion && (
+              <div className="mb-4 rounded-lg bg-neutral-50 p-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">{EmotionTypeIcons[prefilledEmotion]}</span>
+                  <span className="text-sm font-medium text-neutral-800">
+                    감정: {EmotionTypeDisplayNames[prefilledEmotion]}
+                  </span>
+                </div>
+                {monthlyEmotionCount !== undefined && monthlyEmotionCount > 0 && (
+                  <p className="mt-1 text-xs text-neutral-600">
+                    이번 달 {EmotionTypeDisplayNames[prefilledEmotion]} 간식 충동: {monthlyEmotionCount}회
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* 안내 메시지 */}
             <div className="mb-4 flex gap-2 rounded-lg bg-info/10 p-3">

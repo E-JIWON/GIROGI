@@ -7,7 +7,9 @@ import { Sunrise, ImagePlus, Lightbulb } from 'lucide-react'
 import {
   EFT_MOTIVATION_MESSAGES,
   EFT_MESSAGES_BY_TIME,
+  EFT_MESSAGES_BY_EMOTION,
 } from '@/lib/constants'
+import { EmotionType } from '@/types/enums'
 
 interface FutureSelfCardProps {
   /**
@@ -26,6 +28,10 @@ interface FutureSelfCardProps {
    * 목표 달성 예상 날짜
    */
   targetDate?: Date | null;
+  /**
+   * 선택된 감정 (맞춤 메시지 표시용)
+   */
+  emotion?: EmotionType | null;
 }
 
 /**
@@ -54,6 +60,7 @@ export function FutureSelfCard({
   targetWeight,
   currentWeight,
   targetDate,
+  emotion,
 }: FutureSelfCardProps) {
   const hasGoalInfo = targetWeight && currentWeight
   const weightDiff = hasGoalInfo ? currentWeight - targetWeight : null
@@ -65,16 +72,22 @@ export function FutureSelfCard({
   const [motivationMessages, setMotivationMessages] = useState<string[]>([])
 
   useEffect(() => {
-    // 시간대 감지
     const timeSlot = getCurrentTimeSlot()
     const timeBasedMessages = EFT_MESSAGES_BY_TIME[timeSlot]
 
-    // 시간대별 메시지 1개 + 일반 메시지 3개 = 총 4개
-    const selectedTimeMessage = getRandomItems(timeBasedMessages, 1)
-    const selectedGeneralMessages = getRandomItems(EFT_MOTIVATION_MESSAGES, 3)
-
-    setMotivationMessages([...selectedTimeMessage, ...selectedGeneralMessages])
-  }, [])
+    if (emotion) {
+      // 감정별 맞춤 메시지 + 시간대별 1개 + 일반 1개
+      const emotionMessages = EFT_MESSAGES_BY_EMOTION[emotion]
+      const selectedTimeMessage = getRandomItems(timeBasedMessages, 1)
+      const selectedGeneralMessages = getRandomItems(EFT_MOTIVATION_MESSAGES, 1)
+      setMotivationMessages([...emotionMessages, ...selectedTimeMessage, ...selectedGeneralMessages])
+    } else {
+      // 시간대별 메시지 1개 + 일반 메시지 3개 = 총 4개
+      const selectedTimeMessage = getRandomItems(timeBasedMessages, 1)
+      const selectedGeneralMessages = getRandomItems(EFT_MOTIVATION_MESSAGES, 3)
+      setMotivationMessages([...selectedTimeMessage, ...selectedGeneralMessages])
+    }
+  }, [emotion])
 
   return (
     <div className="rounded-lg bg-neutral-100 p-6">

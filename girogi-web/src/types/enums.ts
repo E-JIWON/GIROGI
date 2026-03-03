@@ -180,3 +180,40 @@ export const TimeSlotIcons: Record<TimeSlot, string> = {
   [TimeSlot.DINNER]: '🌙',
   [TimeSlot.EXERCISE]: '💪',
 };
+
+/**
+ * 유혹 감정 타입
+ *
+ * 유혹극복 페이지에서 "왜 먹고 싶은지" 감정을 분류하기 위한 Enum
+ * (Appetite Journal 2018: 감정 인식만으로 간식 충동 40% 감소)
+ */
+export enum EmotionType {
+  /** 진짜 배고파서 */
+  HUNGRY = 'hungry',
+  /** 스트레스 때문에 */
+  STRESS = 'stress',
+  /** 심심해서 */
+  BOREDOM = 'boredom',
+  /** 습관적으로 */
+  HABITUAL = 'habitual',
+  /** 보상받고 싶어서 */
+  REWARD_SEEKING = 'rewardSeeking',
+}
+
+/** 감정 타입 한글 표시명 */
+export const EmotionTypeDisplayNames: Record<EmotionType, string> = {
+  [EmotionType.HUNGRY]: '배고파서',
+  [EmotionType.STRESS]: '스트레스',
+  [EmotionType.BOREDOM]: '심심해서',
+  [EmotionType.HABITUAL]: '습관적으로',
+  [EmotionType.REWARD_SEEKING]: '보상받고 싶어서',
+};
+
+/** 감정 타입 아이콘 */
+export const EmotionTypeIcons: Record<EmotionType, string> = {
+  [EmotionType.HUNGRY]: '🍽️',
+  [EmotionType.STRESS]: '😤',
+  [EmotionType.BOREDOM]: '😐',
+  [EmotionType.HABITUAL]: '🔄',
+  [EmotionType.REWARD_SEEKING]: '🎁',
+};
