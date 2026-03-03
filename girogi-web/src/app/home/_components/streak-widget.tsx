@@ -29,7 +29,7 @@ export function StreakWidget({ className }: StreakWidgetProps) {
   return (
     <div className={cn('rounded-2xl bg-white p-6', className)}>
       {/* 헤더 */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-1 flex items-center justify-between">
         <h2 className="text-base font-semibold text-neutral-700">연속 기록</h2>
         {currentStreak > 0 && (
           <div className="flex items-center gap-1 text-orange-500">
@@ -38,6 +38,9 @@ export function StreakWidget({ className }: StreakWidgetProps) {
           </div>
         )}
       </div>
+      <p className="mb-4 text-sm text-neutral-500">
+        매일 핵심 미션 2개 이상 달성하면 기록이 쌓여요
+      </p>
 
       {/* 주간 체크박스 */}
       <div className="mb-4">

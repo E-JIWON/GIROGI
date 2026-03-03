@@ -4,11 +4,11 @@
 
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 
-import type { ModalProps } from '@/components/common/modal';
-import type { ToastProps, ToastType } from '@/components/common/toast';
+import type { ModalProps } from '@/components/ui/modal';
+import type { ToastProps, ToastType } from '@/components/ui/toast';
 
-import { Modal } from '@/components/common/modal';
-import { Toast } from '@/components/common/toast';
+import { Modal } from '@/components/ui/modal';
+import { Toast } from '@/components/ui/toast';
 
 interface ModalContextValue {
   openModal: (props: Omit<ModalProps, 'isOpen' | 'onClose'>) => void;
