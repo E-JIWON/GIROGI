@@ -158,40 +158,13 @@ GIROGI/
 - ✅ **친구 프로필 페이지** + 비교 콘텐츠
 - ✅ **체중 비교 차트** (단일 겹침 그래프)
 
-### 현재 레이아웃 (변경 예정)
+### 현재 레이아웃 — 저널 셸 (2026-10-07)
 
-- 모바일 중심: `max-w-2xl` (896px), 하단 탭바
-- 세로 스택 레이아웃, PC에서 공간 낭비 심함
-
----
-
-## 🚀 현재 진행: PC 대시보드 UI 전환
-
-> **상세 계획**: [docs/PC_DASHBOARD_UI_PLAN.md](docs/PC_DASHBOARD_UI_PLAN.md)
-
-### 목표
-
-모바일 중심 UI → PC 친화적 **사이드바 + 위젯 대시보드** 레이아웃
-
-### 핵심 변경
-
-| 항목 | Before | After |
-|------|--------|-------|
-| 네비게이션 | 하단 탭바 | 왼쪽 사이드바 (데스크탑) |
-| 콘텐츠 | 세로 스택, max-w-2xl | 위젯 그리드, 전체 너비 |
-| 반응형 | 거의 없음 | lg (1024px) 기준 전환 |
-
-### 구현 단계
-
-- ✅ **Phase 1**: 레이아웃 인프라 (사이드바 + 루트 레이아웃 수정)
-- ✅ **Phase 2**: 위젯 시스템 (WidgetCard 래퍼 + 기존 컴포넌트 래핑)
-- ✅ **Phase 3**: 대시보드 페이지 (홈 위젯 그리드화)
-- ✅ **Phase 4**: 서브 페이지 적용 (체크리스트, 유혹극복, 커뮤니티, 프로필)
-
-### 주요 파일
-
-**신규**: `sidebar.tsx`, `top-bar.tsx`, `widget-card.tsx`
-**수정**: `layout.tsx`, `page.tsx`, 각 서브페이지
+- `src/components/navigation/journal-shell.tsx`가 앱 몸체. 책상(desk) 배경 위 카드 한 장: Header(워드마크 + NavTabs + 프로필) → JournalBar(날짜 · 통계 칩 · 라우트별 CTA) → 스크롤 `<main>` → 하단 중앙 독(날짜·미션·통계·+식사 팝오버)
+- 좌측 사이드바 · 하단 탭바는 폐기. 모바일도 같은 카드 (패널만 접힘). 페이지 안 반응형은 `@container` 쿼리(`@3xl:` 등)로 — 뷰포트가 아니라 카드 폭 기준
+- 디자인 토큰·컴포넌트는 `bongchil-design-system`(`file:../../bongchil-design-system`). `globals.css`에서 GIROGI @theme보다 먼저 import하므로 같은 이름 토큰은 GIROGI 값이 이긴다. 카드 표면은 `WidgetCard`(반투명 종이), 컨트롤은 `Button`(grain) · `TodoCheckbox` · `FilterChips` · `Segmented`
+- 본문 폰트는 Pretendard (Galmuri @font-face는 남아 있으나 미사용)
+- 시안 비교 페이지 `/proposals`는 그대로 둔다 (디자인 결정 기록)
 
 ---
 
@@ -333,4 +306,4 @@ style: 스타일 변경
 **최종 수정**: 2026-02-26
 
 > 이 문서는 Claude가 GIROGI 프로젝트를 이해하고 작업하기 위한 핵심 가이드입니다.
-> 현재 작업: 모바일 중심 UI → PC 친화적 사이드바 + 위젯 대시보드 전환
+> 현재 작업: 저널 셸(책상 위 카드 + 상단 탭 + 하단 독) 적용 — 홈 완료, 서브 페이지 내부는 기존 파스텔 위젯 유지 중

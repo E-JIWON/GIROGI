@@ -341,7 +341,7 @@
   /* ========================================
      Typography
      ======================================== */
-  --font-family-sans: 'Galmuri11', Pretendard, -apple-system,
+  --font-family-sans: 'Pretendard Variable', Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 
   /* Font Sizes (기본 범위: 10px~18px) */
@@ -633,3 +633,7 @@ body {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
+
+/* 가로 스크롤 줄 숨김 (상단 탭 · 사진 스트립) */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }

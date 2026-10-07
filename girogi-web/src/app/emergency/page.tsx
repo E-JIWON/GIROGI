@@ -87,12 +87,6 @@ export default function EmergencyPage() {
 
   return (
     <div className="min-h-screen bg-white lg:bg-transparent">
-      {/* 모바일 헤더 */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm lg:hidden">
-        <div className="flex items-center justify-between border-b border-neutral-100 px-8 py-4">
-          <h1 className="text-lg font-semibold text-neutral-700">유혹 극복</h1>
-        </div>
-      </header>
 
       {/* 메인 컨텐츠 */}
       <main className="px-4 py-4 lg:px-6">

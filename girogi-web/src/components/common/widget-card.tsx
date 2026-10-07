@@ -1,4 +1,4 @@
-/** @desc 위젯 카드 래퍼 - 대시보드 그리드용 */
+/** @desc 위젯 카드 래퍼 - 책상 위에 떠있는 반투명 종이 카드 (bongchil-diary DashCard 결) */
 
 import { type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
@@ -23,6 +23,9 @@ const SPAN_CLASSES = {
   3: 'lg:col-span-3',
 } as const;
 
+export const WIDGET_CARD_CLASS =
+  'rounded-2xl border border-border/50 bg-surface/75 shadow-[0_2px_14px_rgb(var(--shadow-ink)/0.04)] backdrop-blur-sm';
+
 export function WidgetCard({
   title,
   action,
@@ -32,17 +35,10 @@ export function WidgetCard({
   children,
 }: WidgetCardProps) {
   return (
-    <div
-      className={cn(
-        'rounded-2xl bg-white',
-        !noPadding && 'p-6',
-        SPAN_CLASSES[span],
-        className
-      )}
-    >
+    <div className={cn(WIDGET_CARD_CLASS, !noPadding && 'p-5', SPAN_CLASSES[span], className)}>
       {title && (
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-base font-semibold text-neutral-800">{title}</h3>
+          <h3 className="text-sm font-semibold tracking-tight text-ink-2">{title}</h3>
           {action}
         </div>
       )}

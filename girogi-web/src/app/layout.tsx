@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { BottomTabBar } from '@/components/navigation/bottom-tab-bar';
-import { Sidebar } from '@/components/navigation/sidebar';
+import { JournalShell } from '@/components/navigation/journal-shell';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -8,6 +7,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
@@ -22,24 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+      </head>
       <body className="antialiased">
-        {/* Desktop: 사이드바 (lg 이상) - 컴팩트 + 둥근 모서리 */}
-        <div className="hidden lg:fixed lg:top-0 lg:left-0 lg:z-50 lg:block lg:w-[17rem] lg:p-3">
-          <Sidebar />
-        </div>
-
-        {/* 메인 영역 */}
-        <div className="min-h-screen pb-16 lg:pb-0 lg:pl-[17rem]">
-          {/* 콘텐츠 */}
-          <div className="max-w-2xl mx-auto lg:max-w-none lg:mx-0">
-            {children}
-          </div>
-        </div>
-
-        {/* Mobile: 하단 탭바 (lg 미만) */}
-        <div className="lg:hidden">
-          <BottomTabBar />
-        </div>
+        {/* 저널 셸 — 책상 위 카드 한 장 + 상단 탭 + 하단 독 (사이드바·탭바 대체) */}
+        <JournalShell>{children}</JournalShell>
       </body>
     </html>
   );

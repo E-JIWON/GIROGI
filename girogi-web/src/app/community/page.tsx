@@ -50,33 +50,6 @@ export default function CommunityPage() {
 
   return (
     <div className="min-h-screen bg-white lg:bg-transparent">
-        {/* 모바일 헤더 */}
-        <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm lg:hidden">
-          <div className="flex items-center justify-between px-8 py-4 border-b border-neutral-100">
-            <h1 className="text-lg font-semibold text-neutral-700">커뮤니티</h1>
-
-            {/* 버튼들 */}
-            <div className="flex items-center gap-2">
-              {/* 친구 목록 버튼 */}
-              <button
-                onClick={() => router.push('/friends')}
-                className="rounded-full p-2 transition-all hover:bg-neutral-100"
-                title="친구 목록"
-              >
-                <Users className="h-6 w-6 text-neutral-700" />
-              </button>
-
-              {/* 글쓰기 버튼 */}
-              <button
-                onClick={() => setIsDialogOpen(true)}
-                className="rounded-full p-2 transition-all hover:bg-neutral-100"
-                title="글쓰기"
-              >
-                <Edit className="h-6 w-6 text-neutral-700" />
-              </button>
-            </div>
-          </div>
-        </header>
 
         {/* 데스크탑: 액션 버튼 */}
         <div className="hidden lg:flex lg:items-center lg:justify-end lg:gap-2 lg:px-8 lg:pt-4">

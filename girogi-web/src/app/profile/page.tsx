@@ -91,7 +91,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white lg:bg-transparent">
+    <div className="min-h-screen">
       {/* 프로필 헤더 */}
       <ProfileHeader
         user={currentUser}
