@@ -11,6 +11,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.20
         version: 5.90.20(react@19.2.3)
+      bongchil-design-system:
+        specifier: file:../../bongchil-design-system
+        version: file:../../bongchil-design-system(lucide-react@0.563.0(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       canvas-confetti:
         specifier: ^1.9.3
         version: 1.9.4
@@ -798,6 +801,13 @@ packages:
   baseline-browser-mapping@2.9.19:
     resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
+
+  bongchil-design-system@file:../../bongchil-design-system:
+    resolution: {directory: ../../bongchil-design-system, type: directory}
+    peerDependencies:
+      lucide-react: '>=0.5'
+      react: '>=19'
+      react-dom: '>=19'
 
   brace-expansion@1.1.12:
     resolution: {integrity: sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==}
@@ -2705,6 +2715,12 @@ snapshots:
   balanced-match@1.0.2: {}
 
   baseline-browser-mapping@2.9.19: {}
+
+  bongchil-design-system@file:../../bongchil-design-system(lucide-react@0.563.0(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+    dependencies:
+      lucide-react: 0.563.0(react@19.2.3)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
 
   brace-expansion@1.1.12:
     dependencies:
