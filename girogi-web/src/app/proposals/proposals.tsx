@@ -9,12 +9,10 @@
 
 import { useState } from 'react';
 import {
-  Calendar,
   Camera,
   Cookie,
   Download,
   Flame,
-  FolderOpen,
   Footprints,
   Heart,
   Home,
@@ -39,9 +37,6 @@ import {
   BasicGlass,
   Button,
   FilterChips,
-  LiquidGlass,
-  LiquidGlassDefs,
-  NavTabs,
   PageTitle,
   PostItCard,
   Segmented,
@@ -73,7 +68,7 @@ function Avatar({ name, tone = 'green', size = 28 }: { name: string; tone?: stri
 }
 function Desk({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`${R} p-5 md:p-7 ${className}`} style={{ background: 'var(--desk-bg)' }}>
+    <div className={`@container ${R} p-5 @md:p-7 ${className}`} style={{ background: 'var(--desk-bg)' }}>
       {children}
     </div>
   );
@@ -105,8 +100,8 @@ function PaperDashboard() {
           />
         }
       />
-      <div className="mt-5 grid gap-3 md:grid-cols-3">
-        <BasicGlass airy className={`${R} p-5 md:col-span-2`}>
+      <div className="mt-5 grid gap-3 @md:grid-cols-3">
+        <BasicGlass airy className={`${R} p-5 @md:col-span-2`}>
           <div className="flex items-start justify-between">
             <div>
               <Label>연속 기록</Label>
@@ -152,7 +147,7 @@ function PaperDashboard() {
           <p className="mt-4 rounded-[var(--radius-m)] bg-primary-subtle px-3 py-2 text-[11px] text-primary">외식 2회. 잘 관리하고 있어요.</p>
         </BasicGlass>
 
-        <BasicGlass airy className={`${R} p-5 md:col-span-2`}>
+        <BasicGlass airy className={`${R} p-5 @md:col-span-2`}>
           <div className="flex items-center justify-between">
             <Label>오늘의 핵심 미션</Label>
             <span className="text-[11px] tabular-nums text-ink-3">
@@ -196,7 +191,7 @@ function PaperDashboard() {
   );
 }
 
-function PaperChecklist() {
+export function PaperChecklist() {
   const [done, setDone] = useState<Record<string, boolean>>({ '아침-0': true, '아침-1': true, '점심-0': true });
   const [place, setPlace] = useState('home');
   const total = mock.checklist.reduce((a, s) => a + s.items.length, 0);
@@ -209,7 +204,7 @@ function PaperChecklist() {
         subtitle={`${mock.date} · ${n}/${total}`}
         action={<Button variant="grain" tone="primary" size="md" icon={Pencil}>항목 편집</Button>}
       />
-      <div className="mt-5 grid gap-3 md:grid-cols-2">
+      <div className="mt-5 grid gap-3 @md:grid-cols-2">
         {mock.checklist.map((s) => {
           const Icon = ICON[s.slot as keyof typeof ICON];
           return (
@@ -262,14 +257,14 @@ function PaperChecklist() {
   );
 }
 
-function PaperEmergency() {
+export function PaperEmergency() {
   const [emotion, setEmotion] = useState('스트레스');
   const [running, setRunning] = useState(false);
   const ICONS = [Wind, Footprints, Droplets];
   return (
     <>
       <PageTitle title="유혹 극복" subtitle="10분만 미루면 대부분 지나간다" />
-      <div className="mt-5 grid gap-3 md:grid-cols-3">
+      <div className="mt-5 grid gap-3 @md:grid-cols-3">
         <BasicGlass airy className={`${R} p-5`}>
           <Label>지금 기분은</Label>
           <div className="mt-3">
@@ -280,9 +275,9 @@ function PaperEmergency() {
           </p>
         </BasicGlass>
 
-        <BasicGlass airy className={`${R} p-5 md:col-span-2`}>
+        <BasicGlass airy className={`${R} p-5 @md:col-span-2`}>
           <Label>대신 해볼 것</Label>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+          <ul className="mt-3 grid gap-2 @sm:grid-cols-3">
             {mock.alternatives.map((a, i) => {
               const Icon = ICONS[i];
               return (
@@ -296,7 +291,7 @@ function PaperEmergency() {
           </ul>
         </BasicGlass>
 
-        <BasicGlass airy className={`${R} flex flex-col items-center p-5 md:col-span-2`}>
+        <BasicGlass airy className={`${R} flex flex-col items-center p-5 @md:col-span-2`}>
           <Label>10분 타이머</Label>
           <div className="relative mt-3 grid size-36 place-items-center">
             <svg viewBox="0 0 100 100" className="absolute inset-0 -rotate-90">
@@ -328,7 +323,7 @@ function PaperEmergency() {
           <p className="mt-1 text-[11px] leading-relaxed text-ink-4">{mock.future.note}</p>
         </BasicGlass>
 
-        <BasicGlass airy className={`${R} p-5 md:col-span-3`}>
+        <BasicGlass airy className={`${R} p-5 @md:col-span-3`}>
           <div className="flex flex-wrap items-center gap-3">
             <div className="min-w-0 flex-1">
               <Label>그래도 먹었다면</Label>
@@ -344,7 +339,7 @@ function PaperEmergency() {
   );
 }
 
-function PaperCommunity() {
+export function PaperCommunity() {
   const [filter, setFilter] = useState('all');
   return (
     <>
@@ -364,8 +359,8 @@ function PaperCommunity() {
           onChange={setFilter}
         />
       </div>
-      <div className="mt-4 grid gap-3 md:grid-cols-3">
-        <div className="space-y-3 md:col-span-2">
+      <div className="mt-4 grid gap-3 @md:grid-cols-3">
+        <div className="space-y-3 @md:col-span-2">
           {mock.posts.map((p) => (
             <BasicGlass airy key={p.who} className={`${R} p-5`}>
               <div className="flex items-center gap-2.5">
@@ -404,7 +399,7 @@ function PaperCommunity() {
   );
 }
 
-function PaperProfile() {
+export function PaperProfile() {
   const [tab, setTab] = useState('timeline');
   return (
     <>
@@ -415,7 +410,7 @@ function PaperProfile() {
             <div className="text-[16px] font-bold text-ink">다이어터</div>
             <div className="text-[12px] text-ink-4">의지력 말고 시스템으로</div>
           </div>
-          <div className="ml-auto hidden items-center gap-1.5 sm:flex">
+          <div className="ml-auto hidden items-center gap-1.5 @sm:flex">
             {[`${mock.total}일 기록`, `${mock.streak}일 연속`, `${mock.badges.length} 배지`].map((t) => (
               <span key={t} className="flex h-[26px] items-center rounded-full border border-border px-2.5 text-[11px] text-ink-3">{t}</span>
             ))}
@@ -455,7 +450,7 @@ function PaperProfile() {
         )}
         {tab === 'badges' && (
           <BasicGlass airy className={`${R} p-5`}>
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
+            <div className="grid grid-cols-3 gap-3 @sm:grid-cols-6">
               {mock.badges.map((b, i) => (
                 <div key={b} className="flex flex-col items-center gap-2 text-center">
                   <span className={`grid size-12 place-items-center rounded-full ${i < 4 ? 'bg-primary-light text-primary' : 'border-[1.5px] border-dashed border-ink/20 text-ink-5'}`}>
@@ -468,7 +463,7 @@ function PaperProfile() {
           </BasicGlass>
         )}
         {tab === 'coupons' && (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 @sm:grid-cols-2">
             {mock.coupons.map((c) => (
               <BasicGlass airy key={c.title} className={`${R} flex items-center gap-4 p-5`}>
                 <span className="grid size-10 place-items-center rounded-[var(--radius-m)] bg-primary-light text-primary"><TicketIcon size={18} /></span>
@@ -498,135 +493,6 @@ export function PaperDesk({ screen }: { screen: ScreenKey }) {
   );
 }
 
-/* ═══════════════════════ 2 · 저널 셸 (bongchil-diary app-frame) ═══════════════════════ */
-
-export function JournalShell() {
-  const [tab, setTab] = useState('home');
-  const [place, setPlace] = useState('all');
-  const { done, toggle, n } = useMissions();
-  return (
-    <Desk className="!p-3 md:!p-5">
-      <LiquidGlassDefs />
-      {/* 책상 위 카드 한 장 */}
-      <div className={`relative flex h-[560px] flex-col overflow-hidden ${R} border border-border bg-surface shadow-m`}>
-        {/* Header — 워드마크 + NavTabs */}
-        <div className="flex items-center gap-4 border-b border-border px-5 py-3">
-          <span className="text-[15px] font-extrabold tracking-tight text-ink">GIROGI</span>
-          <NavTabs
-            tabs={[
-              { label: '오늘', isActive: tab === 'home', onSelect: () => setTab('home') },
-              { label: '체크리스트', isActive: tab === 'check', onSelect: () => setTab('check') },
-              { label: '유혹 극복', isActive: tab === 'sos', onSelect: () => setTab('sos') },
-              { label: '커뮤니티', isActive: tab === 'friends', onSelect: () => setTab('friends') },
-            ]}
-          />
-          <span className="ml-auto grid size-8 place-items-center rounded-[var(--radius-m)] text-ink-3"><Moon size={15} /></span>
-        </div>
-
-        {/* JournalBar — 프로필 + 통계 칩 + CTA / 필터 */}
-        <div className="shrink-0 border-b border-border px-5 py-3">
-          <div className="flex items-center gap-3">
-            <span className="grid size-9 place-items-center rounded-xl bg-primary-subtle text-[13px] font-bold text-primary" style={{ border: '2px dotted var(--color-primary-muted)' }}>다</span>
-            <div className="min-w-0">
-              <div className="truncate text-[13px] font-medium text-ink">다이어터</div>
-              <div className="truncate text-[11px] text-ink-4">의지력 말고 시스템으로</div>
-            </div>
-            <div className="ml-1 hidden items-center gap-1.5 sm:flex">
-              {[`${mock.streak}일 연속`, `${mock.total}일 기록`, `${mock.badges.length} 배지`].map((t) => (
-                <span key={t} className="flex h-[26px] items-center rounded-full border border-border px-2.5 text-[11px] text-ink-3">{t}</span>
-              ))}
-            </div>
-            <div className="ml-auto">
-              <Button variant="grain" tone="primary" size="md" icon={Plus}>기록</Button>
-            </div>
-          </div>
-          <div className="mt-2.5">
-            <FilterChips
-              items={[
-                { value: 'all', label: '전체' },
-                { value: 'home', label: '집밥', text: 'text-comment-green-solid' },
-                { value: 'office', label: '회사밥', text: 'text-comment-sky-solid' },
-                { value: 'out', label: '외식', text: 'text-comment-sand-solid' },
-                { value: 'delivery', label: '배달', text: 'text-comment-pink-solid' },
-              ]}
-              value={place}
-              onChange={setPlace}
-            />
-          </div>
-        </div>
-
-        {/* 스크롤 영역 — 3열 대시보드 (DashCard · HeatmapCard · RecordList) */}
-        <div className="flex-1 overflow-y-auto px-5 py-4 pb-20">
-          <div className="grid gap-3 md:grid-cols-3">
-            <div className="rounded-[var(--radius-m)] border border-border bg-surface-warm p-4">
-              <Label>연속</Label>
-              <div className="mt-1 flex items-baseline gap-1 text-ink">
-                <span className="text-[32px] font-bold leading-none tabular-nums">{mock.streak}</span>
-                <span className="text-[12px] text-ink-3">일</span>
-                <Flame size={14} className="ml-1 self-center text-primary" />
-              </div>
-              <div className="mt-3 flex gap-1">
-                {DAYS.map((d, i) => (
-                  <span key={d} className={`h-1.5 flex-1 rounded-full ${mock.week[i] ? 'bg-primary' : 'bg-ink-5/50'}`} title={d} />
-                ))}
-              </div>
-            </div>
-            <div className="rounded-[var(--radius-m)] border border-border bg-surface-warm p-4 md:col-span-2">
-              <div className="flex items-center justify-between">
-                <Label>최근 5주</Label>
-                <span className="text-[10px] text-ink-4">성공한 날</span>
-              </div>
-              <div className="mt-2 grid grid-cols-7 gap-1">
-                {mock.heat.flat().map((on, i) => (
-                  <span key={i} className={`h-4 rounded-[3px] ${on ? 'bg-primary/80' : 'bg-ink-5/30'}`} />
-                ))}
-              </div>
-            </div>
-            <div className="rounded-[var(--radius-m)] border border-border bg-surface-warm p-4 md:col-span-3">
-              <div className="flex items-center justify-between">
-                <Label>오늘의 기록</Label>
-                <span className="text-[11px] tabular-nums text-ink-3">미션 {n}/3</span>
-              </div>
-              <ul className="mt-2 divide-y divide-border">
-                {mock.missions.map((m, i) => (
-                  <li key={m.title} className="flex items-center gap-3 py-2">
-                    <TodoCheckbox size={15} done={done[i]} onClick={() => toggle(i)} />
-                    <span className={`text-[12.5px] ${done[i] ? 'text-ink-4 line-through' : 'text-ink'}`}>{m.title}</span>
-                    <span className="ml-auto text-[10px] text-ink-4">{m.slot}</span>
-                  </li>
-                ))}
-                {mock.meals.filter((m) => m.value).map((m) => (
-                  <li key={m.label} className="flex items-center gap-3 py-2">
-                    <span className="grid size-[15px] place-items-center text-ink-4"><Camera size={12} /></span>
-                    <span className="text-[12.5px] text-ink-2">{m.label} · {m.value}</span>
-                    <span className="ml-auto text-[10px] tabular-nums text-ink-4">{m.time}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* BottomDock — 하단 중앙 독 */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-          <LiquidGlass className="pointer-events-auto rounded-full px-2 py-1.5" contentClassName="flex items-center gap-1">
-            {[
-              { icon: Calendar, label: '10.7' },
-              { icon: FolderOpen, label: '미션' },
-              { icon: Trophy, label: '통계' },
-            ].map(({ icon: Icon, label }) => (
-              <span key={label} className="flex h-8 items-center gap-1.5 rounded-full px-3 text-[11px] text-ink-2">
-                <Icon size={13} /> {label}
-              </span>
-            ))}
-            <Button variant="grain" tone="primary" size="sm" icon={Plus}>식사</Button>
-          </LiquidGlass>
-        </div>
-      </div>
-    </Desk>
-  );
-}
-
 /* ═══════════════════════ 3 · 다락방 벽 (records-canvas) ═══════════════════════ */
 
 const WALL_ITEMS: { kind: 'photo' | 'note'; x: number; y: number; r: number; text: string; sub?: string; color?: string }[] = [
@@ -641,7 +507,7 @@ const WALL_ITEMS: { kind: 'photo' | 'note'; x: number; y: number; r: number; tex
 
 export function AtticWall() {
   return (
-    <Desk className="!p-3 md:!p-5">
+    <Desk className="!p-3 @md:!p-5">
       <div
         className={`relative h-[520px] overflow-hidden ${R} border border-border bg-surface-warm`}
         style={{ backgroundImage: 'radial-gradient(rgb(var(--shadow-ink)/0.12) 1px, transparent 1px)', backgroundSize: '18px 18px' }}
@@ -755,7 +621,7 @@ export function DayTicket() {
   const face = 'absolute inset-0 flex flex-col rounded-[10px] border border-border bg-surface p-4 shadow-m [backface-visibility:hidden]';
   return (
     <Desk>
-      <div className="grid gap-6 md:grid-cols-[260px_1fr] md:items-start">
+      <div className="grid gap-6 @md:grid-cols-[260px_1fr] @md:items-start">
         {/* 티켓 — 클릭하면 뒤집힌다 */}
         <button type="button" onClick={() => setFlipped(!flipped)} className="relative mx-auto h-[400px] w-[250px] text-left [perspective:1200px]" aria-pressed={flipped}>
           <span className="absolute inset-0 transition-transform duration-500 [transform-style:preserve-3d]" style={{ transform: `rotateY(${flipped ? 180 : 0}deg)` }}>

@@ -9,7 +9,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { FilterChips, NavTabs } from 'bongchil-design-system';
 import { PROPOSALS, SCREENS, type ProposalKey, type ScreenKey } from './data';
-import { AtticWall, DayTicket, JournalShell, PaperDesk, ScribbleStream } from './proposals';
+import { AtticWall, DayTicket, PaperDesk, ScribbleStream } from './proposals';
+import { JournalShell } from './journal-shell';
 
 export default function ProposalsPage() {
   const [key, setKey] = useState<ProposalKey>('paper');
