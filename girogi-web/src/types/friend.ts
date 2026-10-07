@@ -2,7 +2,7 @@
  * 친구 비교 시스템 타입 정의
  */
 
-import { User } from './models';
+import { User } from './user';
 import { StreakData } from './streak';
 import { UserBadge } from './badge';
 import { UserAchievement } from './achievement';

@@ -12,8 +12,8 @@ importers:
         specifier: ^5.90.20
         version: 5.90.20(react@19.2.3)
       bongchil-design-system:
-        specifier: file:../../bongchil-design-system
-        version: file:../../bongchil-design-system(lucide-react@0.563.0(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: github:E-JIWON/bongchil-design-system#v0.1.2
+        version: https://codeload.github.com/E-JIWON/bongchil-design-system/tar.gz/ba182a492130550b9bc60e5876a4510f40d79af2(lucide-react@0.563.0(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       canvas-confetti:
         specifier: ^1.9.3
         version: 1.9.4
@@ -802,8 +802,9 @@ packages:
     resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
 
-  bongchil-design-system@file:../../bongchil-design-system:
-    resolution: {directory: ../../bongchil-design-system, type: directory}
+  bongchil-design-system@https://codeload.github.com/E-JIWON/bongchil-design-system/tar.gz/ba182a492130550b9bc60e5876a4510f40d79af2:
+    resolution: {tarball: https://codeload.github.com/E-JIWON/bongchil-design-system/tar.gz/ba182a492130550b9bc60e5876a4510f40d79af2}
+    version: 0.1.0
     peerDependencies:
       lucide-react: '>=0.5'
       react: '>=19'
@@ -2716,7 +2717,7 @@ snapshots:
 
   baseline-browser-mapping@2.9.19: {}
 
-  bongchil-design-system@file:../../bongchil-design-system(lucide-react@0.563.0(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
+  bongchil-design-system@https://codeload.github.com/E-JIWON/bongchil-design-system/tar.gz/ba182a492130550b9bc60e5876a4510f40d79af2(lucide-react@0.563.0(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3):
     dependencies:
       lucide-react: 0.563.0(react@19.2.3)
       react: 19.2.3

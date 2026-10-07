@@ -309,7 +309,7 @@ export default function DesignShowcasePage() {
                 <CleanButton variant="primary">Primary</CleanButton>
                 <CleanButton variant="secondary">Secondary</CleanButton>
                 <CleanButton variant="success">Success</CleanButton>
-                <CleanButton variant="warning">Warning</CleanButton>
+                <CleanButton variant="error">Warning</CleanButton>
                 <CleanButton variant="error">Error</CleanButton>
                 <CleanButton variant="ghost">Ghost</CleanButton>
               </div>
@@ -354,7 +354,7 @@ export default function DesignShowcasePage() {
               <p className="text-sm text-success-700">성공 상태 카드</p>
             </CleanCard>
 
-            <CleanCard variant="warning" padding="md">
+            <CleanCard variant="error" padding="md">
               <h3 className="font-semibold text-warning-800 mb-2">Warning</h3>
               <p className="text-sm text-warning-700">경고 상태 카드</p>
             </CleanCard>
@@ -435,7 +435,7 @@ export default function DesignShowcasePage() {
               <div className="flex gap-2 flex-wrap">
                 <CleanBadge variant="primary">Primary</CleanBadge>
                 <CleanBadge variant="success">Success</CleanBadge>
-                <CleanBadge variant="warning">Warning</CleanBadge>
+                <CleanBadge variant="error">Warning</CleanBadge>
                 <CleanBadge variant="error">Error</CleanBadge>
                 <CleanBadge variant="info">Info</CleanBadge>
                 <CleanBadge variant="neutral">Neutral</CleanBadge>
@@ -464,7 +464,7 @@ export default function DesignShowcasePage() {
                 <CleanBadge variant="success" icon={<span>✓</span>}>
                   완료
                 </CleanBadge>
-                <CleanBadge variant="warning" icon={<span>⚠</span>}>
+                <CleanBadge variant="error" icon={<span>⚠</span>}>
                   경고
                 </CleanBadge>
                 <CleanBadge variant="error" icon={<span>✕</span>}>

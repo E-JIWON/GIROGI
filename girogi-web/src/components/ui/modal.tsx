@@ -3,7 +3,7 @@
 /** @desc 공통 Modal 컴포넌트 */
 
 import { useEffect } from 'react';
-import classNames from 'classnames';
+import { cn } from '@/lib/utils';
 
 export interface ModalProps {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export function Modal({
         </div>
 
         {/* Buttons */}
-        <div className={classNames('flex gap-3 px-6 pb-6', type === 'confirm' ? 'flex-row' : 'flex-col')}>
+        <div className={cn('flex gap-3 px-6 pb-6', type === 'confirm' ? 'flex-row' : 'flex-col')}>
           {type === 'confirm' && (
             <button
               onClick={onClose}
@@ -72,7 +72,7 @@ export function Modal({
           )}
           <button
             onClick={handleConfirm}
-            className={classNames(
+            className={cn(
               'py-3 rounded-xl font-semibold transition-colors',
               type === 'confirm' ? 'flex-1 bg-primary text-white hover:bg-primary-800' : 'w-full bg-primary text-white hover:bg-primary-800',
             )}>
