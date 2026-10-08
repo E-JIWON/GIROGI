@@ -26,7 +26,7 @@ import { useStreakStore } from '@/stores/streakStore';
 import { useMealRecordStore } from '@/stores/mealRecordStore';
 
 // 체중 — 목 값. 체중 기록 스토어가 생기면 getCurrentWeight(stats)로 교체
-const WEIGHT = { current: 72.4, target: 68, start: 78 };
+const WEIGHT = { current: 72.4, yesterday: 72.7, start: 78, target: 68, monthStart: 73.5, monthTarget: 72 };
 
 const MISSIONS: MissionItem[] = [
   { id: 'mission1', title: '아침 식사 집에서 먹기', description: '외식/배달 대신 집에서 직접 조리', isCompleted: false, icon: Apple },

@@ -39,7 +39,7 @@ export default function ComponentLabPage() {
     <div className="px-3 pt-3 sm:px-5 sm:pt-4">
       <div className="mb-3 flex items-baseline gap-2">
         <h1 className="text-[16px] font-bold tracking-tight text-ink">컴포넌트 랩</h1>
-        <span className="text-[11px] text-ink-4">홈(오늘) 조각 {ENTRIES.length - 1}개 + 레이아웃 · 각 시안 5~6</span>
+        <span className="text-[11px] text-ink-4">홈(오늘) 조각 {ENTRIES.length - 1}개 + 레이아웃</span>
       </div>
       <div className="scrollbar-hide overflow-x-auto"><div className="w-max"><NavTabs tabs={ENTRIES.map((e) => ({ label: e.name, isActive: e.key === entryKey, onSelect: () => pick(e.key) }))} /></div></div>
       <p className="mt-2 text-[12px] text-ink-4">{entry.desc}</p>
@@ -48,9 +48,9 @@ export default function ComponentLabPage() {
         <FilterChips items={entry.variants.map((v) => ({ value: v.key, label: `${v.name}${v.recommended ? ' ★' : ''}` }))} value={variant.key} onChange={setVariantKey} />
       </div>
 
-      <div className="mt-4 grid gap-4 @3xl:grid-cols-[minmax(0,1fr)_260px]">
+      <div className={`mt-4 grid gap-4 ${entry.key === 'layout' ? '' : '@3xl:grid-cols-[minmax(0,1fr)_260px]'}`}>
         <div className="rounded-[var(--radius-l)] border border-dashed border-ink/15 bg-surface-warm p-5 @container" key={`${entry.key}-${variant.key}`}>
-          <div className={entry.key === 'profile' || entry.key === 'missions' || entry.key === 'week' ? 'max-w-[220px]' : entry.key === 'layout' ? '' : 'max-w-[600px]'}>
+          <div className={entry.key === 'profile' || entry.key === 'missions' || entry.key === 'week' ? 'max-w-[220px]' : entry.key === 'layout' ? '' : 'max-w-[640px]'}>
             <variant.Render />
           </div>
         </div>

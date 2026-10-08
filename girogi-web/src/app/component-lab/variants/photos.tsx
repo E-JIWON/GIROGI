@@ -1,42 +1,63 @@
 'use client';
 
+import { useState } from 'react';
 import { Camera, MapPin } from 'lucide-react';
-import { MealPlaceDisplayNames, MealTimeDisplayNames } from '@/types/enums';
-import { MEALS, type Variant } from './shared';
+import { Segmented } from 'bongchil-design-system';
+import type { Variant } from './shared';
 
 /* eslint-disable @next/next/no-img-element */
-/** 랩 전용 — 진짜 사진 느낌을 보려고 시드 이미지 사용 (앱에선 m.imageUrl) */
+type Meal = { id: string; t: string; slot: string; menu: string; place: string };
+/** 하루 최대치 — 세 끼 + 간식 둘 + 커피 + 야식 + 운동 후 (8개) */
+const ALL: Meal[] = [
+  { id: 'a', t: '07:40', slot: '아침', menu: '계란국, 현미밥', place: '집' },
+  { id: 'b', t: '10:20', slot: '간식', menu: '아메리카노', place: '회사' },
+  { id: 'c', t: '12:10', slot: '점심', menu: '제육볶음, 미역국', place: '구내식당' },
+  { id: 'd', t: '15:30', slot: '간식', menu: '사과 반 개', place: '회사' },
+  { id: 'e', t: '17:50', slot: '간식', menu: '프로틴 쉐이크', place: '헬스장' },
+  { id: 'f', t: '19:00', slot: '저녁', menu: '된장찌개, 나물', place: '집' },
+  { id: 'g', t: '21:40', slot: '야식', menu: '그릭요거트', place: '집' },
+  { id: 'h', t: '23:10', slot: '야식', menu: '라면 반 개', place: '집' },
+];
+const SETS: Record<string, Meal[]> = { one: ALL.slice(0, 1), three: [ALL[0], ALL[2], ALL[5]], max: ALL };
 const img = (seed: string, w = 240, h = 240) => `https://picsum.photos/seed/girogi-${seed}/${w}/${h}`;
-const time = (iso: string) => new Date(iso).toTimeString().slice(0, 5);
-const rows = MEALS.map((m) => ({ id: m.id, t: time(m.createdAt), slot: MealTimeDisplayNames[m.mealTime], menu: m.menu, place: MealPlaceDisplayNames[m.place] }));
+
+/** 각 시안 위에 데이터 양 토글 — 1끼 · 3끼 · 최대 8개 */
+function WithData({ children }: { children: (meals: Meal[]) => React.ReactNode }) {
+  const [k, setK] = useState('three');
+  return (
+    <div>
+      <div className="mb-3 flex items-center gap-2"><span className="text-[10.5px] text-ink-4">데이터</span><Segmented groups={[{ items: [{ value: 'one', label: '1끼' }, { value: 'three', label: '3끼' }, { value: 'max', label: '최대 8' }], value: k, onChange: setK }]} /></div>
+      {children(SETS[k])}
+    </div>
+  );
+}
 
 export const PHOTOS: Variant[] = [
-  { key: 'timeline', name: '시간 점 + 썸네일 (현재)', why: '기준. 36px 썸네일이라 사진이 뭔지 안 보인다.',
-    Render: () => (
-      <div className="relative pl-5"><span className="absolute left-[7px] top-1 bottom-1 w-px bg-border" />
-        {rows.map((r) => <div key={r.id} className="relative mb-2 flex items-center gap-3"><span className="absolute -left-5 top-1/2 size-2 -translate-y-1/2 rounded-full bg-primary" /><span className="font-mono text-[10px] text-ink-4">{r.t}</span><img src={img(r.id)} alt="" className="size-9 rounded-[6px] object-cover" /><span className="truncate text-[12px] text-ink-2">{r.slot} · {r.menu}</span></div>)}
-      </div>
-    ) },
-  { key: 'timeline-64', name: '시간 점 + 64px 썸네일 + 장소', recommended: true, why: '썸네일을 64px로 키우고 메뉴 아래 장소 칩. 사진이 보이면서도 한 끼가 한 줄. 홈에 그대로 넣을 수 있는 크기.',
-    Render: () => (
-      <div className="relative pl-5"><span className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
-        {rows.map((r) => <div key={r.id} className="relative mb-2.5 flex items-center gap-3"><span className="absolute -left-5 top-1/2 size-2 -translate-y-1/2 rounded-full bg-primary" /><span className="w-9 font-mono text-[10px] text-ink-4">{r.t}</span><img src={img(r.id)} alt="" className="size-16 rounded-[8px] border border-border/60 object-cover" /><span className="min-w-0"><span className="block truncate text-[12.5px] text-ink">{r.slot} · {r.menu}</span><span className="mt-0.5 inline-flex items-center gap-1 text-[10.5px] text-ink-4"><MapPin size={10} /> {r.place}</span></span></div>)}
-      </div>
-    ) },
-  { key: 'timeline-wide', name: '시간 점 + 가로형 카드', why: '썸네일 80px + 오른쪽에 메뉴·장소·"잘한 것" 칩까지. 끼니 하나가 작은 기록 카드. 정보 가장 많음, 세로 가장 길다.',
-    Render: () => (
-      <div className="relative pl-5"><span className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
-        {MEALS.map((m) => <div key={m.id} className="relative mb-2.5 flex gap-3 rounded-[var(--radius-m)] border border-border/60 bg-surface p-2"><span className="absolute -left-5 top-5 size-2 rounded-full bg-primary" /><img src={img(m.id, 320, 240)} alt="" className="h-20 w-24 shrink-0 rounded-[6px] object-cover" /><div className="min-w-0 flex-1 py-0.5"><div className="flex items-baseline justify-between"><span className="text-[12.5px] font-medium text-ink">{MealTimeDisplayNames[m.mealTime]} · {m.menu}</span><span className="font-mono text-[10px] text-ink-4">{time(m.createdAt)}</span></div><div className="mt-0.5 text-[10.5px] text-ink-4">{MealPlaceDisplayNames[m.place]}</div><div className="mt-1.5 flex flex-wrap gap-1">{m.achievements.slice(0, 2).map((a) => <span key={a} className="rounded-[4px] bg-comment-green px-1.5 py-0.5 text-[9.5px] text-comment-green-solid">{a}</span>)}</div></div></div>)}
-      </div>
-    ) },
-  { key: 'horizontal', name: '가로 시간축 + 사진', why: '시간이 왼쪽→오른쪽으로 흐르고 사진이 축 위에 선다. 하루가 한눈에. 끼니 4개 넘으면 가로 스크롤.',
-    Render: () => (
-      <div className="scrollbar-hide overflow-x-auto pb-1"><div className="relative flex w-max gap-6 px-2 pt-2"><span className="absolute inset-x-2 bottom-[22px] h-px bg-border" />
-        {rows.map((r) => <div key={r.id} className="relative flex w-[104px] flex-col items-center"><img src={img(r.id)} alt="" className="size-[88px] rounded-[10px] border border-border/60 object-cover" /><span className="mt-1.5 truncate text-[11px] text-ink-2">{r.slot} · {r.menu.split(',')[0]}</span><span className="mt-1 size-2 rounded-full bg-primary ring-4 ring-surface-warm" /><span className="mt-1 font-mono text-[10px] text-ink-4">{r.t}</span></div>)}
+  { key: 'horizontal', name: '가로 시간축 + 사진', recommended: true, why: '시간이 왼→오로 흐르고 사진이 축 위에 선다. 8개면 가로 스크롤로 밀리고, 지금 시간 이후는 비어 있다. 쌓일수록 하루가 필름처럼 길어진다.',
+    Render: () => <WithData>{(meals) => (
+      <div className="scrollbar-hide overflow-x-auto pb-1"><div className="relative flex w-max gap-5 px-2 pt-1"><span className="absolute inset-x-2 bottom-[22px] h-px bg-border" />
+        {meals.map((m) => <div key={m.id} className="relative flex w-[96px] flex-col items-center"><img src={img(m.id)} alt="" className={`size-[84px] rounded-[10px] border object-cover ${m.slot === '간식' || m.slot === '야식' ? 'border-comment-sand-solid/50' : 'border-border/60'}`} /><span className="mt-1.5 w-full truncate text-center text-[10.5px] text-ink-2"><span className="text-ink-4">{m.slot}</span> {m.menu.split(',')[0]}</span><span className={`mt-1 size-2 rounded-full ring-4 ring-surface-warm ${m.slot === '간식' || m.slot === '야식' ? 'bg-comment-sand-solid' : 'bg-primary'}`} /><span className="mt-1 font-mono text-[10px] text-ink-4">{m.t}</span></div>)}
+        <div className="relative flex w-[72px] flex-col items-center"><div className="flex size-[84px] items-center justify-center rounded-[10px] border border-dashed border-ink/20 text-ink-4"><Camera size={15} /></div><span className="mt-1.5 text-[10.5px] text-ink-4">추가</span><span className="mt-1 size-2 rounded-full border border-dashed border-ink/30 bg-surface ring-4 ring-surface-warm" /><span className="mt-1 font-mono text-[10px] text-ink-5">지금</span></div>
       </div></div>
-    ) },
-  { key: 'grid-time', name: '시간 라벨 + 2열 사진', why: '사진을 제일 크게. 타일 위에 시간·끼니만 얹는다. 하루 끼니 사진이 보기 좋게 쌓이고, 선은 없다.',
-    Render: () => (
-      <div className="grid grid-cols-2 gap-2">{rows.map((r) => <div key={r.id} className="relative aspect-[4/3] overflow-hidden rounded-[10px] border border-border/60"><img src={img(r.id, 400, 300)} alt="" className="h-full w-full object-cover" /><span className="absolute left-2 top-2 rounded-full bg-surface/90 px-2 py-0.5 font-mono text-[10px] text-ink-2">{r.t}</span><span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent px-2 pb-1.5 pt-5 text-[11px] text-white">{r.slot} · {r.menu}</span></div>)}<div className="flex aspect-[4/3] flex-col items-center justify-center gap-1 rounded-[10px] border border-dashed border-ink/20 text-ink-4"><Camera size={14} /><span className="text-[10.5px]">저녁 기록</span></div></div>
-    ) },
+    )}</WithData> },
+  { key: 'timeline-64', name: '세로 시간 점 + 64px', why: '세로로 쌓인다. 8개면 세로 약 600px — 홈 본문 한 화면을 넘는다. 3개까지는 가장 정돈돼 보인다.',
+    Render: () => <WithData>{(meals) => (
+      <div className="relative pl-5"><span className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
+        {meals.map((m) => <div key={m.id} className="relative mb-2.5 flex items-center gap-3"><span className={`absolute -left-5 top-1/2 size-2 -translate-y-1/2 rounded-full ${m.slot === '간식' || m.slot === '야식' ? 'bg-comment-sand-solid' : 'bg-primary'}`} /><span className="w-9 font-mono text-[10px] text-ink-4">{m.t}</span><img src={img(m.id)} alt="" className="size-16 rounded-[8px] border border-border/60 object-cover" /><span className="min-w-0"><span className="block truncate text-[12.5px] text-ink">{m.slot} · {m.menu}</span><span className="mt-0.5 inline-flex items-center gap-1 text-[10.5px] text-ink-4"><MapPin size={10} /> {m.place}</span></span></div>)}
+      </div>
+    )}</WithData> },
+  { key: 'grouped', name: '가로 시간축 · 끼니만 크게', why: '세 끼는 큰 사진, 간식·야식은 축 위 작은 동그라미로. 8개여도 폭이 크게 안 늘고, "끼니"와 "군것질"이 구분된다.',
+    Render: () => <WithData>{(meals) => (
+      <div className="scrollbar-hide overflow-x-auto pb-1"><div className="relative flex w-max items-end gap-3 px-2 pt-1"><span className="absolute inset-x-2 bottom-[22px] h-px bg-border" />
+        {meals.map((m) => { const main = ['아침', '점심', '저녁'].includes(m.slot); return main ? (
+          <div key={m.id} className="relative flex w-[96px] flex-col items-center"><img src={img(m.id)} alt="" className="size-[84px] rounded-[10px] border border-border/60 object-cover" /><span className="mt-1.5 w-full truncate text-center text-[10.5px] text-ink-2">{m.slot} · {m.menu.split(',')[0]}</span><span className="mt-1 size-2 rounded-full bg-primary ring-4 ring-surface-warm" /><span className="mt-1 font-mono text-[10px] text-ink-4">{m.t}</span></div>
+        ) : (
+          <div key={m.id} className="relative flex w-[44px] flex-col items-center" title={`${m.slot} · ${m.menu}`}><img src={img(m.id, 120, 120)} alt="" className="size-9 rounded-full border-2 border-comment-sand-solid/60 object-cover" /><span className="mt-1 w-full truncate text-center text-[9px] text-ink-4">{m.slot}</span><span className="mt-1 size-1.5 rounded-full bg-comment-sand-solid ring-4 ring-surface-warm" /><span className="mt-1 font-mono text-[9px] text-ink-5">{m.t}</span></div>
+        ); })}
+      </div></div>
+    )}</WithData> },
+  { key: 'grid-time', name: '2열 사진 + 시간 라벨', why: '사진이 제일 크다. 8개면 4줄 — 대신 끼니 사진이 앨범처럼 쌓여 하루 끝에 보기 좋다.',
+    Render: () => <WithData>{(meals) => (
+      <div className="grid grid-cols-2 gap-2 @md:grid-cols-3">{meals.map((m) => <div key={m.id} className="relative aspect-[4/3] overflow-hidden rounded-[10px] border border-border/60"><img src={img(m.id, 400, 300)} alt="" className="h-full w-full object-cover" /><span className="absolute left-2 top-2 rounded-full bg-surface/90 px-2 py-0.5 font-mono text-[10px] text-ink-2">{m.t}</span><span className="absolute inset-x-0 bottom-0 truncate bg-gradient-to-t from-black/55 to-transparent px-2 pb-1.5 pt-5 text-[11px] text-white">{m.slot} · {m.menu}</span></div>)}</div>
+    )}</WithData> },
 ];

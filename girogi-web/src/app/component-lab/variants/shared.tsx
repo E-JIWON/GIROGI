@@ -38,3 +38,5 @@ export function useMissionState() {
 export function Label({ children }: { children: React.ReactNode }) {
   return <span className="text-[10.5px] text-ink-4">{children}</span>;
 }
+
+export const WEIGHT = { current: 72.4, yesterday: 72.7, start: 78, target: 68, monthStart: 73.5, monthTarget: 72 };

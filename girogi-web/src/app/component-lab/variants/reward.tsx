@@ -1,88 +1,140 @@
 'use client';
 
-import { useState } from 'react';
+/**
+ * 보상 시안 — 레퍼런스
+ * 1 스크래치: Focus Tree 스트릭 보상 (긁어야 보상이 드러남, "여는 것 자체가 보상")
+ * 2 스탬프 카드: 카페 적립 도장판
+ * 3 월렛 패스: Apple Wallet 카드 스택
+ * 4 보물 상자: Duolingo 상자 열기 + 60fps.design 완료 컨페티
+ * 5 메달: Apple Fitness 어워드 · Pulpwren 첫 스트릭 배지 (기울기 + 광택)
+ */
+
+import { useEffect, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
-import { Cookie, Gift, PartyPopper, Sparkles } from 'lucide-react';
+import { Check, Cookie, Gift, PartyPopper, Sparkles } from 'lucide-react';
 import { Button } from 'bongchil-design-system';
 import type { Variant } from './shared';
 
-/** 쿠폰 티켓 — 왼쪽 스텁(개수) · 절취선 · 본체(이름·조건·버튼). 다듬은 버전 */
-function Ticket({ kind, n, cta, enter = false, tearing = false, onUse }: { kind: 'snack' | 'cheat'; n: number; cta: string; enter?: boolean; tearing?: boolean; onUse?: () => void }) {
-  const snack = kind === 'snack';
-  const bg = snack ? 'bg-comment-sand' : 'bg-comment-green';
-  const fg = snack ? 'text-comment-sand-solid' : 'text-comment-green-solid';
-  const Icon = snack ? Cookie : PartyPopper;
+const burst = (y = 0.6) => confetti({ particleCount: 80, spread: 70, startVelocity: 30, origin: { y }, colors: ['#5a8268', '#c8a050', '#e3efe7', '#f7e6de', '#ffffff'], scalar: 0.85 });
+
+/* 1. 스크래치 카드 */
+function Scratch() {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const [revealed, setRevealed] = useState(false);
+  const [key, setKey] = useState(0);
+  useEffect(() => {
+    const c = ref.current; if (!c) return;
+    const ctx = c.getContext('2d')!; const r = c.getBoundingClientRect(); c.width = r.width; c.height = r.height;
+    const g = ctx.createLinearGradient(0, 0, c.width, c.height); g.addColorStop(0, '#b9b2a3'); g.addColorStop(0.5, '#d9d3c6'); g.addColorStop(1, '#a9a293');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, c.width, c.height);
+    for (let i = 0; i < 400; i++) { ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.25})`; ctx.fillRect(Math.random() * c.width, Math.random() * c.height, 1.5, 1.5); }
+    ctx.fillStyle = 'rgba(60,55,45,0.75)'; ctx.font = '600 13px Pretendard, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('긁어서 열기', c.width / 2, c.height / 2 + 4);
+    ctx.globalCompositeOperation = 'destination-out';
+  }, [key]);
+  const scratch = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (e.buttons !== 1 || revealed) return;
+    const c = ref.current!; const ctx = c.getContext('2d')!; const r = c.getBoundingClientRect();
+    ctx.beginPath(); ctx.arc(e.clientX - r.left, e.clientY - r.top, 16, 0, Math.PI * 2); ctx.fill();
+  };
+  const check = () => {
+    const c = ref.current!; const d = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data; let clear = 0;
+    for (let i = 3; i < d.length; i += 64) if (d[i] === 0) clear++;
+    if (clear / (d.length / 64) > 0.45) { setRevealed(true); burst(); }
+  };
   return (
-    <div className={`relative flex overflow-hidden rounded-[10px] ${bg} ${enter ? 'ticket-in' : ''} ${tearing ? 'ticket-tear' : ''}`} style={{ boxShadow: '0 2px 10px rgb(var(--shadow-ink)/0.08)' }}>
-      {/* 스텁 */}
-      <div className={`flex w-[68px] shrink-0 flex-col items-center justify-center gap-0.5 ${fg}`}>
-        <Icon size={16} />
-        <span className="text-[20px] font-bold leading-none tabular-nums text-ink">{n}</span>
-        <span className="text-[9px] text-ink-4">{snack ? '개' : '장'}</span>
+    <div className="mx-auto max-w-[320px]">
+      <div className="mb-2 text-center text-[11px] text-ink-4">3일 연속 달성! 오늘의 보상</div>
+      <div className="relative h-[150px] overflow-hidden rounded-[16px] bg-gradient-to-br from-comment-sand to-surface shadow-m">
+        <div className="absolute inset-0 flex flex-col items-center justify-center"><Cookie size={34} className="text-comment-sand-solid" /><div className="mt-2 text-[17px] font-bold text-ink">과자박스 1개</div><div className="text-[11px] text-ink-4">원하는 간식 하나, 오늘 당당하게</div></div>
+        <canvas key={key} ref={ref} onPointerMove={scratch} onPointerDown={scratch} onPointerUp={check} className={`absolute inset-0 h-full w-full cursor-pointer touch-none transition-opacity duration-500 ${revealed ? 'opacity-0' : ''}`} />
       </div>
-      {/* 절취선 */}
-      <div className="relative w-0 border-l border-dashed border-ink/25"><span className="absolute -left-[7px] -top-[7px] size-3.5 rounded-full bg-surface-warm" /><span className="absolute -bottom-[7px] -left-[7px] size-3.5 rounded-full bg-surface-warm" /></div>
-      {/* 본체 */}
-      <div className="flex min-w-0 flex-1 items-center gap-3 px-3 py-2.5">
-        <div className="min-w-0 flex-1">
-          <div className="text-[12.5px] font-semibold text-ink">{snack ? '과자박스' : '치팅데이'}</div>
-          <div className="mt-0.5 text-[10px] text-ink-4">{snack ? '3일 연속 성공마다 1개' : '7일 연속 성공 시 1장'}</div>
-          <div className="mt-1 font-mono text-[8.5px] tracking-[0.2em] text-ink-5">GRG-{snack ? 'SNK' : 'CHT'}-{String(n).padStart(3, '0')}</div>
-        </div>
-        <Button variant="grain" tone="primary" size="xs" onClick={onUse}>{cta}</Button>
-      </div>
+      <div className="mt-2 text-center"><Button variant="text" size="sm" onClick={() => { setRevealed(false); setKey((k) => k + 1); }}>다시 덮기</Button></div>
     </div>
   );
 }
 
-function Earn() {
-  const [tickets, setTickets] = useState([0, 1]);
-  const earn = () => {
-    setTickets((t) => [...t, t.length]);
-    confetti({ particleCount: 70, spread: 60, startVelocity: 28, origin: { y: 0.7 }, colors: ['#5a8268', '#c8a050', '#e3efe7', '#f7e6de'], scalar: 0.8 });
-  };
+/* 2. 스탬프 카드 */
+function Stamps() {
+  const [n, setN] = useState(4);
+  const [fresh, setFresh] = useState<number | null>(null);
+  const stamp = () => { if (n >= 7) { setN(0); return; } const next = n + 1; setN(next); setFresh(next); if (next === 3 || next === 6 || next === 7) burst(0.65); };
   return (
-    <div>
-      <div className="mb-3 flex items-center justify-between"><span className="text-[11px] text-ink-4">3일 연속 달성하는 순간</span><Button variant="dotted" tone="primary" size="sm" icon={Sparkles} onClick={earn}>획득 연출 보기</Button></div>
-      <div className="space-y-2">{tickets.map((t, i) => <Ticket key={t} kind="snack" n={i + 1} cta="사용" enter={i === tickets.length - 1 && tickets.length > 2} />)}</div>
+    <div className="mx-auto max-w-[360px] rounded-[14px] border border-comment-brown-solid/20 p-4" style={{ background: 'linear-gradient(160deg,#fbf6ec,#f1e8d6)', boxShadow: '0 6px 20px rgb(var(--shadow-ink)/0.10)' }}>
+      <div className="flex items-baseline justify-between"><span className="text-[13px] font-bold tracking-tight text-ink">GIROGI 도장판</span><span className="font-mono text-[10px] text-ink-4">NO. 0031</span></div>
+      <div className="mt-0.5 text-[10.5px] text-ink-4">3칸마다 과자박스 · 7칸 채우면 치팅데이</div>
+      <div className="mt-3 grid grid-cols-7 gap-1.5">{Array.from({ length: 7 }, (_, i) => i + 1).map((i) => { const on = i <= n; const prize = i === 3 || i === 6 ? 'snack' : i === 7 ? 'cheat' : null; return (
+        <div key={i} className={`relative grid aspect-square place-items-center rounded-full border-[1.5px] border-dashed ${prize ? 'border-comment-sand-solid/70' : 'border-ink/20'}`}>
+          {!on && (prize === 'snack' ? <Cookie size={13} className="text-comment-sand-solid/60" /> : prize === 'cheat' ? <PartyPopper size={13} className="text-primary/60" /> : <span className="text-[10px] text-ink-5">{i}</span>)}
+          {on && <span className={`absolute inset-[-3px] grid place-items-center rounded-full bg-primary text-white ${fresh === i ? 'stamp-press' : ''}`} style={{ transform: 'rotate(-8deg)', boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.35)' }}><Check size={14} strokeWidth={3} /></span>}
+        </div>
+      ); })}</div>
+      <div className="mt-3 flex items-center justify-between"><span className="text-[11px] text-ink-3">{n >= 7 ? '치팅데이 도착!' : n >= 3 ? `과자박스 ${Math.floor(n / 3)}개 받음` : `${3 - n}칸 더`}</span><Button variant="grain" tone="primary" size="sm" onClick={stamp}>{n >= 7 ? '새 도장판' : '오늘 도장'}</Button></div>
     </div>
   );
 }
-function Tear() {
-  const [gone, setGone] = useState<number[]>([]);
-  const [tearing, setTearing] = useState<number | null>(null);
-  const use = (i: number) => { setTearing(i); setTimeout(() => { setGone((g) => [...g, i]); setTearing(null); }, 560); };
+
+/* 3. 월렛 패스 */
+function Wallet() {
+  const [front, setFront] = useState(0);
+  const passes = [
+    { t: '과자박스', n: '3', unit: '개', sub: '3일 연속 성공마다 1개', bg: 'linear-gradient(135deg,#c8a050,#a8803a)', I: Cookie },
+    { t: '치팅데이', n: '1', unit: '장', sub: '7일 연속 성공 · 오늘 사용 가능', bg: 'linear-gradient(135deg,#5a8268,#3f6250)', I: PartyPopper },
+  ];
   return (
-    <div className="space-y-2">
-      {[0, 1, 2].filter((i) => !gone.includes(i)).map((i) => <Ticket key={i} kind={i === 2 ? 'cheat' : 'snack'} n={i === 2 ? 1 : 3 - i} cta={i === 2 ? '오늘 쓰기' : '사용'} tearing={tearing === i} onUse={() => use(i)} />)}
-      {gone.length === 3 && <div className="py-6 text-center text-[12px] text-ink-4">다 썼어요. 3일 더 가면 또 하나.</div>}
+    <div className="relative mx-auto h-[220px] max-w-[340px]">
+      {passes.map((p, i) => { const isFront = i === front; return (
+        <button key={p.t} type="button" onClick={() => setFront(i)} className="absolute inset-x-0 overflow-hidden rounded-[14px] p-4 text-left text-white transition-all duration-500" style={{ background: p.bg, top: isFront ? 52 : 0, zIndex: isFront ? 2 : 1, transform: isFront ? 'none' : 'scale(0.95)', boxShadow: '0 10px 30px rgb(var(--shadow-ink)/0.25)' }}>
+          <span className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.28), transparent 55%)' }} />
+          <span className="relative flex items-center gap-2"><p.I size={15} /><span className="text-[12px] font-semibold tracking-wide">{p.t}</span><span className="ml-auto font-mono text-[10px] opacity-70">GIROGI PASS</span></span>
+          <span className="relative mt-4 flex items-baseline gap-1"><span className="text-[34px] font-bold leading-none tabular-nums">{p.n}</span><span className="text-[12px] opacity-80">{p.unit}</span></span>
+          <span className="relative mt-1 block text-[11px] opacity-80">{p.sub}</span>
+          <span className="relative mt-3 flex items-end justify-between"><span className="block h-7 w-36 bg-[repeating-linear-gradient(90deg,#fff_0_1px,transparent_1px_3px,#fff_3px_5px,transparent_5px_8px)] opacity-80" /><span className="rounded-full bg-white/20 px-2.5 py-1 text-[10.5px] backdrop-blur">사용하기</span></span>
+        </button>
+      ); })}
     </div>
   );
 }
-function Flip() {
-  const [f, setF] = useState(false);
-  const face = 'absolute inset-0 flex items-center gap-3 rounded-[10px] px-4 [backface-visibility:hidden]';
+
+/* 4. 보물 상자 */
+function Chest() {
+  const [st, setSt] = useState<'idle' | 'shake' | 'open'>('idle');
+  const open = () => { if (st !== 'idle') { setSt('idle'); return; } setSt('shake'); setTimeout(() => { setSt('open'); burst(0.55); }, 1000); };
   return (
-    <button type="button" onClick={() => setF(!f)} className="relative h-[84px] w-full text-left [perspective:900px]">
-      <span className="absolute inset-0 transition-transform duration-500 [transform-style:preserve-3d]" style={{ transform: `rotateY(${f ? 180 : 0}deg)` }}>
-        <span className={`${face} bg-comment-sand`} style={{ boxShadow: '0 2px 10px rgb(var(--shadow-ink)/0.08)' }}><Cookie size={18} className="text-comment-sand-solid" /><span><span className="block text-[13px] font-semibold text-ink">과자박스 <span className="tabular-nums">3</span>개</span><span className="block text-[10.5px] text-ink-4">뒤집어서 규칙 보기</span></span><span className="ml-auto text-[10px] text-ink-4">↻</span></span>
-        <span className={`${face} bg-surface [transform:rotateY(180deg)]`} style={{ boxShadow: '0 2px 10px rgb(var(--shadow-ink)/0.08)' }}><Gift size={16} className="text-ink-3" /><span className="text-[11px] leading-relaxed text-ink-2">3일 연속 성공 → 과자박스 1개<br />7일 연속 성공 → 치팅데이 1장<br /><span className="text-ink-4">실패해도 보유한 건 안 사라져요</span></span></span>
-      </span>
-    </button>
+    <div className="flex flex-col items-center py-4">
+      <div className={`relative mt-10 h-[90px] w-[120px] [perspective:400px] ${st === 'shake' ? 'shake' : ''}`}>
+        {st === 'open' && <span className="glow-burst absolute -inset-10 rounded-full" style={{ background: 'radial-gradient(circle, rgba(200,160,80,0.55), transparent 65%)' }} />}
+        {st === 'open' && <div className="rise absolute left-1/2 top-0 z-0 -ml-[46px] w-[92px] rounded-[10px] bg-surface p-2 text-center shadow-m"><Cookie size={18} className="mx-auto text-comment-sand-solid" /><div className="mt-1 text-[11px] font-semibold text-ink">과자박스 +1</div></div>}
+        <div className="absolute inset-x-0 bottom-0 z-10 h-[58px] rounded-b-[12px] rounded-t-[4px]" style={{ background: 'linear-gradient(180deg,#8a6a3e,#6d5230)', boxShadow: 'inset 0 -6px 0 rgba(0,0,0,0.15), 0 8px 18px rgb(var(--shadow-ink)/0.25)' }}><span className="absolute inset-x-0 top-3 h-2 bg-[#c8a050]" /><span className="absolute left-1/2 top-1 h-6 w-5 -translate-x-1/2 rounded-[4px] bg-[#e1c27a] ring-2 ring-[#8a6a3e]" /></div>
+        <div className="absolute inset-x-0 top-[2px] z-20 h-[34px] origin-bottom rounded-t-[16px] transition-transform duration-500 [transform-style:preserve-3d]" style={{ background: 'linear-gradient(180deg,#9d7b4a,#7a5c35)', transform: st === 'open' ? 'translateY(-6px) rotateX(-115deg)' : 'none' }}><span className="absolute inset-x-0 bottom-2 h-2 bg-[#c8a050]" /></div>
+      </div>
+      <div className="mt-4 text-[12px] text-ink-3">{st === 'open' ? '3일 연속 달성 보상!' : '3일 연속 달성 — 상자가 도착했어요'}</div>
+      <div className="mt-2"><Button variant="grain" tone="primary" size="sm" icon={Gift} onClick={open}>{st === 'open' ? '다시' : '열기'}</Button></div>
+    </div>
+  );
+}
+
+/* 5. 메달 (기울기 + 광택) */
+function Medal({ label, sub, I, from, to, locked }: { label: string; sub: string; I: typeof Cookie; from: string; to: string; locked?: boolean }) {
+  const [t, setT] = useState({ x: 0, y: 0, gx: 50, gy: 30 });
+  return (
+    <div className="flex flex-col items-center">
+      <div onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height; setT({ x: (0.5 - py) * 24, y: (px - 0.5) * 24, gx: px * 100, gy: py * 100 }); }} onPointerLeave={() => setT({ x: 0, y: 0, gx: 50, gy: 30 })} className="[perspective:500px]">
+        <div className="relative grid size-[104px] place-items-center rounded-full transition-transform duration-150" style={{ transform: `rotateX(${t.x}deg) rotateY(${t.y}deg)`, background: locked ? 'linear-gradient(145deg,#e4e0d8,#cfc9bd)' : `linear-gradient(145deg,${from},${to})`, boxShadow: '0 10px 24px rgb(var(--shadow-ink)/0.22), inset 0 2px 0 rgba(255,255,255,0.45), inset 0 -3px 0 rgba(0,0,0,0.12)' }}>
+          <div className="grid size-[78px] place-items-center rounded-full" style={{ background: locked ? '#ebe7df' : 'rgba(255,255,255,0.18)', boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.35)' }}><I size={30} className={locked ? 'text-ink-5' : 'text-white'} strokeWidth={1.8} /></div>
+          {!locked && <span className="pointer-events-none absolute inset-0 rounded-full" style={{ background: `radial-gradient(circle at ${t.gx}% ${t.gy}%, rgba(255,255,255,0.55), transparent 45%)` }} />}
+        </div>
+      </div>
+      <div className="mt-2.5 text-[12.5px] font-semibold text-ink">{label}</div>
+      <div className="text-[10.5px] text-ink-4">{sub}</div>
+    </div>
   );
 }
 
 export const REWARD: Variant[] = [
-  { key: 'ticket', name: '쿠폰 티켓 (다듬음)', recommended: true, why: '스텁에 개수, 절취선, 본체에 이름·조건·일련번호·버튼. 일기장 감상 티켓의 규격을 보상에 맞춰 줄인 것.',
-    Render: () => <div className="space-y-2"><Ticket kind="snack" n={3} cta="사용" /><Ticket kind="cheat" n={1} cta="오늘 쓰기" /></div> },
-  { key: 'earn', name: '티켓 + 획득 연출', why: '3일 달성 순간 새 티켓이 3D로 넘어오며 꽂히고 컨페티. 버튼으로 연출을 미리 볼 수 있다. (canvas-confetti, 이미 설치돼 있음)',
-    Render: () => <Earn /> },
-  { key: 'tear', name: '티켓 + 절취 연출', why: '"사용"을 누르면 티켓이 찢겨 날아간다. 쓰는 행위에도 손맛. 다 쓰면 빈 상태 문구.',
-    Render: () => <Tear /> },
-  { key: 'flip', name: '3D 플립 카드', why: '앞면은 개수, 뒷면은 규칙. 규칙 설명 줄이 사라지고 카드가 한 줄로 납작해진다.',
-    Render: () => <Flip /> },
-  { key: 'book', name: '티켓북 (겹쳐 쌓기)', why: '여러 장을 부채꼴로 겹쳐 "쌓였다"를 보여준다. 개수가 많을수록 보기 좋고, 1장일 땐 밋밋하다.',
-    Render: () => (
-      <div className="relative h-[120px]">{[2, 1, 0].map((i) => <div key={i} className="absolute left-0 right-0" style={{ top: i * 14, transform: `rotate(${(i - 1) * 1.5}deg) scale(${1 - i * 0.03})`, zIndex: 3 - i, opacity: 1 - i * 0.25 }}><Ticket kind="snack" n={3 - i} cta="사용" /></div>)}</div>
-    ) },
+  { key: 'scratch', name: '스크래치 카드', recommended: true, why: 'Focus Tree. 보상이 가려져 있고 손가락으로 긁어야 나온다 — 받는 행위 자체가 보상. 45% 넘게 긁으면 컨페티. 직접 긁어봐.', Render: () => <Scratch /> },
+  { key: 'stamps', name: '스탬프 카드', why: '카페 도장판. 7칸 중 3·6칸이 과자박스, 7칸이 치팅데이. "오늘 도장"을 누르면 도장이 쾅 찍힌다. 보상까지 몇 칸인지가 가장 직관적.', Render: () => <Stamps /> },
+  { key: 'wallet', name: '월렛 패스', why: 'Apple Wallet. 보상이 진짜 "쓸 수 있는 카드"로 보인다. 누르면 앞으로 나온다. 색 그라데이션이 화면에서 가장 화려한 요소가 되므로 홈 한 군데만.', Render: () => <Wallet /> },
+  { key: 'chest', name: '보물 상자', why: 'Duolingo 상자. 흔들리다 뚜껑이 열리고 보상 카드가 솟아오르며 컨페티. 획득 순간의 연출용 — 평소엔 닫힌 상자만 작게.', Render: () => <Chest /> },
+  { key: 'medal', name: '기울어지는 메달', why: 'Apple Fitness 어워드 · Pulpwren 배지. 마우스(폰은 자이로)에 따라 기울고 광택이 따라 움직인다. 잠긴 메달은 회색. 컬렉션이 쌓이는 맛.',
+    Render: () => <div className="flex flex-wrap justify-center gap-8 py-2"><Medal label="과자박스 ×3" sub="3일 연속" I={Cookie} from="#d9b465" to="#a9802f" /><Medal label="치팅데이" sub="7일 연속" I={PartyPopper} from="#6f9a7d" to="#3f6250" /><Medal label="한 달 완주" sub="잠김 · 30일" I={Sparkles} from="#000" to="#000" locked /></div> },
 ];
