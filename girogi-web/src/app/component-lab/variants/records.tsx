@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Camera, ChevronDown, Moon, Plus, Sun, Sunrise } from 'lucide-react';
 import { Button, TodoCheckbox } from 'bongchil-design-system';
 import { MealPlaceDisplayNames, MealTimeDisplayNames } from '@/types/enums';
+import { DayBoard } from '../../home/_components/journal/day-board';
 import { MEALS, useMissionState, type Variant } from './shared';
 
 const NOW = '19:40';
@@ -38,6 +39,7 @@ const NowLine = () => (
 );
 
 export const RECORDS: Variant[] = [
+  { key: 'final', name: '가로 3카드 + 지금 막대 · 다듬음', recommended: true, why: '채택안. 하루 막대(06–24, 11·16시 눈금, 지금 시간 핀) 아래 시간대 카드 3장. 지금 카드는 primary 테두리 + 옅은 링, 지난 카드의 완료 행은 흐리게. 카드 높이는 같은 줄에서 맞춰진다. 홈에 적용됨.', Render: () => { const s = useMissionState(); const d = new Date(); d.setHours(19, 40); return <div className="@container"><DayBoard missions={s.missions} meals={MEALS} onToggleMission={s.toggle} now={d} /></div>; } },
   { key: 'all-now', name: '셋 다 + 지금', why: '시간대 머리 + 세로선·시간 + 색·체크에 "지금" 선. 지난 건 옅게, 앞으로 할 미션은 진하게. 한 리스트.',
     Render: () => { const s = useRows(); return (
       <div className="relative pl-12"><span className="absolute left-[38px] top-2 bottom-2 w-px bg-border" />
@@ -48,7 +50,7 @@ export const RECORDS: Variant[] = [
         ); })}
       </div>
     ); } },
-  { key: 'cards-now', name: '시간대 카드 · 지금 펼침', recommended: true, why: '시간대마다 카드. 지난 카드는 한 줄 요약으로 접히고(눌러 펼침), 지금 카드만 타임라인 + 지금 선으로 펼쳐진다. 남은 카드는 옅게. 카드 분리 + 셋 다 + 지금.',
+  { key: 'cards-now', name: '시간대 카드 · 지금 펼침', why: '시간대마다 카드. 지난 카드는 한 줄 요약으로 접히고(눌러 펼침), 지금 카드만 타임라인 + 지금 선으로 펼쳐진다. 남은 카드는 옅게. 카드 분리 + 셋 다 + 지금.',
     Render: () => { const s = useRows(); const cur = slotOf(NOW); const [open, setOpen] = useState<number[]>([]); return (
       <div className="space-y-2">{SLOTS.map(({ n, I }, si) => { const inSlot = s.rows.filter((r) => slotOf(r.t) === si); const past = si < cur, future = si > cur, expanded = si === cur || open.includes(si); const doneN = inSlot.filter((r) => r.done).length; return (
         <div key={n} className={`rounded-[var(--radius-m)] border ${si === cur ? 'border-primary/40 bg-surface shadow-s' : 'border-border/60 bg-surface/70'} ${future ? 'opacity-60' : ''}`}>

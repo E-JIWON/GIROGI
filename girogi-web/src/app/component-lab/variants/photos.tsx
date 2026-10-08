@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Camera, MapPin } from 'lucide-react';
 import { Segmented } from 'bongchil-design-system';
-import type { Variant } from './shared';
+import { MealTimeline } from '../../home/_components/journal/meal-timeline';
+import { MEALS, type Variant } from './shared';
 
 /* eslint-disable @next/next/no-img-element */
 type Meal = { id: string; t: string; slot: string; menu: string; place: string };
@@ -33,7 +34,8 @@ function WithData({ children }: { children: (meals: Meal[]) => React.ReactNode }
 }
 
 export const PHOTOS: Variant[] = [
-  { key: 'horizontal', name: '가로 시간축 + 사진', recommended: true, why: '시간이 왼→오로 흐르고 사진이 축 위에 선다. 8개면 가로 스크롤로 밀리고, 지금 시간 이후는 비어 있다. 쌓일수록 하루가 필름처럼 길어진다.',
+  { key: 'final', name: '끼니만 크게 · 다듬음', recommended: true, why: '채택안. 세 끼는 4:5 사진 카드(시간대 라벨 · 메뉴 두 줄), 간식은 44px 칩, 시간은 카드 아래 짧은 선 + 축. 끝에 같은 높이의 점선 "기록" 카드와 "지금". 홈에 적용됨.', Render: () => <MealTimeline meals={MEALS} /> },
+  { key: 'horizontal', name: '가로 시간축 + 사진', why: '시간이 왼→오로 흐르고 사진이 축 위에 선다. 8개면 가로 스크롤로 밀리고, 지금 시간 이후는 비어 있다. 쌓일수록 하루가 필름처럼 길어진다.',
     Render: () => <WithData>{(meals) => (
       <div className="scrollbar-hide overflow-x-auto pb-1"><div className="relative flex w-max gap-5 px-2 pt-1"><span className="absolute inset-x-2 bottom-[22px] h-px bg-border" />
         {meals.map((m) => <div key={m.id} className="relative flex w-[96px] flex-col items-center"><img src={img(m.id)} alt="" className={`size-[84px] rounded-[10px] border object-cover ${m.slot === '간식' || m.slot === '야식' ? 'border-comment-sand-solid/50' : 'border-border/60'}`} /><span className="mt-1.5 w-full truncate text-center text-[10.5px] text-ink-2"><span className="text-ink-4">{m.slot}</span> {m.menu.split(',')[0]}</span><span className={`mt-1 size-2 rounded-full ring-4 ring-surface-warm ${m.slot === '간식' || m.slot === '야식' ? 'bg-comment-sand-solid' : 'bg-primary'}`} /><span className="mt-1 font-mono text-[10px] text-ink-4">{m.t}</span></div>)}
@@ -46,7 +48,7 @@ export const PHOTOS: Variant[] = [
         {meals.map((m) => <div key={m.id} className="relative mb-2.5 flex items-center gap-3"><span className={`absolute -left-5 top-1/2 size-2 -translate-y-1/2 rounded-full ${m.slot === '간식' || m.slot === '야식' ? 'bg-comment-sand-solid' : 'bg-primary'}`} /><span className="w-9 font-mono text-[10px] text-ink-4">{m.t}</span><img src={img(m.id)} alt="" className="size-16 rounded-[8px] border border-border/60 object-cover" /><span className="min-w-0"><span className="block truncate text-[12.5px] text-ink">{m.slot} · {m.menu}</span><span className="mt-0.5 inline-flex items-center gap-1 text-[10.5px] text-ink-4"><MapPin size={10} /> {m.place}</span></span></div>)}
       </div>
     )}</WithData> },
-  { key: 'grouped', name: '가로 시간축 · 끼니만 크게', why: '세 끼는 큰 사진, 간식·야식은 축 위 작은 동그라미로. 8개여도 폭이 크게 안 늘고, "끼니"와 "군것질"이 구분된다.',
+  { key: 'grouped', name: '끼니만 크게 (이전)', why: '세 끼는 큰 사진, 간식·야식은 축 위 작은 동그라미로. 8개여도 폭이 크게 안 늘고, "끼니"와 "군것질"이 구분된다.',
     Render: () => <WithData>{(meals) => (
       <div className="scrollbar-hide overflow-x-auto pb-1"><div className="relative flex w-max items-end gap-3 px-2 pt-1"><span className="absolute inset-x-2 bottom-[22px] h-px bg-border" />
         {meals.map((m) => { const main = ['아침', '점심', '저녁'].includes(m.slot); return main ? (

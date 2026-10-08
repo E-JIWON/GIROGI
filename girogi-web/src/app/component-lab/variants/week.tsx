@@ -12,7 +12,7 @@ const Week = () => <>{DAYS.map((d) => <span key={d} className="text-[9px] text-i
 const kept = [...OK].filter((d) => d < TODAY).length;
 
 export const WEEK_V: Variant[] = [
-  { key: 'mini', name: '달력 미니', recommended: true, why: '진행 바를 뺐다. 오늘 = 채운 칸, 지킨 날 = 옅은 틴트, 놓친 날 = 글자만. 머리줄 "7일 중 7일 지킴" 하나로 요약.',
+  { key: 'mini', name: '달력 미니', why: '진행 바를 뺐다. 오늘 = 채운 칸, 지킨 날 = 옅은 틴트, 놓친 날 = 글자만. 머리줄 "7일 중 7일 지킴" 하나로 요약.',
     Render: () => (
       <div><Head right={<>{TODAY - 1}일 중 <b className="tabular-nums text-primary">{kept}일</b> 지킴</>} />
         <div className="grid grid-cols-7 gap-[3px] text-center"><Week />{days.map((d) => <span key={d} className={`grid h-5 place-items-center rounded-[4px] text-[9.5px] tabular-nums ${d === TODAY ? 'bg-primary font-semibold text-white' : d < TODAY ? (OK.has(d) ? 'bg-primary/15 text-ink-2' : 'text-ink-4') : 'text-ink-5'}`}>{d}</span>)}</div>
@@ -24,7 +24,7 @@ export const WEEK_V: Variant[] = [
         <div className="grid grid-cols-7 gap-y-[3px] text-center"><Week />{days.map((d) => { const on = d <= TODAY && (OK.has(d) || d === TODAY); const L = on && d > 1 && (OK.has(d - 1)) && (d + 2) % 7 !== 0; const R = on && d < TODAY && (OK.has(d + 1) || d + 1 === TODAY) && (d + 3) % 7 !== 0; return <span key={d} className={`grid h-5 place-items-center text-[9.5px] tabular-nums ${on ? `bg-primary/20 text-ink ${L ? '' : 'rounded-l-full'} ${R ? '' : 'rounded-r-full'}` : 'text-ink-5'} ${d === TODAY ? '!bg-primary font-semibold text-white rounded-full' : ''}`}>{d}</span>; })}</div>
       </div>
     ) },
-  { key: 'tone', name: '농도 달력', why: '그날 지킨 미션 수(0~3)를 색 농도로. 성공/실패 두 칸이 아니라 "얼마나"가 보인다. 아래 작은 범례.',
+  { key: 'tone', name: '농도 달력', recommended: true, why: '채택 — 홈 적용. 그날 지킨 미션 수(0~3)를 색 농도로. 성공/실패 두 칸이 아니라 "얼마나"가 보인다. 아래 작은 범례.',
     Render: () => (
       <div><Head right={<>평균 <b className="tabular-nums text-primary">2.3</b>개</>} />
         <div className="grid grid-cols-7 gap-[3px] text-center"><Week />{days.map((d) => { const n = DONE[d]; const tone = d === TODAY ? 'ring-2 ring-primary text-ink' : n === 3 ? 'bg-primary text-white' : n === 2 ? 'bg-primary/55 text-white' : n === 1 ? 'bg-primary/20 text-ink-2' : d < TODAY ? 'bg-ink-5/25 text-ink-4' : 'text-ink-5'; return <span key={d} className={`grid h-5 place-items-center rounded-[4px] text-[9.5px] tabular-nums ${tone}`}>{d}</span>; })}</div>

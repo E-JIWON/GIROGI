@@ -16,6 +16,8 @@ interface ProfilePanelProps {
   /** 최근 28일, 오래된 날부터 */
   grass: boolean[];
   weight?: WeightSummary;
+  /** 최근 7일 체중, 오래된 날부터 */
+  weightTrend?: number[];
 }
 
 const pct = (from: number, to: number, now: number) => Math.max(0, Math.min(100, ((from - now) / (from - to)) * 100));
@@ -33,7 +35,24 @@ function GoalRow({ label, from, to, now }: { label: string; from: number; to: nu
   );
 }
 
-export function ProfilePanel({ nickname, bio, totalDays, grass, weight }: ProfilePanelProps) {
+/** 최근 7일 체중선 — 하루 등락보다 흐름 */
+function Spark({ pts }: { pts: number[] }) {
+  const min = Math.min(...pts) - 0.2, max = Math.max(...pts) + 0.2;
+  const xy = pts.map((v, i) => [(i / (pts.length - 1)) * 100, ((max - v) / (max - min)) * 28] as const);
+  const d = xy.map(([x, y]) => `${x},${y}`).join(' ');
+  const [lx, ly] = xy[xy.length - 1];
+  return (
+    <div className="relative mt-2 h-7">
+      <svg viewBox="0 0 100 28" preserveAspectRatio="none" className="absolute inset-0 h-full w-full overflow-visible">
+        <polygon points={`0,28 ${d} 100,28`} fill="var(--color-primary)" opacity="0.08" />
+        <polyline points={d} fill="none" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      </svg>
+      <span className="absolute size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary ring-2 ring-surface" style={{ left: `${lx}%`, top: `${(ly / 28) * 100}%` }} />
+    </div>
+  );
+}
+
+export function ProfilePanel({ nickname, bio, totalDays, grass, weight, weightTrend }: ProfilePanelProps) {
   const diff = weight ? weight.current - weight.yesterday : 0;
   return (
     <div className="flex flex-col gap-3 px-1">
@@ -61,7 +80,8 @@ export function ProfilePanel({ nickname, bio, totalDays, grass, weight }: Profil
               어제 {diff <= 0 ? '▼' : '▲'}{Math.abs(diff).toFixed(1)}
             </span>
           </div>
-          <div className="mt-2.5 space-y-2">
+          {weightTrend && weightTrend.length > 1 && <Spark pts={weightTrend} />}
+          <div className="mt-2 space-y-2">
             <GoalRow label="이번 달" from={weight.monthStart} to={weight.monthTarget} now={weight.current} />
             <GoalRow label="전체" from={weight.start} to={weight.target} now={weight.current} />
           </div>

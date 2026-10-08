@@ -141,7 +141,7 @@ export function JournalShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-dvh p-2 sm:p-4" style={{ background: 'var(--desk-bg)' }}>
       <LiquidGlassDefs />
-      <div className="relative mx-auto flex h-full max-w-[var(--page-max)] flex-col overflow-hidden rounded-[var(--radius-l)] border border-border bg-surface shadow-m">
+      <div className="relative mx-auto flex h-full max-w-[1200px] flex-col overflow-hidden rounded-[var(--radius-l)] border border-border bg-surface shadow-m">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-border px-3 py-2.5 sm:px-5">
           <NextLink href="/" className="text-[15px] font-extrabold tracking-tight text-ink">GIROGI</NextLink>

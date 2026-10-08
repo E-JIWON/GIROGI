@@ -17,7 +17,7 @@ function SuccessLine({ done }: { done: number }) {
 }
 
 export const MISSION: Variant[] = [
-  { key: 'line-slot-check', name: '성공선 + 시간대 + 체크', recommended: true, why: '성공선으로 규칙, 시간대 접두로 "언제", 체크 아이콘으로 "됐는지". 세 질문에 답하는 최소 조합.',
+  { key: 'line-slot-check', name: '성공선 + 시간대 + 체크', recommended: true, why: '채택 — 홈 적용. 성공선으로 규칙, 시간대 접두로 "언제", 체크 아이콘으로 "됐는지". 세 질문에 답하는 최소 조합.',
     Render: () => { const s = useMissionState(); return (
       <div><SuccessLine done={s.done} />
         <div className="grid gap-1.5">{s.missions.map((m, i) => (

@@ -1,8 +1,8 @@
-/** @desc 좌측 패널 — 핵심 미션 서랍 (bongchil-diary DrawerCard bare 결: 알약 1열, 누르면 토글) */
+/** @desc 좌측 패널 — 핵심 미션: 성공선 + 시간대 + 체크 알약 */
 
 'use client';
 
-import type { LucideIcon } from 'lucide-react';
+import { Check, type LucideIcon } from 'lucide-react';
 import { Button } from 'bongchil-design-system';
 import { MIN_CORE_MISSIONS_FOR_SUCCESS, TOTAL_CORE_MISSIONS } from '@/lib/constants';
 
@@ -12,6 +12,8 @@ export interface MissionItem {
   description: string;
   isCompleted: boolean;
   icon: LucideIcon;
+  /** 시간대 라벨 (아침 · 점심 · 저녁) */
+  slot?: string;
 }
 
 interface MissionDrawerProps {
@@ -21,26 +23,30 @@ interface MissionDrawerProps {
 
 export function MissionDrawer({ missions, onToggle }: MissionDrawerProps) {
   const done = missions.filter((m) => m.isCompleted).length;
-  const success = done >= MIN_CORE_MISSIONS_FOR_SUCCESS;
+  const ok = done >= MIN_CORE_MISSIONS_FOR_SUCCESS;
+  const linePct = (MIN_CORE_MISSIONS_FOR_SUCCESS / TOTAL_CORE_MISSIONS) * 100;
   return (
     <div>
-      <div className="mb-2 flex items-baseline gap-2 px-1">
-        <span className="text-[12.5px] font-semibold text-ink-2">오늘의 핵심 미션</span>
-        <span className="text-[11px] tabular-nums text-ink-4">
-          {done}/{TOTAL_CORE_MISSIONS}
-          {success && <b className="ml-1 text-primary">성공</b>}
-        </span>
+      <div className="mb-3 px-1">
+        <div className="mb-1.5 flex items-baseline gap-2">
+          <span className="text-[12.5px] font-semibold text-ink-2">{ok ? '오늘 성공' : '핵심 미션'}</span>
+          <span className="text-[11px] tabular-nums text-ink-4">{done}/{TOTAL_CORE_MISSIONS}{!ok && ` · ${MIN_CORE_MISSIONS_FOR_SUCCESS - done}개 더`}</span>
+        </div>
+        <div className="relative grid gap-1" style={{ gridTemplateColumns: `repeat(${TOTAL_CORE_MISSIONS}, 1fr)` }}>
+          {Array.from({ length: TOTAL_CORE_MISSIONS }).map((_, i) => <span key={i} className={`h-1.5 rounded-full transition-colors ${i < done ? 'bg-primary' : 'bg-ink-5/40'}`} />)}
+          <span className="absolute -top-1 h-3.5 w-px bg-primary/60" style={{ left: `${linePct}%` }} aria-label="성공선" />
+        </div>
       </div>
-      <div className="grid grid-cols-1 gap-1.5">
+      <div className="grid gap-1.5">
         {missions.map((m) => (
-          <Button key={m.id} variant="grain" size="sm" icon={m.icon} active={m.isCompleted} color="var(--color-primary)" onClick={() => onToggle(m.id)}>
-            {m.title}
-          </Button>
+          <div key={m.id} className="flex items-center gap-2">
+            {m.slot && <span className={`w-7 shrink-0 text-[10px] ${m.isCompleted ? 'text-primary' : 'text-ink-4'}`}>{m.slot}</span>}
+            <Button variant="grain" size="sm" icon={m.isCompleted ? Check : m.icon} active={m.isCompleted} color="var(--color-primary)" onClick={() => onToggle(m.id)} className="min-w-0 flex-1 justify-start">
+              <span className={`truncate ${m.isCompleted ? 'line-through opacity-70' : ''}`}>{m.slot ? m.title.replace(new RegExp(`^${m.slot} `), '') : m.title}</span>
+            </Button>
+          </div>
         ))}
       </div>
-      <p className="mt-2 px-1 text-[10.5px] leading-relaxed text-ink-4">
-        {TOTAL_CORE_MISSIONS}개 중 {MIN_CORE_MISSIONS_FOR_SUCCESS}개만 달성하면 오늘 성공. 체크리스트에서 바꿀 수 있어요.
-      </p>
     </div>
   );
 }
