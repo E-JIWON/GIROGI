@@ -25,6 +25,9 @@ import { SNACK_BOX_COUNT_KEY } from '@/lib/constants';
 import { useStreakStore } from '@/stores/streakStore';
 import { useMealRecordStore } from '@/stores/mealRecordStore';
 
+// 체중 — 목 값. 체중 기록 스토어가 생기면 getCurrentWeight(stats)로 교체
+const WEIGHT = { current: 72.4, target: 68, start: 78 };
+
 const MISSIONS: MissionItem[] = [
   { id: 'mission1', title: '아침 식사 집에서 먹기', description: '외식/배달 대신 집에서 직접 조리', isCompleted: false, icon: Apple },
   { id: 'mission2', title: '점심 30회 이상 씹기', description: '천천히 먹어서 포만감 높이기', isCompleted: false, icon: Utensils },
@@ -75,7 +78,7 @@ export default function Home() {
     <div className="px-3 pt-3 sm:px-5 sm:pt-4">
       <div className="grid gap-6 @3xl:grid-cols-[200px_minmax(0,1fr)] @3xl:gap-x-9">
         <aside className="flex flex-col gap-5">
-          <ProfilePanel nickname={mockCurrentUser.nickname} bio={mockCurrentUser.bio} totalDays={totalDays} grass={grass} />
+          <ProfilePanel nickname={mockCurrentUser.nickname} bio={mockCurrentUser.bio} totalDays={totalDays} grass={grass} weight={WEIGHT} />
           <MissionDrawer missions={missions} onToggle={toggleMission} />
           <WeekStrip weeklyStatus={weeklyStatus} />
         </aside>

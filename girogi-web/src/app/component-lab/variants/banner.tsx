@@ -1,38 +1,28 @@
 'use client';
 
-import { ChevronRight, Flame } from 'lucide-react';
-import { BasicGlass } from 'bongchil-design-system';
-import { StreakBanner } from '../../home/_components/journal/streak-banner';
+import { useEffect, useState } from 'react';
+import { ArrowRight, Flame } from 'lucide-react';
+import { BasicGlass, Button } from 'bongchil-design-system';
 import { STREAK, type Variant } from './shared';
 
+const Desk = ({ children }: { children: React.ReactNode }) => <div className="rounded-[var(--radius-l)] p-3" style={{ background: 'var(--desk-bg)' }}>{children}</div>;
+const CHEERS = ['오늘도 두 개면 충분해요', '어제의 나보다 하루 더', '내일의 내가 고마워할 거예요', '지금 이 선택이 7일을 8일로'];
+
+function Rotating() {
+  const [i, setI] = useState(0);
+  useEffect(() => { const t = setInterval(() => setI((x) => (x + 1) % CHEERS.length), 2600); return () => clearInterval(t); }, []);
+  return <span key={i} className="fade-up inline-block text-[12px] text-ink-2">{CHEERS[i]}</span>;
+}
+
 export const BANNER: Variant[] = [
-  { key: 'tint', name: '틴트 한 줄', recommended: true, why: '일기장 MemoryBanner 자리. 한 줄이라 본문 위에서 안 거슬리고, 누르면 체크리스트.', Render: () => <StreakBanner currentStreak={STREAK} /> },
-  { key: 'number', name: '큰 숫자 카드', why: '연속 일수를 주인공으로. 듀오링고식. 숫자가 커질수록 기분 좋지만 0일 때 민망하다.',
-    Render: () => (
-      <div className="flex items-center gap-4 rounded-[var(--radius-l)] bg-surface p-4">
-        <span className="grid size-12 place-items-center rounded-[var(--radius-m)] bg-primary-light text-primary"><Flame size={22} /></span>
-        <div><div className="flex items-baseline gap-1 text-ink"><span className="text-[32px] font-bold leading-none tabular-nums">{STREAK}</span><span className="text-[12px] text-ink-3">일 연속</span></div><div className="mt-0.5 text-[11px] text-ink-4">오늘 미션 2개면 {STREAK + 1}일</div></div>
-        <ChevronRight size={14} className="ml-auto text-ink-4" />
-      </div>
-    ) },
-  { key: 'glass', name: '유리 띠', why: 'BasicGlass airy로 책상이 비치게. 데스크 배경이 보이는 자리(모바일 상단)에서 예쁘고, 카드 위에선 의미 없다.',
-    Render: () => (
-      <div className="rounded-[var(--radius-l)] p-3" style={{ background: 'var(--desk-bg)' }}>
-        <BasicGlass airy className="flex items-center gap-3 rounded-[13px] px-3.5 py-2.5"><Flame size={14} className="text-primary" /><span className="text-[12px] text-ink-2">연속 <b className="text-primary">{STREAK}일째</b>. 오늘도 두 개면 충분해요.</span></BasicGlass>
-      </div>
-    ) },
-  { key: 'quote', name: '세리프 한 줄', why: '숫자 대신 말. 자기 연민 모드와 어울리는 톤. 격려 문구 풀을 만들어 하루마다 바꾼다.',
-    Render: () => (
-      <div className="border-l-2 border-primary/50 py-1 pl-3">
-        <p className="text-[13.5px] leading-relaxed text-ink-2" style={{ fontFamily: 'var(--font-family-serif)' }}>“완벽한 하루가 아니라, 두 개를 지킨 하루.”</p>
-        <p className="mt-1 text-[10.5px] text-ink-4">{STREAK}일째 그렇게 하고 있어요</p>
-      </div>
-    ) },
-  { key: 'progress', name: '다음 보상까지', why: '연속 일수를 치팅데이(7일) 진행 바로. 보상 카드와 역할이 겹치지만, 보상 카드를 없앤다면 이게 그 자리.',
-    Render: () => (
-      <div className="rounded-[13px] bg-primary-subtle px-3.5 py-2.5">
-        <div className="flex items-center justify-between text-[11px]"><span className="text-ink-2">치팅데이까지</span><span className="font-mono text-primary">D-{7 - (STREAK % 7 || 7)}</span></div>
-        <div className="mt-1.5 h-1.5 rounded-full bg-surface"><span className="block h-full rounded-full bg-primary" style={{ width: `${((STREAK % 7 || 7) / 7) * 100}%` }} /></div>
-      </div>
-    ) },
+  { key: 'glass', name: '유리 띠', why: 'BasicGlass airy. 책상 배경이 비치는 띠. 기준.',
+    Render: () => <Desk><BasicGlass airy className="flex items-center gap-3 rounded-[13px] px-3.5 py-2.5"><Flame size={14} className="text-primary" /><span className="text-[12px] text-ink-2">연속 <b className="text-primary">{STREAK}일째</b>. 오늘도 두 개면 충분해요.</span></BasicGlass></Desk> },
+  { key: 'glass-pulse', name: '유리 띠 + 불꽃 펄스', recommended: true, why: '불꽃이 숨 쉬듯 커졌다 작아진다. 글은 짧고 세게: "7일째. 오늘도 간다." 응원은 말보다 움직임이 먼저.',
+    Render: () => <Desk><BasicGlass airy className="flex items-center gap-3 rounded-[13px] px-3.5 py-2.5"><span className="grid size-7 place-items-center rounded-full bg-primary-light"><Flame size={15} className="flame-pulse text-primary" /></span><span className="text-[12.5px] text-ink"><b className="text-primary">{STREAK}일째.</b> 오늘도 간다.</span><span className="ml-auto text-[10.5px] text-ink-4">미션 2개면 {STREAK + 1}일</span></BasicGlass></Desk> },
+  { key: 'glass-dots', name: '유리 띠 + 치팅데이 점', why: '7개 점 중 몇 개 채웠는지. "3일만 더 가면 치팅데이"가 바로 보인다. 보상이 응원이 되는 구조.',
+    Render: () => { const n = STREAK % 7 || 7; return <Desk><BasicGlass airy className="flex items-center gap-3 rounded-[13px] px-3.5 py-2.5"><Flame size={14} className="text-primary" /><span className="text-[12px] text-ink-2"><b className="text-primary">{STREAK}일째</b></span><span className="flex gap-1">{Array.from({ length: 7 }).map((_, i) => <span key={i} className={`size-2 rounded-full ${i < n ? 'bg-primary' : 'bg-ink-5/40'}`} />)}</span><span className="ml-auto text-[10.5px] text-ink-3">{n === 7 ? '치팅데이 도착' : `치팅데이까지 ${7 - n}일`}</span></BasicGlass></Desk>; } },
+  { key: 'glass-cta', name: '유리 띠 + 큰 숫자 + 버튼', why: '왼쪽에 큰 7, 오른쪽에 "오늘 미션 시작" grain 버튼. 배너가 읽는 것에서 누르는 것으로 바뀐다.',
+    Render: () => <Desk><BasicGlass airy className="flex items-center gap-3 rounded-[13px] px-3.5 py-2"><span className="flex items-baseline gap-0.5"><span className="text-[24px] font-bold leading-none tabular-nums text-primary">{STREAK}</span><span className="text-[11px] text-ink-3">일</span></span><span className="text-[12px] text-ink-2">잘 하고 있어요. 오늘 건 아직이에요.</span><span className="ml-auto"><Button variant="grain" tone="primary" size="sm" icon={ArrowRight}>오늘 미션</Button></span></BasicGlass></Desk> },
+  { key: 'glass-cheer', name: '유리 띠 + 바뀌는 응원', why: '응원 문구가 몇 초마다 바뀐다. 매일 열어도 같은 말이 아니라서 질리지 않는다. 문구 풀만 늘리면 된다.',
+    Render: () => <Desk><BasicGlass airy className="flex items-center gap-3 rounded-[13px] px-3.5 py-2.5"><Flame size={14} className="flame-pulse text-primary" /><span className="text-[12px] text-ink-2"><b className="text-primary">{STREAK}일째</b> · </span><Rotating /></BasicGlass></Desk> },
 ];

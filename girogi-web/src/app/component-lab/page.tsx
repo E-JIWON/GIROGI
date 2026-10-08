@@ -15,6 +15,7 @@ import { BANNER } from './variants/banner';
 import { PHOTOS } from './variants/photos';
 import { RECORDS } from './variants/records';
 import { REWARD } from './variants/reward';
+import { LAYOUT } from './variants/shell-layouts';
 
 const ENTRIES: LabEntry[] = [
   { key: 'profile', name: 'ProfilePanel', desc: '좌측 패널 맨 위 — 누구의 기록인가', variants: PROFILE },
@@ -24,6 +25,7 @@ const ENTRIES: LabEntry[] = [
   { key: 'photos', name: 'PhotoStrip', desc: '오늘 끼니 사진', variants: PHOTOS },
   { key: 'records', name: 'RecordList', desc: '오늘 기록 (미션 + 식사)', variants: RECORDS },
   { key: 'reward', name: 'RewardStatusCard', desc: '과자박스 · 치팅데이', variants: REWARD },
+  { key: 'layout', name: '레이아웃', desc: '셸 안에서 조각들을 어떻게 놓을 것인가 (PC · 모바일)', variants: LAYOUT },
 ];
 
 export default function ComponentLabPage() {
@@ -37,7 +39,7 @@ export default function ComponentLabPage() {
     <div className="px-3 pt-3 sm:px-5 sm:pt-4">
       <div className="mb-3 flex items-baseline gap-2">
         <h1 className="text-[16px] font-bold tracking-tight text-ink">컴포넌트 랩</h1>
-        <span className="text-[11px] text-ink-4">홈(오늘) 조각 {ENTRIES.length}개 × 시안 5</span>
+        <span className="text-[11px] text-ink-4">홈(오늘) 조각 {ENTRIES.length - 1}개 + 레이아웃 · 각 시안 5~6</span>
       </div>
       <div className="scrollbar-hide overflow-x-auto"><div className="w-max"><NavTabs tabs={ENTRIES.map((e) => ({ label: e.name, isActive: e.key === entryKey, onSelect: () => pick(e.key) }))} /></div></div>
       <p className="mt-2 text-[12px] text-ink-4">{entry.desc}</p>
@@ -48,7 +50,7 @@ export default function ComponentLabPage() {
 
       <div className="mt-4 grid gap-4 @3xl:grid-cols-[minmax(0,1fr)_260px]">
         <div className="rounded-[var(--radius-l)] border border-dashed border-ink/15 bg-surface-warm p-5 @container" key={`${entry.key}-${variant.key}`}>
-          <div className={entry.key === 'profile' || entry.key === 'missions' || entry.key === 'week' ? 'max-w-[220px]' : 'max-w-[600px]'}>
+          <div className={entry.key === 'profile' || entry.key === 'missions' || entry.key === 'week' ? 'max-w-[220px]' : entry.key === 'layout' ? '' : 'max-w-[600px]'}>
             <variant.Render />
           </div>
         </div>
