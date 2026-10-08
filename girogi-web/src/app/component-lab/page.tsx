@@ -8,24 +8,11 @@
 import { useState } from 'react';
 import { FilterChips, NavTabs } from 'bongchil-design-system';
 import type { LabEntry } from './variants/shared';
-import { PROFILE } from './variants/profile';
-import { MISSION } from './variants/missions';
-import { WEEK_V } from './variants/week';
-import { BANNER } from './variants/banner';
-import { PHOTOS } from './variants/photos';
-import { RECORDS } from './variants/records';
 import { REWARD } from './variants/reward';
-import { LAYOUT } from './variants/shell-layouts';
 
+/** 채택된 것은 /component로 옮기고 여기선 지운다. 남은 건 아직 고르는 중인 것만. */
 const ENTRIES: LabEntry[] = [
-  { key: 'profile', name: 'ProfilePanel', desc: '좌측 패널 맨 위 — 누구의 기록인가', variants: PROFILE },
-  { key: 'missions', name: 'MissionDrawer', desc: '오늘의 핵심 미션 3개', variants: MISSION },
-  { key: 'week', name: 'WeekStrip', desc: '이번 주 성공 여부', variants: WEEK_V },
-  { key: 'banner', name: 'StreakBanner', desc: '본문 맨 위 한 줄 격려', variants: BANNER },
-  { key: 'photos', name: 'PhotoStrip', desc: '오늘 끼니 사진', variants: PHOTOS },
-  { key: 'records', name: 'RecordList', desc: '오늘 기록 (미션 + 식사)', variants: RECORDS },
-  { key: 'reward', name: 'RewardStatusCard', desc: '과자박스 · 치팅데이', variants: REWARD },
-  { key: 'layout', name: '레이아웃', desc: '셸 안에서 조각들을 어떻게 놓을 것인가 (PC · 모바일)', variants: LAYOUT },
+  { key: 'reward', name: 'RewardStatusCard', desc: '과자박스 · 치팅데이 — 아직 결정 전 (홈엔 임시로 패스 리스트)', variants: REWARD },
 ];
 
 export default function ComponentLabPage() {
@@ -39,7 +26,7 @@ export default function ComponentLabPage() {
     <div className="px-3 pt-3 sm:px-5 sm:pt-4">
       <div className="mb-3 flex items-baseline gap-2">
         <h1 className="text-[16px] font-bold tracking-tight text-ink">컴포넌트 랩</h1>
-        <span className="text-[11px] text-ink-4">홈(오늘) 조각 {ENTRIES.length - 1}개 + 레이아웃</span>
+        <span className="text-[11px] text-ink-4">결정 대기 {ENTRIES.length}개 · 채택된 건 /component</span>
       </div>
       <div className="scrollbar-hide overflow-x-auto"><div className="w-max"><NavTabs tabs={ENTRIES.map((e) => ({ label: e.name, isActive: e.key === entryKey, onSelect: () => pick(e.key) }))} /></div></div>
       <p className="mt-2 text-[12px] text-ink-4">{entry.desc}</p>
